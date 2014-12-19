@@ -16,6 +16,8 @@ gem 'haml-rails'
 gem 'unicorn'
 gem 'foreman'
 
+gem 'mongoid'
+
 group :development do
   gem 'spring'
 end
