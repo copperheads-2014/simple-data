@@ -13,6 +13,5 @@ test:
 
 production:
   <<: *default
-  database: simple_data_production
-  username: simple_data
+  database: simple_data
   password: <%= ENV['SIMPLE_DATA_DATABASE_PASSWORD'] %>

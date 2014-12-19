@@ -1,3 +1,5 @@
+ruby "2.0.0"
+
 source 'https://rubygems.org'
 
 gem 'rails', '4.1.8'
@@ -21,4 +23,8 @@ end
 
 group :doc do
   gem 'sdoc', '~> 0.4.0'
+end
+
+group :production do
+  gem 'rails_12factor'
 end
