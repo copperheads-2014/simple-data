@@ -1,0 +1,18 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+
+development:
+  <<: *default
+  database: simple_data_development
+
+test:
+  <<: *default
+  database: simple_data_test
+
+production:
+  <<: *default
+  database: simple_data_production
+  username: simple_data
+  password: <%= ENV['SIMPLE_DATA_DATABASE_PASSWORD'] %>
