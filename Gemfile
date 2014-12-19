@@ -13,6 +13,9 @@ gem 'jquery-rails'
 gem 'jbuilder', '~> 2.0'
 gem 'haml-rails'
 
+gem 'unicorn'
+gem 'foreman'
+
 group :development do
   gem 'spring'
 end
