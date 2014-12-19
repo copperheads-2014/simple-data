@@ -17,6 +17,7 @@ gem 'unicorn'
 gem 'foreman'
 
 gem 'mongoid'
+gem 'newrelic_rpm'
 
 group :development do
   gem 'spring'
