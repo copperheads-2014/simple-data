@@ -1,6 +1,5 @@
 language: ruby
 rvm:
-  - 2.1.5
   - 2.0.0-p598
 notifications:
   slack: dbc-copperheads:M2bM6eOSd4Ksy4cKacLEpp4h
