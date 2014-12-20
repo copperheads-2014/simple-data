@@ -7,12 +7,10 @@ class RecordsController < ApplicationController
     # elsif params[:offset]
     #   render json: @records.something
     elsif params[:filter]
-      @filtered_records = []
-      @records.each do |record|
-
+      filter_headers = []
+      params[:filter].each_with_index do |header, index|
+        filter_headers[index] = header
       end
-
-
     else
       render json: @records
     end
