@@ -2,15 +2,15 @@ class RecordsController < ApplicationController
   def index
     @service = Service.find_by(slug: params[:service_slug])
     @records = @service.records
-    if params[:limit]
+    if params[:offset] && params[:limit]
+      render json: @records.skip(params[:offset]).limit(params[:limit])
+    elsif params[:limit]
       render json: @records.limit(params[:limit])
-    # elsif params[:offset]
-    #   render json: @records.something
-    elsif params[:filter]
-      filter_headers = []
-      params[:filter].each_with_index do |header, index|
-        filter_headers[index] = header
-      end
+    elsif params[:offset]
+      render json: @records.skip(params[:offset])
+    # elsif params[:filter]
+    #   filter_headers = params[:filter]
+    #   @records.pluck()
     else
       render json: @records
     end
