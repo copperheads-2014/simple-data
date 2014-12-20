@@ -27,6 +27,7 @@ end
 
 group :development, :test do
   gem 'rspec-rails'
+  gem 'mongoid-rspec', '~> 2.0.0.rc1'
 end
 
 group :doc do
