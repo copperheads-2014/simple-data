@@ -8,12 +8,26 @@ RSpec.describe User, :type => :model do
     end
 
     it "fails to add a user when required fields are missing" do
-      roman = User.create(name: "The Roman", email: "Cato@Rome.it")
-      # roman.should have(1).error_on(:organization_id)
-      # expect(User.find(1).name).to return_error
+      expect { User.create!(name: "The Roman") }.to raise_error
     end
+
+    pending "a user can update its password"
 
   end
 
+  describe "#associations" do
+    # TURN ON FOREMAN BEFORE THIS TEST
+    it "has many services through organizations" do
+      tim = User.create(name: "tim", email: 'tim@timmy.com')
+      agora = Organization.new(name: "The agora")
+      agora.users << tim
+      agora.save
+      api = Service.create(
+        organization_id: agora.id)
+      # binding.pry
+
+      expect(tim.organization.services.count).to eq(1)
+    end
+  end
 
 end
