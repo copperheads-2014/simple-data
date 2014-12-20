@@ -3,3 +3,10 @@ rvm:
   - 2.0.0-p598
 notifications:
   slack: dbc-copperheads:M2bM6eOSd4Ksy4cKacLEpp4h
+services: mongodb
+
+before_script:
+  - foreman start
+  - be rake db:create
+  - be rake db:migrate
+

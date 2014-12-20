@@ -15,6 +15,8 @@ gem 'haml-rails'
 
 gem 'unicorn'
 gem 'foreman'
+gem 'pry'
+gem 'capybara'
 
 gem 'mongoid'
 gem 'newrelic_rpm'
@@ -25,6 +27,7 @@ end
 
 group :development, :test do
   gem 'rspec-rails'
+  gem 'mongoid-rspec', '~> 2.0.0.rc1'
 end
 
 group :doc do
