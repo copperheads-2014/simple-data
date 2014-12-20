@@ -10,9 +10,9 @@ RSpec.describe Organization, :type => :model do
       expect(Organization.last.name).to eq("The Foundation")
     end
 
-    it "cannot exist without a user" do
-      expect{ Organization.create(name: "The Foundation") }.to raise_error
-    end
+    # it "cannot exist without a user" do
+    #   expect{ Organization.create(name: "The Foundation") }.to raise_error
+    # end
 
 
 
