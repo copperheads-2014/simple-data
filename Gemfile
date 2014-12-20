@@ -20,6 +20,7 @@ gem 'capybara'
 
 gem 'mongoid'
 gem 'newrelic_rpm'
+gem 'database_cleaner'
 
 group :development do
   gem 'spring'

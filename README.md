@@ -24,6 +24,8 @@ This starts a Unicorn server.
 
 After you've run bundle install, use the regular rake db commands to create, migrate and seed the database. You must have the Unicorn server running to seed the database.
 
+If you want to drop the database, you need to stop the server first. To re-seed, you need to run rake db:create and rake db:migrate. Then start the server with foreman start and run rake db:seed. It's possible that you will need to use bundle exec with these commands as well.
+
 You'll notice in the seed file that we create four different types of objects: 1 User, 1 Organization, 1 Service that's pulling from a CSV, and many Service records.
 
 Organization is the top-level model in our schema. It is an ActiveRecord model. An organization has many users and many services.
@@ -54,6 +56,16 @@ $ rake db:purge
 ```
 
 The purge command drops the Mongo database.
+
+## What API URIs will look like
+
+Our current thinking is that the URI for an API should have the following structure:
+
+When a user wants to retrieve the entire dataset, they would make a request to the following path:
+localhost:5000/services/:api_name/records
+
+Maybe we can also put in query string functionality for users to be able to filter for certain columns.
+
 
 ## Random Notes
 
