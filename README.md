@@ -55,6 +55,18 @@ $ rake db:purge
 
 The purge command drops the Mongo database.
 
+## What API URIs will look like
+
+Our current thinking is that the URI for an API should have the following structure:
+
+When a user wants to retrieve the entire dataset, they would make a request to the following path:
+localhost:5000/services/:api_name/records
+
+Maybe we can also put in query string functionality for users to be able to filter for certain columns.
+
+
+
+
 ## Random Notes
 
 We're using the mongoid-rspec gem, which adds mongoid functionality to the rspec testing framework. Check out documentation about it at https://github.com/mongoid-rspec/mongoid-rspec.
