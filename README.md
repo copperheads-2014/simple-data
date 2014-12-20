@@ -18,7 +18,7 @@ After a `bundle install`, run the following to boot the Rails app on port 3000:
 $ foreman start -p 3000
 ```
 
-This starts a Unicorn server.
+This starts a Unicorn server. Note that running foreman start with no -p will start a server on port 5000 by default.
 
 ## How to use the database and seed file
 
@@ -27,6 +27,8 @@ After you've run bundle install, use the regular rake db commands to create, mig
 If you want to drop the database, you need to stop the server first. To re-seed, you need to run rake db:create and rake db:migrate. Then start the server with foreman start and run rake db:seed. It's possible that you will need to use bundle exec with these commands as well.
 
 You'll notice in the seed file that we create four different types of objects: 1 User, 1 Organization, 1 Service that's pulling from a CSV, and many Service records.
+
+## Models
 
 Organization is the top-level model in our schema. It is an ActiveRecord model. An organization has many users and many services.
 
@@ -48,14 +50,14 @@ Notice that the services and records methods return collections. In order to acc
 
 ## Dropping the database for both ActiveRecord and Mongo
 
-The Mongo database must be dropped separately drom the PostGres database. TO make sure that both your dtaabases are dropped, Use the following commands one after the other:
+The Mongo database must be dropped separately drom the PostGres database. TO make sure that both your databases are dropped, use the following commands:
 
 ```sh
 $ rake db:drop
 $ rake db:purge
 ```
 
-The purge command drops the Mongo database.
+The purge command drops the Mongo database. Note that purge can only be done while the server is running.
 
 ## What API URIs will look like
 

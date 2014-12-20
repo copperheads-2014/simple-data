@@ -23,6 +23,6 @@ Service.create(
 
 popo = CSV.read('db/Police_Stations.csv', headers: true)
 
-popo.each_with_index do |row, i|
+popo.each do |row|
   Service.first.records.create(row.to_hash)
 end
