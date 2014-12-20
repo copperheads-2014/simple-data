@@ -7,7 +7,7 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 Organization.create(
-  name: "Melian League")
+  name: "Delian League")
 
 User.create(
   name: "Eleni Chappen",
