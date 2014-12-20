@@ -23,8 +23,7 @@ RSpec.describe User, :type => :model do
       agora.users << tim
       agora.save
       api = Service.create(
-        organization_id: agora.id)
-      # binding.pry
+        organization_id: agora.id, name: "The Senate")
 
       expect(tim.organization.services.count).to eq(1)
     end
