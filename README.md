@@ -41,5 +41,9 @@ Use the following command along with rake db:drop:
 $ rake db:purge
 ```
 
+## Random Notes
+
+We're using the mongoid-rspec gem, which adds mongoid functionality to the rspec testing framework. Check out documentation about it at https://github.com/mongoid-rspec/mongoid-rspec.
+
 
 
