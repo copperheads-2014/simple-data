@@ -41,3 +41,5 @@ Use the following command along with rake db:drop:
 $ rake db:purge
 ```
 
+
+
