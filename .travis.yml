@@ -6,9 +6,9 @@ notifications:
 services: mongodb
 
 before_script:
-  - rake db:drop
-  - rake db:purge
+  - be rake db:drop
+  - be rake db:purge
   - foreman start
-  - rake db:create
-  - rake db:migrate
+  - be rake db:create
+  - be rake db:migrate
 
