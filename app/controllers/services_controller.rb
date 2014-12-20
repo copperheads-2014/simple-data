@@ -12,7 +12,8 @@ class ServicesController < ApplicationController
   end
 
   def show
-    @service = Service.find(params[:id])
+    # @service = Service.find(params[:id])
+    @service = Service.find_by(slug: params[:service_slug])
   end
 
 # only the creator of the service can edit or destroy
