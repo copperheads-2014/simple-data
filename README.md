@@ -59,7 +59,7 @@ $ rake db:purge
 
 The purge command drops the Mongo database. Note that purge can only be done while the server is running.
 
-## What API URIs will look like
+## What API URIs could look like
 
 Our current thinking is that the URI for an API should have the following structure:
 
@@ -67,6 +67,13 @@ When a user wants to retrieve the entire dataset, they would make a request to t
 localhost:5000/services/:api_name/records
 
 Maybe we can also put in query string functionality for users to be able to filter for certain columns.
+
+For querying the API itself, we plan to provide several methods to enable the API consumer to get specific attributes from the data. For example, we have a limit method which allows the consumer to get the first 10 (or however many) records when they visit /services/:service_name/records?limit=10
+
+Another method we plan to add is filtering. The tests we've been conducting result in a query string which is a bit ugly, but would look something like the following:
+/services/:service_name/records?filter[]=column1&filter[]=column2&filter[]=column3
+
+
 
 
 ## Random Notes
