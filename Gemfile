@@ -15,6 +15,8 @@ gem 'haml-rails'
 
 gem 'unicorn'
 gem 'foreman'
+gem 'pry'
+gem 'capybara'
 
 gem 'mongoid'
 gem 'newrelic_rpm'
