@@ -6,7 +6,7 @@ notifications:
 services: mongodb
 
 before_script:
-  - foreman start
-  - be rake db:create
-  - be rake db:migrate
+  - bundle exec foreman start
+  - bundle exec rake db:create
+  - bundle exec rake db:migrate
 
