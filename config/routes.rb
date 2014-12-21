@@ -1,5 +1,17 @@
 Rails.application.routes.draw do
 
+  get 'users/create'
+
+  get 'users/new'
+
+  get 'users/edit'
+
+  get 'users/update'
+
+  get 'users/destroy'
+
+  get 'users/show'
+
   # resources :services do
   #   resources :records, only: [:index, :show]
   # end
