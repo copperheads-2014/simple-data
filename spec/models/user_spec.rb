@@ -32,6 +32,11 @@ RSpec.describe User, :type => :model do
         user = User.create(name: "The Greek", email: "Platoathens.gr", organization_id: 1, password: 'password', password_confirmation: 'password')
         expect(user.errors[:email]).to include("is invalid")
       end
+
+      it 'requires password to be at least 8 characters' do
+        user = User.create(name: "The Greek", email: "Plato@athens.gr", organization_id: 1, password: 'passwor', password_confirmation: 'passwor')
+        expect(user.errors[:password]).to include("is too short (minimum is 8 characters)")
+      end
     end
 
     pending "a user can update its password"
