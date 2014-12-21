@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Organization, :type => :model do
   describe "#initialize" do
     it "adds an organization to the database" do
-      timmy = User.create(name: 'Timmy', email: "Timmy2@gmail.com")
+      timmy = User.create(name: 'Timmy', email: "Timmy2@gmail.com", password: 'password', password_confirmation: 'password')
       org = Organization.new(name: "The Foundation")
       org.users << timmy
       org.save

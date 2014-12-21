@@ -21,6 +21,7 @@ gem 'capybara'
 gem 'mongoid'
 gem 'newrelic_rpm'
 gem 'database_cleaner'
+gem 'bcrypt'
 
 group :development do
   gem 'spring'

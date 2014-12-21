@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20141219233046) do
     t.string   "name"
     t.string   "email"
     t.integer  "organization_id"
+    t.string   "password_digest"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
