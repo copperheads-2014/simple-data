@@ -20,6 +20,18 @@ RSpec.describe User, :type => :model do
         expect { User.create!(name: "The Roman", organization_id: 1, password: 'password', password_confirmation: 'password') }.to raise_error
       end
     end
+
+    context 'validations' do
+      it 'requires email to be unique' do
+        User.create(name: "The Greek", email: "Plato@athens.gr", organization_id: 1, password: 'password', password_confirmation: 'password')
+        duplicate = User.create(name: "The geek", email: "Plato@athens.gr", organization_id: 1, password: 'password1', password_confirmation: 'password1')
+        expect(duplicate.errors[:email]).to include("has already been taken")
+      end
+
+      it 'requires a email to include @' do
+        user = User.create(name: "The Greek", email: "Platoathens.gr", organization_id: 1, password: 'password', password_confirmation: 'password')
+        expect(user.errors[:email]).to include("is invalid")
+      end
     end
 
     pending "a user can update its password"
