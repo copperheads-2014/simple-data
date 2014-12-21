@@ -3,12 +3,10 @@ require 'rails_helper'
 RSpec.describe User, :type => :model do
   describe "#initialize" do
     it "adds a user to the database" do
-      test_user = User.create(name: "The Greek", email: "Plato@athens.gr", organization_id: 1)
+      test_user = User.create(name: "The Greek", email: "Plato@athens.gr", organization_id: 1, password: 'password', password_confirmation: 'password')
       expect(User.find(test_user.id).name).to eq("The Greek")
     end
 
-    it "fails to add a user when required fields are missing" do
-      expect { User.create!(name: "The Roman") }.to raise_error
     end
 
     pending "a user can update its password"
