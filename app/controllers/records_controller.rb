@@ -15,7 +15,7 @@ class RecordsController < ApplicationController
     #   filter_headers = params[:filter]
     #   @records.pluck()
     else
-      render json: @records
+      render json: @records, status: 200
     end
 
   end
