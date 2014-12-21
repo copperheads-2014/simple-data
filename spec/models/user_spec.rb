@@ -7,6 +7,19 @@ RSpec.describe User, :type => :model do
       expect(User.find(test_user.id).name).to eq("The Greek")
     end
 
+    context 'presence' do
+      it "fails to add a user when password is missing" do
+        expect { User.create!(name: "The Roman", email: "email@email.com", organization_id: 1) }.to raise_error
+      end
+
+      it "fails to add a user when name is missing" do
+        expect { User.create!(email: "email@email.com", organization_id: 1, password: 'password', password_confirmation: 'password') }.to raise_error
+      end
+
+      it "fails to add a email when name is missing" do
+        expect { User.create!(name: "The Roman", organization_id: 1, password: 'password', password_confirmation: 'password') }.to raise_error
+      end
+    end
     end
 
     pending "a user can update its password"
