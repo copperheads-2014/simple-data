@@ -4,10 +4,13 @@ class RecordsController < ApplicationController
     @records = @service.records
     if params[:offset] && params[:limit]
       render json: @records.skip(params[:offset]).limit(params[:limit])
+    elsif params[:sortby] && params[:order]
+      render json: @records.order_by(params[:sortby] + " " + params[:order])
     elsif params[:limit]
       render json: @records.limit(params[:limit])
     elsif params[:offset]
       render json: @records.skip(params[:offset])
+
     # elsif params[:filter]
     #   filter_headers = params[:filter]
     #   @records.pluck()
