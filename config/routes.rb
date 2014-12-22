@@ -13,8 +13,6 @@ Rails.application.routes.draw do
   get 'contact_us' => 'pages#contact_us'
 root 'application#index'
   get "/services/new", to: "services#new"
-  get "/services/_form.html.haml", to: "services#form"
-  get "/services/:service_slug/set_headers.html.haml", to: "services#set_headers"
   get "/services/:service_slug", to: "services#show"
   get "/services", to: "services#index"
   post "/services", to: "services#create"
