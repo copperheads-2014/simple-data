@@ -1,0 +1,24 @@
+%nav.navbar.navbar-default{:role => "navigation"}
+  .container-fluid
+    .navbar-header
+      %a.navbar-brand{:href => "/"}
+        %span simple-data
+    %form.navbar-form.navbar-right{:role => "search"}
+      .form-group
+        %input.form-control{:placeholder => "Search", :type => "text"}
+      %button.btn.btn-default{:type => "submit"} Submit
+    %ul.nav.navbar-nav.navbar-right
+      %li.dropdown
+        %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+          Explore
+          %span.caret
+        %ul.dropdown-menu{:role => "menu"}
+          %li
+            %a{:href => "/users/login"}
+              Log-In
+          %li
+            %a{:href => "/users/about"}
+              About
+          %li
+            %a{:href => "/users/faq"}
+              FAQ
