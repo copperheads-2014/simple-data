@@ -1,11 +1,10 @@
-%div.container-fluid
-  %div.row
-    %div.col-md-4
-    %div.col-md-4.form-group.logging
-      =form_for :session, url: { controller: "sessions", action: "create"} do |f|
-        = f.label :email
-        = f.text_field :email, :class => "form-control", :id => "fucking_work"
-        = f.label :password
-        = f.password_field :password, :class => "form-control"
-        = f.submit "Login", :class => "btn btn-default form_submit"
-    %div.col-md-4
+.row
+  .col-md-4
+  .col-md-4.form-group.logging
+    =form_for :session, url: { controller: "sessions", action: "create"} do |f|
+      = f.label :email
+      = f.text_field :email, :class => "form-control", :id => "fucking_work"
+      = f.label :password
+      = f.password_field :password, :class => "form-control"
+      = f.submit "Login", :class => "btn btn-default form_submit"
+  .col-md-4
