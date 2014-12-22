@@ -25,8 +25,7 @@ gem 'newrelic_rpm'
 gem 'database_cleaner'
 gem 'bcrypt'
 
-#Bootstrap
-gem 'bootstrap-sass', '~> 3.2.0'
+
 gem 'autoprefixer-rails'
 
 
