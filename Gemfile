@@ -25,10 +25,6 @@ gem 'newrelic_rpm'
 gem 'database_cleaner'
 gem 'bcrypt'
 
-
-gem 'autoprefixer-rails'
-
-
 group :development do
   gem 'spring'
 end
