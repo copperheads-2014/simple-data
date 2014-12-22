@@ -3,4 +3,3 @@
 //= require_tree .
 //= require bootstrap
 //= require bootstrap-sprockets
-
