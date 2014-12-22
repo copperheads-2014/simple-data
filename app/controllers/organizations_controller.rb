@@ -13,12 +13,6 @@ class OrganizationsController < ApplicationController
     end
   end
 
-  def edit
-  end
-
-  def destroy
-  end
-
   private
 
   def organization_params
