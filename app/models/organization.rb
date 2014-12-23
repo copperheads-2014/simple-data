@@ -1,5 +1,6 @@
 class Organization < ActiveRecord::Base
   has_many :users
+  validates :name, presence: true
   # validate :organization_has_users
 
   # def organization_has_users
