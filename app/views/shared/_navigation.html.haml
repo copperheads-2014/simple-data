@@ -12,15 +12,15 @@
         = link_to "Logout", session_path(session[:user_id]), method: :delete if session[:user_id]
       %li.dropdown
         %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
-          Explore
+          %span Explore
           %span.caret
         %ul.dropdown-menu{:role => "menu"}
           %li
             %a{:href => "/users/login"}
-              Log-In
+              %span Log-In
           %li
             %a{:href => "/users/about"}
-              About
+              %span About
           %li
             %a{:href => "/users/faq"}
-              FAQ
+              %span FAQ

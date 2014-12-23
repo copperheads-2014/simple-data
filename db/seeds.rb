@@ -7,13 +7,13 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 Organization.create(
-  name: "Melian League")
+  name: "Delian League")
 
 User.create(
   name: "Eleni Chappen",
   email: "athens@greece.com",
   organization_id: 1,
-  password: 'password'
+  password: 'password',
   password_confirmation: 'password')
 
 Service.create(
@@ -23,6 +23,6 @@ Service.create(
 
 popo = CSV.read('db/Police_Stations.csv', headers: true)
 
-popo.each_with_index do |row, i|
+popo.each do |row|
   Service.first.records.create(row.to_hash)
 end

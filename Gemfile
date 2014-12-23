@@ -12,6 +12,9 @@ gem 'jquery-rails'
 
 gem 'jbuilder', '~> 2.0'
 gem 'haml-rails'
+gem 'bootstrap-sass', '~> 3.3.1'
+gem 'autoprefixer-rails'
+
 
 gem 'unicorn'
 gem 'foreman'
@@ -23,13 +26,10 @@ gem 'newrelic_rpm'
 gem 'database_cleaner'
 gem 'bcrypt'
 
-#Bootstrap
-gem 'bootstrap-sass', '~> 3.2.0'
-gem 'autoprefixer-rails'
-
-
 group :development do
   gem 'spring'
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
 
 group :development, :test do
