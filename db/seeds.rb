@@ -13,7 +13,7 @@ User.create(
   name: "Eleni Chappen",
   email: "athens@greece.com",
   organization_id: 1,
-  password: 'password'
+  password: 'password',
   password_confirmation: 'password')
 
 Service.create(
