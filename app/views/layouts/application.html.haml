@@ -8,6 +8,4 @@
   %body
     = render 'shared/navigation'
     .container
-      = link_to "Logout", session_path(session[:user_id]), method: :delete if session[:user_id]
-      = render 'layouts/header'
       = yield
