@@ -1,3 +1,10 @@
+- if @organization.errors.any?
+  .alert.alert-danger.fade.in
+    %a.close{"data-dismiss" => "alert", :href => "#"} ×
+    %ul
+    - @organization.errors.full_messages.each do |msg|
+      %li
+        = msg
 = form_for @organization, url: {controller: "organizations", action: "create"} do |f|
   = f.label :name
   = f.text_field :name
