@@ -39,4 +39,10 @@ class ServicesController < ApplicationController
 
   def destroy
   end
+
+  private
+
+  def service_params
+    params.require(:service).permit(:description, :name)
+  end
 end
