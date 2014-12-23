@@ -21,6 +21,7 @@ class ServicesController < ApplicationController
       uploaded_csv.each do |row|
         @service.records.create(row.to_hash)
       end
+      redirect_to "/services/#{@service.slug}/records"
     end
   end
 
