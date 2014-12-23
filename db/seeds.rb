@@ -34,3 +34,5 @@ popo = CSV.read(
 popo.each do |row|
   Service.first.records.create(row.to_hash)
 end
+
+Service.first.set_total_records
