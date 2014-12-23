@@ -26,7 +26,6 @@ gem 'database_cleaner'
 gem 'bcrypt'
 
 
-
 group :development do
   gem 'spring'
 end
