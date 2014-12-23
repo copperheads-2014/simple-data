@@ -8,7 +8,7 @@ class UsersController < ApplicationController
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
-        render :new
+        format.html {render :new}
       end
     end
   end

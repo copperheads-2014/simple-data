@@ -5,11 +5,14 @@ class OrganizationsController < ApplicationController
 
   def create
     @organization = Organization.new(organization_params)
-    if @organization.save
-      @user = User.find(session[:user_id])
-      @user.update(organization_id: @organization.id)
-      redirect_to root_path
-    else
+    respond_to do |format|
+      if @organization.save
+        @user = User.find(session[:user_id])
+        @user.update(organization_id: @organization.id)
+        format.html {redirect_to root_path , notice: 'Organization was successfully created.' }
+      else
+        format.html {render :new}
+      end
     end
   end
 
