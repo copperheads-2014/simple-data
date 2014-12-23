@@ -10,6 +10,14 @@ class ServicesController < ApplicationController
   end
 
   def create
+    uploaded_io = params[:file]
+    File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'wb') do |file|
+    file.write(uploaded_io.read)
+    end
+    uploaded_csv = CSV.read(Rails.root.join('public', 'uploads', uploaded_io.original_filename), headers: true)
+    uploaded_csv.each do |row|
+      Service.last.records.create(row.to_hash)
+    end
   end
 
   def show
