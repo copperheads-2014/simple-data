@@ -8,12 +8,14 @@ class Service
   field :total_records, type: Integer
   embeds_many :records
 
-  before_create :make_slug, :set_total_records
+  before_create :make_slug
+
+  after_save :set_total_records
 
   validates :name, uniqueness: {case_sensitive: false}
 
   def set_total_records
-    self.total_records = self.records.count
+    self.update(total_records: self.records.count)
   end
 
   protected
