@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   # resources :services do
   #   resources :records, only: [:index, :show]
   # end
+  get 'about_us' => 'pages#about_us'
+  get 'faqs' => 'pages#faqs'
+  get 'contact_us' => 'pages#contact_us'
 root 'application#index'
   get "/services/new", to: "services#new"
   get "/services/:service_slug", to: "services#show"
