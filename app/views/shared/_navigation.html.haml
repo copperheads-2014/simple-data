@@ -1,12 +1,14 @@
 %nav.navbar.navbar-default{:role => "navigation"}
-  .container-fluid
-    .navbar-header
-      .navbar-brand= link_to "SimpleData", root_path
+  .navbar-header
+    %button.navbar-toggle{"data-target" => ".navbar-collapse", "data-toggle" => "collapse", type: "button"}
+      %span.sr-only Toggle navigation
+      %span.icon-bar
+      %span.icon-bar
+      %span.icon-bar
+    .navbar-brand= link_to "SimpleData", root_path
 
-    %form.navbar-form.navbar-right{:role => "search"}
-      .form-group
-        %input.form-control{:placeholder => "Search", :type => "text"}
-      %button.btn.btn-default{:type => "submit"} Submit
+  .navbar-collapse.collapse
+
     %ul.nav.navbar-nav.navbar-right
       %li
         = link_to "Logout", session_path(session[:user_id]), method: :delete if session[:user_id]
@@ -21,3 +23,8 @@
             = link_to "About Us", "about_us_path"
           %li
             = link_to "FAQs", "faqs_path"
+    %form.navbar-form.navbar-right{:role => "search"}
+      .form-group
+        %input.form-control{:placeholder => "Search", :type => "text"}
+
+        %button.btn.btn-sm{:type => "submit"} Submit
