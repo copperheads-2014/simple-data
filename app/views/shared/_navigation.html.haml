@@ -6,10 +6,8 @@
         %span.icon-bar
         %span.icon-bar
         %span.icon-bar
-      .navbar-brand.pull-left= link_to "SimpleData", root_path
-
+      .navbar-brand.pull-left= link_to "simple-data", root_path
     .navbar-collapse.collapse
-
       %ul.nav.navbar-nav.navbar-right
         %li
           = link_to "Logout", session_path(session[:user_id]), method: :delete if session[:user_id]
