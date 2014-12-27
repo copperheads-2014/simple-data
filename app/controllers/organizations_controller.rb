@@ -16,6 +16,11 @@ class OrganizationsController < ApplicationController
     end
   end
 
+  def show
+    @organization = Organization.find(params[:id])
+    @services = @organization.services
+  end
+
   private
 
   def organization_params
