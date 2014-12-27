@@ -10,7 +10,7 @@ class Service
 
   before_create :make_slug
 
-  after_save :set_total_records
+  # after_save :set_total_records
 
   validates :name, uniqueness: {case_sensitive: false}
 
