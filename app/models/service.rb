@@ -10,12 +10,14 @@ class Service
 
   before_create :make_slug
 
-  # after_save :set_total_records
-
   validates :name, uniqueness: {case_sensitive: false}
 
   def set_total_records
     self.update(total_records: self.records.count)
+  end
+
+  def set_update_time
+    self.update(updated_at: Time.now )
   end
 
   protected
