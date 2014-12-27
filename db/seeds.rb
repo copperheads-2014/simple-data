@@ -21,7 +21,15 @@ Service.create(
   description: "a list of all the popos",
   name: "Police Stations")
 
-popo = CSV.read('db/Police_Stations.csv', headers: true)
+
+# This downcases all headers and replaces spaces in headers with underscores. Will need to implement this in our app when we convert CSV's to Records.
+popo = CSV.read(
+  'db/Police_Stations.csv',
+  headers: true,
+  :converters => :all,
+  :header_converters => lambda { |h| h.downcase.gsub(' ', '_') unless h.nil? }
+  )
+
 
 popo.each do |row|
   Service.first.records.create(row.to_hash)

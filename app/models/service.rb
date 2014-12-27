@@ -5,17 +5,33 @@ class Service
   field :description, type: String
   field :name, type: String
   field :slug, type: String
+  field :total_records, type: Integer
+  field :version, type: Integer, default: 1
   embeds_many :records
 
   before_create :make_slug
 
   validates :name, uniqueness: {case_sensitive: false}
 
+  def set_total_records
+    self.update(total_records: self.records.count)
+  end
+
+  def set_update_time
+    self.update(updated_at: Time.now )
+  end
+
+  def increment_version
+    self.version += 1
+  end
+
   protected
 
   def make_slug
     self.slug = self.name.split(" ").map(&:downcase).join("-")
   end
+
+
 
 end
 

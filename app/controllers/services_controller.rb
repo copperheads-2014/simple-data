@@ -17,16 +17,19 @@ class ServicesController < ApplicationController
       File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'wb') do |file|
       file.write(uploaded_io.read)
       end
-      uploaded_csv = CSV.read(Rails.root.join('public', 'uploads', uploaded_io.original_filename), headers: true)
+      uploaded_csv = CSV.read(Rails.root.join('public', 'uploads', uploaded_io.original_filename),
+        headers: true,
+        :converters => :all,
+        :header_converters => lambda { |h| h.downcase.gsub(' ', '_') unless h.nil? } )
       uploaded_csv.each do |row|
         @service.records.create(row.to_hash)
       end
+      @service.set_total_records
       redirect_to "/services/#{@service.slug}/records"
     end
   end
 
   def show
-    # @service = Service.find(params[:id])
     @service = Service.find_by(slug: params[:service_slug])
   end
 
