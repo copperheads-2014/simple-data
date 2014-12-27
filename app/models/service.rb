@@ -6,6 +6,7 @@ class Service
   field :name, type: String
   field :slug, type: String
   field :total_records, type: Integer
+  field :version, type: Integer, default: 1
   embeds_many :records
 
   before_create :make_slug
