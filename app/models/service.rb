@@ -21,6 +21,10 @@ class Service
     self.update(updated_at: Time.now )
   end
 
+  def increment_version
+    self.version += 1
+  end
+
   protected
 
   def make_slug
