@@ -4,3 +4,4 @@
   - @services.each do |service|
     %li
       = service.name
+      = link_to "Update", :controller => "services", :action => "edit", :service_slug => service.slug
