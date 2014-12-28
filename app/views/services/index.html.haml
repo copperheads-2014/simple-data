@@ -1,0 +1,8 @@
+%h2 API Services for My Organization
+%ul
+  - current_user.organization.services.each do |s|
+    %li
+      = s.name
+      = link_to "Add data to this service", "/services/#{s.slug}/edit"
+%h4
+  = link_to "Add a new service", services_new_path
