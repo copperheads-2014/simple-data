@@ -8,6 +8,11 @@ RSpec.describe Service, :type => :model do
       service = Service.create(organization_id: 1, description: "description", slug: "a", total_records: 1, version: 1)
       expect(service.errors[:name]).to include("can't be blank")
     end
+
+    it 'requires the presence of a description' do
+      service = Service.create(name: "test service", organization_id: 1,total_records: 1, version: 1)
+      expect(service.errors[:description]).to include("can't be blank")
+    end
   end
 
   describe "#make_slug" do
