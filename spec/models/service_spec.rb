@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Service, :type => :model do
-  let(:zoo) { Service.create(name: "Map of Zoos") }
+  let(:zoo) { Service.create(name: "Map of Zoos", description: "Description") }
 
   describe 'validations' do
     it 'requires the presence of a name' do
