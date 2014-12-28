@@ -9,7 +9,7 @@ class OrganizationsController < ApplicationController
       if @organization.save
         @user = User.find(session[:user_id])
         @user.update(organization_id: @organization.id)
-        format.html {redirect_to root_path , notice: 'Organization was successfully created.' }
+        format.html {redirect_to services_new_path, notice: 'Organization was successfully created.' }
       else
         format.html {render :new}
       end
