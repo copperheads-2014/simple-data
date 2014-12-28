@@ -14,6 +14,11 @@ RSpec.describe Service, :type => :model do
       expect(service.errors[:description]).to include("can't be blank")
     end
 
+    it 'requires an organization id' do
+      service = Service.create()
+      expect(service.errors[:organization_id]).to include("can't be blank")
+    end
+
     it 'fails to create a service with the same name' do
       zoo
       zoo_two = Service.create(name: "Map of Zoos", description: "Description",organization_id: 1)
