@@ -5,24 +5,24 @@ RSpec.describe Service, :type => :model do
 
   describe 'validations' do
     it 'requires the presence of a name' do
-      service = Service.create(organization_id: 1, description: "description", slug: "a", total_records: 1, version: 1)
+      service = Service.create()
       expect(service.errors[:name]).to include("can't be blank")
     end
 
     it 'requires the presence of a description' do
-      service = Service.create(name: "test service", organization_id: 1,total_records: 1, version: 1)
+      service = Service.create()
       expect(service.errors[:description]).to include("can't be blank")
     end
 
     it 'fails to create a service with the same name' do
       zoo
-      zoo_two = Service.create(name: "Map of Zoos", description: "Description")
+      zoo_two = Service.create(name: "Map of Zoos", description: "Description",organization_id: 1)
       expect(zoo_two.errors[:name]).to include("is already taken")
     end
 
     it 'fails to create a service with the same name of different case sensitivity' do
       zoo
-      zoo_two = Service.create(name: "map of Zoos", description: "Description")
+      zoo_two = Service.create(name: "map of Zoos", description: "Description",organization_id: 1)
       expect(zoo_two.errors[:name]).to include("is already taken")
     end
   end
