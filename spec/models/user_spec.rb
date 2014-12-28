@@ -46,13 +46,13 @@ RSpec.describe User, :type => :model do
   describe "#associations" do
     # TURN ON FOREMAN BEFORE THIS TEST
     it "has many services through organizations" do
+      # We need to look at using doubles for this test
       tim = User.create(name: "tim", email: 'tim@timmy.com')
       agora = Organization.new(name: "The agora")
-      agora.users << tim
       agora.save
+      agora.users << tim
       api = Service.create(
-        organization_id: agora.id, name: "The Senate")
-
+        organization_id: agora.id, name: "The Senate", description: "description")
       expect(tim.organization.services.count).to eq(1)
     end
   end
