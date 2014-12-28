@@ -37,8 +37,8 @@
 
           %button.btn.btn-sm{:type => "submit"} Submit
 %h6
-  You are currently logged in as
-  = current_user.name
+  = "You are currently logged in as" if session[:user_id]
+  = current_user.name if session[:user_id]
   / This is horrific to have the next two lines separated, but I'm struggling with HAML when I try to have the next to lines nested under an 'if' statement here
-  = "for" if current_user.organization
-  = current_user.organization.name if current_user.organization
+  = ("for" if current_user.organization) if session[:user_id]
+  = (current_user.organization.name if current_user.organization) if session[:user_id]
