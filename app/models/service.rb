@@ -13,6 +13,7 @@ class Service
 
   validates :name, presence: true, uniqueness: {case_sensitive: false}
   validates :description, presence: true
+  validates :organization_id, presence: true
 
   def set_total_records
     self.update(total_records: self.records.count)
