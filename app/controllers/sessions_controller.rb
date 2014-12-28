@@ -1,4 +1,7 @@
 class SessionsController < ApplicationController
+  skip_before_action :current_user
+
+
   def new
   end
 
