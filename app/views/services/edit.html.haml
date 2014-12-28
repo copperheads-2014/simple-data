@@ -1,0 +1,7 @@
+%h1
+  Update
+  = @service.name
+
+= form_for @service, as: :service, url: "/services/"+@service.slug, method: :put, multipart: true do |f|
+  = f.file_field :file
+  = f.submit "Update"
