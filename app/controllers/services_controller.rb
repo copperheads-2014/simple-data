@@ -43,8 +43,10 @@ class ServicesController < ApplicationController
 
   def update
     @service = Service.find_by(slug: params[:service_slug])
-    if @service.save
-
+    # if @service.organization_id != current_user.organization_id
+    #   @error = "You must be a member of this organization to update this API"
+    # end
+    if @service.save && (@service.organization_id == current_user.organization_id)
       # Load the CSV into the repository in public/uploads
       uploaded_io = params[:service][:file]
       File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'wb') do |file|
@@ -61,7 +63,6 @@ class ServicesController < ApplicationController
       @service.set_total_records
       redirect_to "/services/#{@service.slug}/records"
     end
-
   end
 
   def destroy

@@ -2,6 +2,9 @@
   Update
   = @service.name
 
+- if @service.organization_id != current_user.organization_id
+  You must be a member of the organization to update this API
+
 = form_for @service, as: :service, url: "/services/"+@service.slug, method: :put, multipart: true do |f|
   = f.file_field :file
   = f.submit "Update"
