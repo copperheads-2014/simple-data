@@ -11,12 +11,15 @@ class ServicesController < ApplicationController
 
   def create
     @service = Service.new(service_params)
-    @service.organization_id = 1
+    @service.organization_id = @user.organization.id
     if @service.save
+
+      # Load the CSV into the repository in public/uploads
       uploaded_io = params[:service][:file]
       File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'wb') do |file|
       file.write(uploaded_io.read)
       end
+      #Take loaded CSV and write it to database
       uploaded_csv = CSV.read(Rails.root.join('public', 'uploads', uploaded_io.original_filename),
         headers: true,
         :converters => :all,

@@ -1,11 +1,13 @@
 class UsersController < ApplicationController
+  skip_before_action :current_user
+
   def create
     @user = User.new(user_params)
 
     respond_to do |format|
       if @user.save
         session[:user_id] = @user.id
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        format.html { redirect_to services_new_path, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
         format.html {render :new}
