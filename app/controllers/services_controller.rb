@@ -27,7 +27,7 @@ class ServicesController < ApplicationController
 
 # only a member of the service's organization can edit or destroy the service
   def edit
-    @service = Service.find_by(slug: params[:service_slug])
+    set_service
   end
 
   def update
@@ -79,4 +79,7 @@ class ServicesController < ApplicationController
     File.delete(Rails.root.join('public', 'uploads', params.original_filename))
   end
 
+  def set_service
+    @service ||= Service.find_by(slug: params[:service_slug])
+  end
 end
