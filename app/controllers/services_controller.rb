@@ -43,9 +43,6 @@ class ServicesController < ApplicationController
 
   def update
     @service = Service.find_by(slug: params[:service_slug])
-    # if @service.organization_id != current_user.organization_id
-    #   @error = "You must be a member of this organization to update this API"
-    # end
     if @service.save && (@service.organization_id == current_user.organization_id)
       # Load the CSV into the repository in public/uploads
       uploaded_io = params[:service][:file]
@@ -57,11 +54,19 @@ class ServicesController < ApplicationController
         headers: true,
         :converters => :all,
         :header_converters => lambda { |h| h.downcase.gsub(' ', '_') unless h.nil? } )
-      update_csv.each do |row|
-        @service.records.create(row.to_hash)
+
+      # check here to make sure file headers match what's in the database
+      existing_headers = @service.records.first.attributes.keys
+      existing_headers.shift
+      if update_csv.headers.sort == existing_headers.sort
+        # create new records in service doc
+        update_csv.each { |row| @service.records.create(row.to_hash) }
+        @service.set_total_records
+        redirect_to "/services/#{@service.slug}/records"
+      else
+        redirect_to "/services/#{@service.slug}/edit"
+        p "headers don't match"
       end
-      @service.set_total_records
-      redirect_to "/services/#{@service.slug}/records"
     end
   end
 
