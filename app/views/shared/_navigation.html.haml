@@ -36,3 +36,9 @@
           %input.form-control{:placeholder => "Search", :type => "text"}
 
           %button.btn.btn-sm{:type => "submit"} Submit
+%h6
+  You are currently logged in as
+  = current_user.name
+  / This is horrific to have the next two lines separated, but I'm struggling with HAML when I try to have the next to lines nested under an 'if' statement here
+  = "for" if current_user.organization
+  = current_user.organization.name if current_user.organization
