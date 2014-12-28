@@ -11,7 +11,7 @@ class ServicesController < ApplicationController
 
   def create
     @service = Service.new(service_params)
-    @service.organization_id = 1
+    @service.organization_id = @user.organization.id
     if @service.save
 
       # Load the CSV into the repository in public/uploads
