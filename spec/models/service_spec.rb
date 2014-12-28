@@ -1,7 +1,36 @@
 require 'rails_helper'
 
 RSpec.describe Service, :type => :model do
-  let(:zoo) { Service.create(name: "Map of Zoos") }
+  let(:zoo) { Service.create(name: "Map of Zoos", description: "Description", organization_id: 1) }
+
+  describe 'validations' do
+    it 'requires the presence of a name' do
+      service = Service.create()
+      expect(service.errors[:name]).to include("can't be blank")
+    end
+
+    it 'requires the presence of a description' do
+      service = Service.create()
+      expect(service.errors[:description]).to include("can't be blank")
+    end
+
+    it 'requires an organization id' do
+      service = Service.create()
+      expect(service.errors[:organization_id]).to include("can't be blank")
+    end
+
+    it 'fails to create a service with the same name' do
+      zoo
+      zoo_two = Service.create(name: "Map of Zoos", description: "Description",organization_id: 1)
+      expect(zoo_two.errors[:name]).to include("is already taken")
+    end
+
+    it 'fails to create a service with the same name of different case sensitivity' do
+      zoo
+      zoo_two = Service.create(name: "map of Zoos", description: "Description",organization_id: 1)
+      expect(zoo_two.errors[:name]).to include("is already taken")
+    end
+  end
 
   describe "#make_slug" do
     it "saves a slug to the database on creation" do
