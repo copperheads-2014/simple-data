@@ -12,6 +12,7 @@ class Service
   before_create :make_slug
 
   validates :name, presence: true, uniqueness: {case_sensitive: false}
+  validates :description, presence: true
 
   def set_total_records
     self.update(total_records: self.records.count)
