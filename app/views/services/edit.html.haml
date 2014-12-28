@@ -16,3 +16,14 @@
   - @service.records.first.attributes.to_a[1..-1].each do |a|
     %li
       = a[0] + ": " + a[1].to_s
+%div.container
+  When you are adding data, make sure that the file you are uploading does not contain data that already exists.
+  %div
+    To see what data already exists,
+    =link_to "click here.", "/services/#{@service.slug}/records"
+
+Make sure that your file has the following headers
+%ul
+  - @service.records.first.attributes.keys[1..-1].each do |key|
+    %li
+      = key
