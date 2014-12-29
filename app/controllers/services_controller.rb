@@ -16,6 +16,7 @@ class ServicesController < ApplicationController
       uploaded_csv = file_to_database(params[:service][:file])
       @service.create_records(uploaded_csv)
       @service.set_total_records
+      delete_original_file(params[:service][:file])
       redirect_to "/services/#{@service.slug}/records"
     end
   end
@@ -36,10 +37,10 @@ class ServicesController < ApplicationController
       if headers_match?(update_csv, @service)
         @service.create_records(update_csv)
         @service.set_total_records
+        delete_original_file(params[:service][:file])
         redirect_to "/services/#{@service.slug}/records"
       else
         redirect_to "/services/#{@service.slug}/edit"
-        p "headers don't match"
       end
     end
   end
@@ -71,6 +72,11 @@ class ServicesController < ApplicationController
     existing_headers = existing_doc.records.first.attributes.keys
     existing_headers.shift
     new_file.headers.sort == existing_headers.sort
+  end
+
+  def delete_original_file(params)
+    # Delete file from the public folder after its data has been saved to database
+    File.delete(Rails.root.join('public', 'uploads', params.original_filename))
   end
 
 end
