@@ -17,7 +17,7 @@
     %li
       = a[0] + ": " + a[1].to_s
 %div.container
-  When you are adding data, make sure that the file you are uploading does not contain data that already exists.
+  When you are adding data, make sure that the file you are uploading does not contain data that already exists if you do not want duplicate data.
   %div
     To see what data already exists,
     =link_to "click here.", "/services/#{@service.slug}/records"
