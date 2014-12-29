@@ -27,6 +27,10 @@ class Service
     self.version += 1
   end
 
+  def create_records(file)
+    file.each { |row| self.records.create(row.to_hash) }
+  end
+
   protected
 
   def make_slug
