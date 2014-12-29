@@ -1,4 +1,9 @@
 class OrganizationsController < ApplicationController
+
+  def index
+
+  end
+
   def new
     @organization = Organization.new
   end
