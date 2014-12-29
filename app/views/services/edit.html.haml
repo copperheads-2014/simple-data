@@ -1,0 +1,18 @@
+%h1
+  Update
+  = @service.name
+
+- if @service.organization_id != current_user.organization_id
+  You must be a member of the organization to update this API
+
+= form_for @service, as: :service, url: "/services/"+@service.slug, method: :put, multipart: true do |f|
+  = f.file_field :file
+  = f.submit "Update"
+
+%h2
+  Example data:
+
+%ul
+  - @service.records.first.attributes.to_a[1..-1].each do |a|
+    %li
+      = a[0] + ": " + a[1].to_s
