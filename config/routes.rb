@@ -19,7 +19,9 @@ root 'application#index'
   get "/services/:service_slug/edit", to: "services#edit"
   put "/services/:service_slug", to: "services#update"
   delete "/services/:service_slug", to: "services#destroy"
+<<<<<<< HEAD
   match "/services/:service_slug", to: "services#metadata", via: [:options]
+=======
 
   get "/services/:service_slug/records", to: "records#index"
 
