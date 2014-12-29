@@ -6,3 +6,4 @@
       = service.name
     - if @organization.id == current_user.organization_id
       = link_to "Update", :controller => "services", :action => "edit", :service_slug => service.slug
+      = service.updated_at.strftime("Last update: %m/%d/%Y")
