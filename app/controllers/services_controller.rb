@@ -28,7 +28,6 @@ class ServicesController < ApplicationController
 
     render json: @service.header_metadatas, status: 200
 
-
   end
 
   def show
