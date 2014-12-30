@@ -2,7 +2,8 @@ class ServicesController < ApplicationController
 
   # shows all services available to use
   def index
-    @services = Service.all
+    @my_services = current_user.organization.services
+    @other_services = Service.all - @my_services
   end
 
   def new
