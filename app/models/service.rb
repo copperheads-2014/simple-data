@@ -8,6 +8,7 @@ class Service
   field :total_records, type: Integer
   field :version, type: Integer, default: 1
   embeds_many :records
+  embeds_many :header_metadatas
 
   before_create :make_slug
 
