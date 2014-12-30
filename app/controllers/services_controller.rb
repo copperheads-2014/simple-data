@@ -22,6 +22,12 @@ class ServicesController < ApplicationController
     end
   end
 
+  def metadata
+    @service = Service.find_by(slug: params[:service_slug])
+    
+    
+  end
+
   def show
     @service = Service.find_by(slug: params[:service_slug])
     @organization = Organization.find_by_id(@service.organization_id)
