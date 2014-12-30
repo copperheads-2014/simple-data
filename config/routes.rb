@@ -21,6 +21,8 @@ root 'application#index'
   delete "/services/:service_slug", to: "services#destroy"
   match "/services/:service_slug", to: "services#metadata", via: [:options]
 
+  match "/services/:service_slug", to: "services#metadata", via: [:options]
+
   get "/services/:service_slug/records", to: "records#index"
 
 
