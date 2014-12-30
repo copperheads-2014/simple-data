@@ -22,12 +22,9 @@ class ServicesController < ApplicationController
     end
   end
 
-
   def show_header_metadata
     @service = Service.find_by(slug: params[:service_slug])
-
     render json: @service.header_metadatas, status: 200
-
   end
 
   def show
