@@ -73,6 +73,18 @@ For querying the API itself, we plan to provide several methods to enable the AP
 Another method we plan to add is filtering. The tests we've been conducting result in a query string which is a bit ugly, but would look something like the following:
 /services/:service_name/records?filter[]=column1&filter[]=column2&filter[]=column3
 
+## Header Metadata (Grant)
+
+Here's what the structure of a service JSON object currently looks like:
+
+{ Name: Some String, 
+  Description: Some String, 
+  Total_Records: Some Integer, 
+  Version: Some Integer, 
+  Records: [{first record}, {second record}, {third record}, etc],
+  Header_Metadata: [{first column metadata}, {second column metadata}, {third column metadata}, etc] }
+
+I constructed the header metadata this way because in my opinion it makes the JSON object a lot cleaner/more organized. The alternative would be to remove the header_metadata model and keep all the column metadata on the top level. For a CSV file with many columns though, I can imagine that the top level would quickly become cluttered and unwieldy. 
 
 
 
