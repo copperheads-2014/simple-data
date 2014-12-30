@@ -20,7 +20,4 @@ class RecordsController < ApplicationController
 
   end
 
-  # TO DO: Add in a controller option for the OPTIONS HTTP method.
-
-
 end
