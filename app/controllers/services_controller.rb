@@ -24,8 +24,6 @@ class ServicesController < ApplicationController
 
   def metadata
     @service = Service.find_by(slug: params[:service_slug])
-    
-    
   end
 
   def show
