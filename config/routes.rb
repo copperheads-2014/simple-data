@@ -22,6 +22,9 @@ root 'application#index'
   match "/services/:service_slug", to: "services#show_header_metadata", via: [:options]
 
 
+  match "/services/:service_slug", to: "services#show_header_metadata", via: [:options]
+
+
   get "/services/:service_slug/records", to: "records#index"
 
 
