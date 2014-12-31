@@ -22,8 +22,13 @@ class ServicesController < ApplicationController
       @service.create_records(uploaded_csv)
       @service.set_total_records
       delete_original_file(params[:service][:file])
-      redirect_to "/services/#{@service.slug}/records"
+      redirect_to "/services/#{@service.slug}/set_headers.html.haml"
     end
+  end
+
+  def set_headers
+    set_service
+    render "set_headers.html.haml", :layout => false
   end
 
   def show_header_metadata
