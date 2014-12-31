@@ -1,2 +1,4 @@
-= render partial: "create_organization" if @user.organization.nil?
-= render partial: "form" if @user.organization
+.col-md-3
+.col-md-6
+  %iframe{:src => "_form.html.haml"}
+.col-md-3

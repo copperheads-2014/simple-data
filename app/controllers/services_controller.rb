@@ -7,7 +7,11 @@ class ServicesController < ApplicationController
   end
 
   def new
+  end
+
+  def form
     @service = Service.new
+    render "_form.html.haml", :layout => false
   end
 
   def create

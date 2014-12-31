@@ -1,3 +1,4 @@
+= render partial: "create_organization" if @user.organization.nil?
 = form_for @service, multipart: true do |f|
   = f.label :name
   = f.text_field :name
