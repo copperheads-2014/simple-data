@@ -1,8 +1,11 @@
+= stylesheet_link_tag 'application', media: 'all'
+= javascript_include_tag 'application'
+= csrf_meta_tags
 = render partial: "create_organization" if @user.organization.nil?
 = form_for @service, multipart: true do |f|
   = f.label :name
-  = f.text_field :name
+  = f.text_field :name, :class => "form-control"
   = f.label :description
-  = f.text_field :description
+  = f.text_area :description, :class => "form-control"
   = f.file_field :file
-  = f.submit "Import"
+  = f.submit "Import", :class => "btn btn-default"
