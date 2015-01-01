@@ -20,6 +20,7 @@ root 'application#index'
   match "/services/:service_slug", to: "services#update", via: [:put, :patch]
   delete "/services/:service_slug", to: "services#destroy"
   match "/services/:service_slug", to: "services#show_header_metadata", via: [:options]
+  get "/services/:service_slug/documentation", to: "services#documentation"
 
 
   match "/services/:service_slug", to: "services#show_header_metadata", via: [:options]
@@ -27,6 +28,5 @@ root 'application#index'
 
   get "/services/:service_slug/records", to: "records#index"
   resources :upload_csv, only: :index
-
 
 end
