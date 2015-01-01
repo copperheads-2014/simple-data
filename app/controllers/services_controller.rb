@@ -34,6 +34,9 @@ class ServicesController < ApplicationController
   def set_headers
     set_service
     render "set_headers.html.haml", :layout => false
+
+  def documentation
+    set_service
   end
 
   def show_header_metadata
