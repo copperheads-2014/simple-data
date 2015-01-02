@@ -1,22 +1,26 @@
-class Service
-  include Mongoid::Document
-  include Mongoid::Timestamps
-  field :organization_id, type: Integer
-  field :description, type: String
-  field :name, type: String
-  field :slug, type: String
-  field :total_records, type: Integer
-  field :version, type: Integer, default: 1
-  embeds_many :records
-  embeds_many :header_metadatas
+class Service < ActiveRecord::Base
+  belongs_to :organization
+
+  validates :organization_id, presence: true
+  validates :name, presence: true, uniqueness: {case_sensitive: false}
+  validates :slug, presence: true, on: :save
 
   before_create :make_slug
 
-  validates :name, presence: true, uniqueness: {case_sensitive: false}
-  validates :description, presence: true
-  validates :organization_id, presence: true
+  def records
+    Record.with(collection: self.collection)
+  end
+
+  def insert_record(record)
+    records.create!(record)
+  end
+
+  def increment_version
+    self.update(version: version += 1)
+  end
 
   def set_total_records
+    # TODO: replace with counter_column maybe?
     self.update(total_records: self.records.count)
   end
 
@@ -24,21 +28,17 @@ class Service
     self.update(updated_at: Time.now )
   end
 
-  def increment_version
-    self.version += 1
-  end
-
   def create_records(file)
-    file.each { |row| self.records.create(row.to_hash) }
+    file.each { |row| insert_record(row.to_hash) }
   end
 
   protected
 
+  def collection
+    slug.underscore.camelize
+  end
+
   def make_slug
     self.slug = self.name.split(" ").map(&:downcase).join("-")
   end
-
-
-
 end
-

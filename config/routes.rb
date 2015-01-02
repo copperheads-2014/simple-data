@@ -19,7 +19,7 @@ root 'application#index'
   get "/services", to: "services#index"
   post "/services", to: "services#create"
   get "/services/:service_slug/edit", to: "services#edit"
-  put "/services/:service_slug", to: "services#update"
+  match "/services/:service_slug", to: "services#update", via: [:put, :patch]
   delete "/services/:service_slug", to: "services#destroy"
   match "/services/:service_slug", to: "services#show_header_metadata", via: [:options]
 

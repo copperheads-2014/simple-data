@@ -5,30 +5,27 @@ RSpec.describe Service, :type => :model do
 
   describe 'validations' do
     it 'requires the presence of a name' do
-      service = Service.create()
-      expect(service.errors[:name]).to include("can't be blank")
-    end
-
-    it 'requires the presence of a description' do
-      service = Service.create()
-      expect(service.errors[:description]).to include("can't be blank")
+      zoo.name = nil
+      zoo.valid?
+      expect(zoo.errors[:name]).to include("can't be blank")
     end
 
     it 'requires an organization id' do
-      service = Service.create()
-      expect(service.errors[:organization_id]).to include("can't be blank")
+      subject.organization_id = nil
+      subject.valid?
+      expect(subject.errors[:organization_id]).to include("can't be blank")
     end
 
     it 'fails to create a service with the same name' do
       zoo
       zoo_two = Service.create(name: "Map of Zoos", description: "Description",organization_id: 1)
-      expect(zoo_two.errors[:name]).to include("is already taken")
+      expect(zoo_two.errors[:name][0]).to include("has already been taken")
     end
 
     it 'fails to create a service with the same name of different case sensitivity' do
       zoo
       zoo_two = Service.create(name: "map of Zoos", description: "Description",organization_id: 1)
-      expect(zoo_two.errors[:name]).to include("is already taken")
+      expect(zoo_two.errors[:name][0]).to include("has already been taken")
     end
   end
 
@@ -48,12 +45,10 @@ RSpec.describe Service, :type => :model do
 
   describe "#set_update_time" do
     it "sets updated_at time" do
-      original_time = zoo.updated_at
-      sleep(1)
+      original_time = Time.now - 5.seconds
+      zoo.update(updated_at: original_time)
       zoo.set_update_time
       expect(zoo.updated_at).not_to eq(original_time)
     end
   end
-
-
 end

@@ -4,7 +4,7 @@
 %h4
   Please confirm the headers for your API. Be aware that undercores and lower_case letters are necessary to ensure useablity.
 - x=1
-= form_for @service, url: "/services/#{@service.slug}/set_headers.html.haml", multipart: true do |f|
+= form_for @service, url: "/services/#{@service.slug}", multipart: true do |f|
   -@service.records.first.attributes.keys[1..-1].each do |header|
     = f.label :"Header #{x}"
     - x += 1

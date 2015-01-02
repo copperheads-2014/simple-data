@@ -1,23 +1,13 @@
 class RecordsController < ApplicationController
   def index
     @service = Service.find_by(slug: params[:service_slug])
-    @records = @service.records
-    if params[:offset] && params[:limit]
-      render json: @records.skip(params[:offset]).limit(params[:limit])
-    elsif params[:sortby] && params[:order]
-      render json: @records.order_by(params[:sortby] + " " + params[:order])
-    elsif params[:limit]
-      render json: @records.limit(params[:limit])
-    elsif params[:offset]
-      render json: @records.skip(params[:offset])
-
-    # elsif params[:filter]
-    #   filter_headers = params[:filter]
-    #   @records.pluck()
-    else
-      render json: @records, status: 200
-    end
-
+    @records = RecordQueryService.new(@service, default_params.merge(params)).fetch_records
+    render json: @records.to_json, status: 200
   end
 
+  protected
+
+  def default_params
+    {limit: 50, offset: 0}.with_indifferent_access
+  end
 end
