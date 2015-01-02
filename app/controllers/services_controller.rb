@@ -7,7 +7,11 @@ class ServicesController < ApplicationController
   end
 
   def new
-    @service = Service.new
+    @service = Service.new()
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @service }
+    end
   end
 
   def form
