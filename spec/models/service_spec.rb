@@ -5,27 +5,27 @@ RSpec.describe Service, :type => :model do
 
   describe 'validations' do
     it 'requires the presence of a name' do
-      subject.name = nil
-      subject.valid?
-      expect(subject.errors[:name]).to include("can't be blank")
+      zoo.name = nil
+      zoo.valid?
+      expect(zoo.errors[:name]).to include("can't be blank")
     end
 
     it 'requires an organization id' do
       subject.organization_id = nil
       subject.valid?
-      expect(subject.errors[:organization]).to include("can't be blank")
+      expect(subject.errors[:organization_id]).to include("can't be blank")
     end
 
     it 'fails to create a service with the same name' do
       zoo
       zoo_two = Service.create(name: "Map of Zoos", description: "Description",organization_id: 1)
-      expect(zoo_two.errors[:name]).to include("is already taken")
+      expect(zoo_two.errors[:name][0]).to include("has already been taken")
     end
 
     it 'fails to create a service with the same name of different case sensitivity' do
       zoo
       zoo_two = Service.create(name: "map of Zoos", description: "Description",organization_id: 1)
-      expect(zoo_two.errors[:name]).to include("is already taken")
+      expect(zoo_two.errors[:name][0]).to include("has already been taken")
     end
   end
 
