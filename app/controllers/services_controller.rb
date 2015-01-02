@@ -37,6 +37,7 @@ class ServicesController < ApplicationController
 
   def documentation
     set_service
+    @headers = get_headers(@service)
   end
 
   def show_header_metadata
@@ -101,6 +102,10 @@ class ServicesController < ApplicationController
   def delete_original_file(params)
     # Delete file from the public folder after its data has been saved to database
     File.delete(Rails.root.join('public', 'uploads', params.original_filename))
+  end
+
+  def get_headers(service)
+    service.records.first.attributes.keys
   end
 
   def set_service
