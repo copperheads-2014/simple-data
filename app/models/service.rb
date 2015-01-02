@@ -1,11 +1,11 @@
 class Service < ActiveRecord::Base
   belongs_to :organization
 
-  validates :organization, presence: true
+  validates :organization_id, presence: true
   validates :name, presence: true, uniqueness: {case_sensitive: false}
-  validates :slug, presence: true
+  validates :slug, presence: true, on: :save
 
-  before_validation :make_slug
+  before_create :make_slug
 
   def records
     Record.with(collection: self.collection)
