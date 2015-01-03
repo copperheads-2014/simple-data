@@ -93,7 +93,7 @@ class ServicesController < ApplicationController
     # to make sure file headers match what's in the database
     existing_headers = existing_doc.records.first.attributes.keys
     existing_headers.shift
-    new_file.read.headers.sort == existing_headers.sort
+    new_file.headers.sort == existing_headers.sort
   end
 
   def get_headers(service)
