@@ -24,10 +24,13 @@ class ServicesController < ApplicationController
     @service = Service.new(service_params)
     @service.organization_id = @user.organization.id
     if @service.save
+      #Get the file from S3
       uploaded_csv = retrieve_file(params[:service][:file])
+      #Insert the records as Mongo Documents as part of a Mongo Collection
       @service.create_records(uploaded_csv)
       @service.set_total_records
-      redirect_to "/services/#{@service.slug}/set_headers.html.haml"
+      #Redirect to pending view
+      redirect_to "/services/#{@service.slug}/records"
     end
   end
 
