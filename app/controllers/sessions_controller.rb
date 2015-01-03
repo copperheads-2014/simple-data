@@ -8,7 +8,6 @@ class SessionsController < ApplicationController
   def create
     @user = User.find_by(email: params[:session][:email])
     if @user && @user.authenticate(params[:session][:password])
-      binding.pry
       session[:user_id] = @user.id
       redirect_to services_new_path
     end
