@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   get 'about_us' => 'pages#about_us'
   get 'faqs' => 'pages#faqs'
   get 'contact_us' => 'pages#contact_us'
-root 'application#index'
+  root 'application#index'
   get "/services/new", to: "services#new"
   get "/services/:service_slug", to: "services#show"
   get "/services", to: "services#index"
@@ -19,9 +19,7 @@ root 'application#index'
   match "/services/:service_slug", to: "services#show_header_metadata", via: [:options]
   get "/services/:service_slug/documentation", to: "services#documentation"
 
-
   match "/services/:service_slug", to: "services#show_header_metadata", via: [:options]
-
 
   get "/services/:service_slug/records", to: "records#index"
 
