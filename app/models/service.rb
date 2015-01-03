@@ -29,7 +29,9 @@ class Service < ActiveRecord::Base
   end
 
   def create_records(file)
-    file.each { |row| insert_record(row.to_hash) }
+    file.each do |row|
+      insert_record(row.to_hash)
+    end
   end
 
   protected
