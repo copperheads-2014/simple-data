@@ -68,8 +68,11 @@ class ServicesController < ApplicationController
       #Read in the posted file from S3
       update_csv = retrieve_file(params[:service][:file]).read
       if headers_match?(update_csv, @service)
+        initial_record_count = @service.records.count
         @service.create_records(update_csv)
         @service.set_total_records
+        @update = ServiceUpdate.create!(service_id: @service.id, user_id: current_user.id)
+        @update.set_records_added(initial_record_count, @service.records.count)
         redirect_to "/services/#{@service.slug}/records"
       else
         redirect_to "/services/#{@service.slug}/edit"

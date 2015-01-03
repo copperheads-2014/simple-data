@@ -1,5 +1,6 @@
 class Service < ActiveRecord::Base
   belongs_to :organization
+  has_many :service_updates
 
   validates :organization_id, presence: true
   validates :name, presence: true, uniqueness: {case_sensitive: false}
