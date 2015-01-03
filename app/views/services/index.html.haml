@@ -21,12 +21,15 @@
             Most Recent Update: #{s.created_at.strftime("%B %d, %Y")}
     %h2 APIs Available:
     %ul.service-list
-      - @other_services.each do |s|
-        %li
-          %p
-            = link_to "#{s.name}", "/services/#{s.slug}"
-          %p.service-description
-            = s.description
+      - @services.each do |s|
+        -if !current_user.organization.services.include?(s)
+          %li
+            %p
+              = link_to "#{s.name}", "/services/#{s.slug}"
+            %p.service-description
+              = s.description
+    .custom_pagination
+      = will_paginate @services
   .col-md-2
 
 
@@ -42,6 +45,7 @@
             = link_to "#{s.name}", "/services/#{s.slug}"
           %p.service-description
             = s.description
+    .custom_pagination
+      = will_paginate @services
   .col-md-2
 
-= will_paginate @services

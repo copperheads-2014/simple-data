@@ -5,9 +5,8 @@ class ServicesController < ApplicationController
   def index
     if current_user
       @my_services = current_user.organization.services
-      @other_services = Service.all - @my_services
     end
-    @services = Service.paginate(:page => params[:page], :per_page => 4)
+    @services = Service.paginate(:page => params[:page], :per_page => 10)
   end
 
   def new
