@@ -9,7 +9,6 @@ feature "Browsing the website" do
   scenario "User clicks get started button and is redirected to account creation page" do
     visit '/'
     click_link "Create Account"
-
     expect(page).to have_text("Confirm Password")
   end
 
@@ -63,16 +62,42 @@ feature "Creating an account" do
   scenario 'Visiting the new account page and creating a user account' do
     visit "/"
     click_link "Create Account"
-    page.fill_in "session_email", with: "Ulysses S Grant"
+    page.fill_in "user_name", with: "US Grant"
     page.fill_in "user_email", with: "OG_Gettysburg@whitehouse.gov"
     page.fill_in "user_password", with: "TheNorth"
     page.fill_in "user_password_confirmation", with: "TheNorth"
-    #DO MORE HERE
+    click_button "Submit"
+
+    expect(page.current_path).to eq("/services/new")
+  end
+
+  scenario "User tries to create an account without filling in a necessary field" do
+    visit "/"
+    click_link "Create Account"
+    page.fill_in "user_email", with: "OG_Gettysburg@whitehouse.gov"
+    page.fill_in "user_password", with: "TheNorth"
+    page.fill_in "user_password_confirmation", with: "TheNorth"
+    click_button "Submit"
+
+    expect(page).to have_text("Name can't be blank")
   end
 end
 
-feature "Uploading an API" do
-end
+# feature "Uploading an API" do
+#   background do
+#     User.create(name: "TheGreek", email: "Plato@athens.gr", organization_id: 1, password: 'password', password_confirmation: 'password')
+#   end
+
+#   scenario ""
+#     visit "/sessions/new"
+
+#     page.fill_in "session_email", with: "Plato@athens.gr"
+#     page.fill_in "session_password", with: "password"
+#     click_button "Login"
+
+#     attach_file('Choose File', File.absolute_path('./db/'))
+
+# end
 
 feature "Retrieving data from API endpoints" do
 end
