@@ -8,7 +8,7 @@ feature "Browsing the website" do
 
   scenario "User clicks get started button and is redirected to account creation page" do
     visit '/'
-    click_link "Create API"
+    click_link "Create Account"
 
     expect(page).to have_text("Confirm Password")
   end
@@ -60,6 +60,15 @@ feature "Signing in" do
 end
 
 feature "Creating an account" do
+  scenario 'Visiting the new account page and creating a user account' do
+    visit "/"
+    click_link "Create Account"
+    page.fill_in "session_email", with: "Ulysses S Grant"
+    page.fill_in "user_email", with: "OG_Gettysburg@whitehouse.gov"
+    page.fill_in "user_password", with: "TheNorth"
+    page.fill_in "user_password_confirmation", with: "TheNorth"
+    #DO MORE HERE
+  end
 end
 
 feature "Uploading an API" do
