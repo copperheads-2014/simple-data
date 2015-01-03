@@ -27,7 +27,6 @@ class ServicesController < ApplicationController
       uploaded_csv = file_to_database(params[:service][:file])
       @service.create_records(uploaded_csv)
       @service.set_total_records
-      delete_original_file(params[:service][:file])
       redirect_to "/services/#{@service.slug}/set_headers.html.haml"
     end
   end
@@ -111,10 +110,10 @@ class ServicesController < ApplicationController
     new_file.headers.sort == existing_headers.sort
   end
 
-  def delete_original_file(params)
-    # Delete file from the public folder after its data has been saved to database
-    File.delete(Rails.root.join('public', 'uploads', params.original_filename))
-  end
+  # def delete_original_file(params)
+  #   # Delete file from the public folder after its data has been saved to database
+  #   File.delete(Rails.root.join('public', 'uploads', params.original_filename))
+  # end
 
   def get_headers(service)
     service.records.first.attributes.keys
