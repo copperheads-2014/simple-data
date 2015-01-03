@@ -63,7 +63,6 @@ class ServicesController < ApplicationController
       if headers_match?(update_csv, @service)
         @service.create_records(update_csv)
         @service.set_total_records
-        delete_original_file(params[:service][:file])
         redirect_to "/services/#{@service.slug}/records"
       else
         redirect_to "/services/#{@service.slug}/edit"
