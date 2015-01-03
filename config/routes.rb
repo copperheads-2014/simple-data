@@ -5,9 +5,6 @@ Rails.application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   resources :organizations, only: [:new, :create, :show, :index]
 
-  # resources :services do
-  #   resources :records, only: [:index, :show]
-  # end
   get 'about_us' => 'pages#about_us'
   get 'faqs' => 'pages#faqs'
   get 'contact_us' => 'pages#contact_us'
@@ -27,6 +24,7 @@ root 'application#index'
 
 
   get "/services/:service_slug/records", to: "records#index"
+
   resources :upload_csv, only: :index
 
 end
