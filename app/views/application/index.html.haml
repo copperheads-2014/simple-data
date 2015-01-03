@@ -8,10 +8,13 @@
       %span simple-data
       is an attempt to make the Web more free. By creating a place where people can upload the amazing data they have (and making that available to web developers) we can create a stronger, better, more creative Internet--and world.
 .container-fluid
-  .row
-    %a.btn.bubbles.col-xs-6{href: new_user_path} Create API
-    %a.btn.bubbles.col-xs-6{href: services_path} Explore APIs
+  -if current_user
+    %a.btn.bubbles.col-xs-6{href: services_new_path} Create API
+  -if !current_user
+    %a.btn.bubbles.col-xs-6{href: new_user_path} Create Account
+  %a.btn.bubbles.col-xs-6{href: services_path} Explore APIs
 .container-fluid
+  .row.container-fluid
   .row
     .col-md-4.info_blocks.col-xs-4
       %h4
