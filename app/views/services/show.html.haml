@@ -8,17 +8,21 @@
 %h4 Details
 %ul
   %li Current Version:
-  %li Licence Type: 
-  %li 
+  %li
+    Licence Type:
+    = @service.license
+    %a{"title" => "Learn more about the #{@service.license} from the Choose A Licence site.", "data-placement" => "right", "data-toggle" => "tooltip", :href => "http://choosealicense.com/", :rel => "tooltip", target: "_blank" }
+      %i.fa.fa-info-circle
+  %li
     Creator:
     = @organization.name
   %li= @service.created_at.strftime("Created: %m/%d/%Y")
   %li= @service.updated_at.strftime("Last update: %m/%d/%Y")
-  %li 
+  %li
 
 %hr
 
-%h4 How to use 
+%h4 How to use
 %p
   In order to use the
   = @service.name
