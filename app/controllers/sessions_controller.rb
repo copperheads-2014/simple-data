@@ -10,6 +10,8 @@ class SessionsController < ApplicationController
     if @user && @user.authenticate(params[:session][:password])
       session[:user_id] = @user.id
       redirect_to services_new_path
+    else
+      render 'sessions/new', status: 401
     end
   end
 
