@@ -30,6 +30,8 @@ gem 'newrelic_rpm'
 gem 'database_cleaner'
 gem 'bcrypt'
 
+gem 'will_paginate', '~> 3.0.6'
+
 group :development do
   gem 'spring'
   gem 'better_errors'
