@@ -14,7 +14,6 @@ RSpec.describe Organization, :type => :model do
 
   describe "validations" do
     it "fails to add an organization without a name" do
-      # qatar = Organization.create()
       opec.name = nil
       opec.valid?
       expect(opec.errors[:name]).to include("can't be blank")
