@@ -1,0 +1,33 @@
+%h2
+  =@service.name
+%h4
+  =@service.description
+%p
+  Headers
+  %table
+    -@headers.each do |header|
+      %tr
+        %td
+          =header
+%p
+  Optional Parameters
+  %table
+    %tr
+      %td
+        Offset
+    %tr
+      %td
+        Limit
+    %tr
+      %td
+        Sortby
+    %tr
+      %td
+        Order
+%p
+  Response format is JSON.
+%p
+  This this is for any user, authentication is not required.
+%p
+  Example request
+  = link_to "/services/#{@service.slug}/records?offset=5&limit=5"

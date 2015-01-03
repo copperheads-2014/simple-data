@@ -36,6 +36,11 @@ class ServicesController < ApplicationController
     render "set_headers.html.haml", :layout => false
   end
 
+  def documentation
+    set_service
+    @headers = get_headers(@service)
+  end
+
   def show_header_metadata
     @service = Service.find_by(slug: params[:service_slug])
     render json: @service.header_metadatas, status: 200
@@ -98,6 +103,10 @@ class ServicesController < ApplicationController
   def delete_original_file(params)
     # Delete file from the public folder after its data has been saved to database
     File.delete(Rails.root.join('public', 'uploads', params.original_filename))
+  end
+
+  def get_headers(service)
+    service.records.first.attributes.keys
   end
 
   def set_service

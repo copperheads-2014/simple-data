@@ -16,7 +16,7 @@ User.create(
   password: 'password',
   password_confirmation: 'password')
 
-Service.create(
+police = Service.create(
   organization_id: 1,
   description: "a list of all the popos",
   name: "Police Stations")
@@ -30,7 +30,5 @@ popo = CSV.read(
   :header_converters => lambda { |h| h.downcase.gsub(' ', '_') unless h.nil? }
   )
 
+police.create_records(popo)
 
-popo.each do |row|
-  Service.first.records.create(row.to_hash)
-end
