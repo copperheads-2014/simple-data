@@ -23,6 +23,7 @@ gem 'unicorn'
 gem 'foreman'
 gem 'pry'
 gem 'capybara'
+gem 'faker'
 
 gem 'mongoid'
 gem 'newrelic_rpm'
