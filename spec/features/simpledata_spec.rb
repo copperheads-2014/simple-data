@@ -9,6 +9,7 @@ feature "Browsing the website" do
   scenario "User clicks get started button and is redirected to account creation page" do
     visit '/'
     click_link "Create API"
+
     expect(page).to have_text("Confirm Password")
   end
 
