@@ -81,39 +81,20 @@ class ServicesController < ApplicationController
   end
 
   def file_to_database(params)
-    # Load the CSV into the repository in public/uploads
-    # uploaded_io = params
-    # File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'wb') do |file|
-    # file.write(uploaded_io.read)
-    # end
-    # File.open(params)
-    #Take loaded CSV and write it to database
-    # Rails.root.join('public', 'uploads', uploaded_io.original_filename),
     file = open(params).read()
     CSV.new(file,
       headers: true,
       :converters => :all,
       :header_converters => lambda { |h| h.downcase.gsub(' ', '_') unless h.nil? }
       )
-    # binding.pry
-    # CSV.read(params,
-    #   headers: true,
-    #   :converters => :all,
-    #   :header_converters => lambda { |h| h.downcase.gsub(' ', '_') unless h.nil? } )
-    # binding.pry
   end
 
   def headers_match?(new_file, existing_doc)
     # to make sure file headers match what's in the database
     existing_headers = existing_doc.records.first.attributes.keys
     existing_headers.shift
-    new_file.headers.sort == existing_headers.sort
+    new_file.read.headers.sort == existing_headers.sort
   end
-
-  # def delete_original_file(params)
-  #   # Delete file from the public folder after its data has been saved to database
-  #   File.delete(Rails.root.join('public', 'uploads', params.original_filename))
-  # end
 
   def get_headers(service)
     service.records.first.attributes.keys
