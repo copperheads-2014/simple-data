@@ -40,8 +40,8 @@
         %li
           %p
             = link_to "#{s.name}", "/services/#{s.slug}"
-
-
           %p.service-description
             = s.description
   .col-md-2
+
+= will_paginate @services
