@@ -1,3 +1,6 @@
+%h1
+  Create New Organization
+
 - if @organization.errors.any?
   .alert.alert-danger.fade.in
     %a.close{"data-dismiss" => "alert", :href => "#"} ×
@@ -7,5 +10,7 @@
         = msg
 = form_for @organization, url: {controller: "organizations", action: "create"} do |f|
   = f.label :name
-  = f.text_field :name
+  = f.text_field :name, :class => "form-control"
+  = f.label :description
+  = f.text_area :description, :class => "form-control"
   = f.submit
