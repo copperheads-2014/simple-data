@@ -58,8 +58,9 @@ class ServicesController < ApplicationController
 
   def update
     @service = Service.find_by(slug: params[:service_slug])
+    #Ensure the individual submitting owns the organization
     if @service.save && (@service.organization_id == current_user.organization_id)
-      update_csv = file_to_database(params[:service][:file])
+      #Read in the posted file from S3
       update_csv = retrieve_file(params[:service][:file]).read
       if headers_match?(update_csv, @service)
         @service.create_records(update_csv)
