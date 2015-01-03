@@ -24,7 +24,7 @@ class ServicesController < ApplicationController
     @service = Service.new(service_params)
     @service.organization_id = @user.organization.id
     if @service.save
-      uploaded_csv = file_to_database(params[:service][:file])
+      uploaded_csv = retrieve_file(params[:service][:file])
       @service.create_records(uploaded_csv)
       @service.set_total_records
       redirect_to "/services/#{@service.slug}/set_headers.html.haml"
@@ -60,6 +60,7 @@ class ServicesController < ApplicationController
     @service = Service.find_by(slug: params[:service_slug])
     if @service.save && (@service.organization_id == current_user.organization_id)
       update_csv = file_to_database(params[:service][:file])
+      update_csv = retrieve_file(params[:service][:file]).read
       if headers_match?(update_csv, @service)
         @service.create_records(update_csv)
         @service.set_total_records
@@ -79,8 +80,8 @@ class ServicesController < ApplicationController
     params.require(:service).permit(:description, :name)
   end
 
-  def file_to_database(params)
-    file = open(params).read()
+  def retrieve_file(params)
+    file = open(params).read
     CSV.new(file,
       headers: true,
       :converters => :all,
