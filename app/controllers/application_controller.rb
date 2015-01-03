@@ -5,6 +5,9 @@ class ApplicationController < ActionController::Base
 
   before_action :current_user
 
+  def index
+  end
+
   protected
 
   def current_user
