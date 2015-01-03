@@ -1,12 +1,7 @@
 %nav.navbar.navbar-default{:role => "navigation"}
   .container-fluid
     .navbar-header
-      %button.navbar-toggle{"data-target" => ".navbar-collapse", "data-toggle" => "collapse", type: "button"}
-        %span.sr-only Toggle navigation
-        %span.icon-bar
-        %span.icon-bar
-        %span.icon-bar
-      .navbar-brand.pull-left= link_to "simple-data", root_path
+      .navbar-brand= link_to "simple-data", root_path
     .navbar-collapse.collapse
       %ul.nav.navbar-nav.navbar-right
         %li
@@ -20,14 +15,9 @@
             = link_to "Logout", session_path(session[:user_id]), method: :delete if session[:user_id]
           - else
             = link_to "Log-In", new_session_path
-      %form.navbar-form.navbar-right{:role => "search"}
-        .form-group
-          %input.form-control{:placeholder => "Search", :type => "text"}
-
-          %button.btn.btn-sm{:type => "submit"} Submit
-%h6
-  = "You are currently logged in as" if session[:user_id]
-  = current_user.name if session[:user_id]
-  / This is horrific to have the next two lines separated, but I'm struggling with HAML when I try to have the next to lines nested under an 'if' statement here
-  = ("for" if current_user.organization) if session[:user_id]
-  = (current_user.organization.name if current_user.organization) if session[:user_id]
+    .navbar-collapse.collapse
+      %h6.log-status.navbar-right
+        = "You are currently logged in as" if session[:user_id]
+        = current_user.name if session[:user_id]
+        = ("for" if current_user.organization) if session[:user_id]
+        = (current_user.organization.name if current_user.organization) if session[:user_id]
