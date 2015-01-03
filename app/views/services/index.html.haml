@@ -1,14 +1,47 @@
-%h2 API Services for My Organization
-%ul
-  - @my_services.each do |s|
-    %li
-      = s.name
-      = link_to "Add data to this service", "/services/#{s.slug}/edit"
-%h4
-  = link_to "Add a new service", services_new_path
-%h2 Services available
-%ul
-  - @other_services.each do |s|
-    %li
-      = s.name
-      = link_to "View data", "/services/#{s.slug}/records"
+- if current_user
+  .col-md-2
+  .col-md-8
+    .btn.btn-default.new-api
+      = link_to "New API", services_new_path
+    %h2 Your Organization's APIs:
+    %ul.service-list
+      - @my_services.each do |s|
+        %li
+          %p
+            = link_to "#{s.name}", "/services/#{s.slug}"
+          %p
+            = link_to "View data", "/services/#{s.slug}/records"
+          %p.service-description
+            = s.description
+          %p
+            Records Count: #{s.records.count}
+          %p
+            Created: #{s.created_at.strftime("%B %d, %Y")}
+          %p
+            Most Recent Update: #{s.created_at.strftime("%B %d, %Y")}
+    %h2 APIs Available:
+    %ul.service-list
+      - @other_services.each do |s|
+        %li
+          %p
+            = link_to "#{s.name}", "/services/#{s.slug}"
+          %p.service-description
+            = s.description
+  .col-md-2
+
+
+
+- if !current_user
+  .col-md-2
+  .col-md-8
+    %h2 APIs Available:
+    %ul.service-list
+      - @services.each do |s|
+        %li
+          %p
+            = link_to "#{s.name}", "/services/#{s.slug}"
+
+
+          %p.service-description
+            = s.description
+  .col-md-2
