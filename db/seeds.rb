@@ -21,7 +21,6 @@ police = Service.create(
   description: "a list of all the popos",
   name: "Police Stations")
 
-
 # This downcases all headers and replaces spaces in headers with underscores. Will need to implement this in our app when we convert CSV's to Records.
 popo = CSV.read(
   'db/Police_Stations.csv',
@@ -32,3 +31,19 @@ popo = CSV.read(
 
 police.create_records(popo)
 
+
+
+24.times do
+  #Create an organization
+  org = Faker::Company.name
+  #Create an user to belong to the organization
+  User.create(
+    name: Faker::Name.name,
+    email: Faker::Internet.email,
+    organization_id: org.id,
+    password: 'password',
+    password_confirmation: 'password_confirmation'
+  )
+
+
+end
