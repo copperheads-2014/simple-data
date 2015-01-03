@@ -65,7 +65,7 @@ services.each do |file|
     email: Faker::Internet.email,
     organization_id: org.id,
     password: 'password',
-    password_confirmation: 'password_confirmation'
+    password_confirmation: 'password'
   )
 
   service = Service.create(
