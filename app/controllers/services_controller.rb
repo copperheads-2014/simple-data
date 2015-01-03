@@ -1,3 +1,4 @@
+require "open-uri"
 class ServicesController < ApplicationController
 
   # shows all services available to use
@@ -82,15 +83,25 @@ class ServicesController < ApplicationController
 
   def file_to_database(params)
     # Load the CSV into the repository in public/uploads
-    uploaded_io = params
-    File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'wb') do |file|
-    file.write(uploaded_io.read)
-    end
+    # uploaded_io = params
+    # File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'wb') do |file|
+    # file.write(uploaded_io.read)
+    # end
+    # File.open(params)
     #Take loaded CSV and write it to database
-    CSV.read(Rails.root.join('public', 'uploads', uploaded_io.original_filename),
+    # Rails.root.join('public', 'uploads', uploaded_io.original_filename),
+    file = open(params).read()
+    CSV.new(file,
       headers: true,
       :converters => :all,
-      :header_converters => lambda { |h| h.downcase.gsub(' ', '_') unless h.nil? } )
+      :header_converters => lambda { |h| h.downcase.gsub(' ', '_') unless h.nil? }
+      )
+    # binding.pry
+    # CSV.read(params,
+    #   headers: true,
+    #   :converters => :all,
+    #   :header_converters => lambda { |h| h.downcase.gsub(' ', '_') unless h.nil? } )
+    # binding.pry
   end
 
   def headers_match?(new_file, existing_doc)
