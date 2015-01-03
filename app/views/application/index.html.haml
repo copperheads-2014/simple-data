@@ -1,31 +1,35 @@
-.jumbotron
-  %h1
-    What's
-    %span simple-data
-    ?
-  %p
-    %span simple-data
-    is an attempt to make the Web more free. By creating a place where people can upload the amazing data they have (and making that available to web developers) we can create a stronger, better, more creative Internet--and world.
-.row
-  .col-md-4.info_blocks.col-xs-4
-    %h4
-      Give us your
-      %span data
-    %p You've got some great data--maybe it's about a pet adoption agency--or a town's traffic patterns--or the local restaurants' menus! You know it's useful, but maybe you don't know HOW useful!
-  .col-md-4.info_blocks.col-xs-4
-    %h4
-      We turn it into an
-      %span API
-    %p Give that info to us (in a friendly-neighborhood CSV file) and we can turn it into something usable for web developers--the people who brought us cat memes and Facebook!
-  .col-md-4.info_blocks.col-xs-4
-    %h4
-      Developers make
-      %span apps
-      based on it
-    %p Coders are hungry for data--because it means they can make things to make the world better. Go ahead--let them have a crack at it!
+.container-fluid
+  .jumbotron
+    %h1
+      What's
+      %span simple-data
+      ?
+    %p
+      %span simple-data
+      is an attempt to make the Web more free. By creating a place where people can upload the amazing data they have (and making that available to web developers) we can create a stronger, better, more creative Internet--and world.
 .container-fluid
   .row
-    %a.btn.bubbles.col-xs-6{href: new_user_path} Get Started
-    %a.btn.bubbles.col-xs-6 Developers
-
-    / Not sure where the Developers button should go.
+    %a.btn.bubbles.col-xs-6{href: new_user_path} Create API
+    %a.btn.bubbles.col-xs-6{href: services_path} Explore APIs
+.container-fluid
+  .row
+    .col-md-4.info_blocks.col-xs-4
+      %h4
+        Give us your
+        %span data
+      %p You've got some great data--maybe it's about a pet adoption agency--or a town's traffic patterns--or the local restaurants' menus! You know it's useful, but maybe you don't know HOW useful!
+    .col-md-4.info_blocks.col-xs-4
+      %h4
+        We turn it into an
+        %span API
+      %p Give that info to us (in a friendly-neighborhood CSV file) and we can turn it into something usable for web developers--the people who brought us cat memes and Facebook!
+    .col-md-4.info_blocks.col-xs-4
+      %h4
+        Developers make
+        %span apps
+        based on it
+      %p Coders are hungry for data--because it means they can make things to make the world better. Go ahead--let them have a crack at it!
+.container-fluid
+  .row
+    .col-xs-3
+    %a.btn.bubbles.col-xs-8.learn-more{href: faqs_path} Learn More
