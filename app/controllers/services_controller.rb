@@ -34,6 +34,7 @@ class ServicesController < ApplicationController
   def set_headers
     set_service
     render "set_headers.html.haml", :layout => false
+  end
 
   def documentation
     set_service
