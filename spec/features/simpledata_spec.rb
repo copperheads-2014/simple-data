@@ -51,7 +51,7 @@ feature "Signing in" do
   scenario "Signing in with incorrect credentials" do
     visit "/sessions/new"
 
-    page.fill_in "session_email", with: "Trojanscum@gmail.com"
+    page.fill_in "session_email", with: "Socrates@gmail.com"
     page.fill_in "session_password", with: "Whatchulookinat"
     click_button "Login"
 
@@ -67,6 +67,7 @@ end
 
 feature "Retrieving data from API endpoints" do
 end
+
 
 
 
