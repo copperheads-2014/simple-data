@@ -19,9 +19,11 @@ $(function() {
           success: function(data) {
             // Now that we have our data, we update the form so it contains all
             // the needed data to sign the request
-            form.find('input[name=key]').val(data.key)
-            form.find('input[name=policy]').val(data.policy)
-            form.find('input[name=signature]').val(data.signature)
+            form.find('input[name=key]').val(data.key);
+            var url = $('#service_file').val()+data.key;
+            $('#service_file').val(url);
+            form.find('input[name=policy]').val(data.policy);
+            form.find('input[name=signature]').val(data.signature);
           }
         })
         data.submit();
