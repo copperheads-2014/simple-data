@@ -70,8 +70,8 @@ services.each do |file|
 
   service = Service.create(
     organization_id: org.id,
-    description: "#{file}",
-    name: "#{file}")
+    description: "#{file}".chomp('.csv'),
+    name: "#{file}".chomp('.csv'))
 
   data = CSV.read(
   "db/#{file}",
