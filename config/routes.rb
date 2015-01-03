@@ -28,6 +28,7 @@ root 'application#index'
 
 
   get "/services/:service_slug/records", to: "records#index"
+  resources :upload_csv, only: :index
 
 
 end
