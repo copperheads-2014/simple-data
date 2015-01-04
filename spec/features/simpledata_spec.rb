@@ -38,7 +38,6 @@ feature "Browsing the website" do
 
 
   scenario "Logged in user can browse APIs" do
-
     greek = User.new(name: "TheGreek", email: "Plato@athens.gr", password: 'password', password_confirmation: 'password')
     delian = Organization.create(name: "Delian League", description: "A buncha Greeks")
     zoos = Service.create(name: "Map of Zoos", description: "Description")
