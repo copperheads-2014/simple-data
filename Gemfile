@@ -29,7 +29,7 @@ gem 'mongoid'
 gem 'newrelic_rpm'
 gem 'database_cleaner'
 gem 'bcrypt'
-gem 'sidekiq'
+gem 'sidekiq', '~> 3.0'
 gem 'redis'
 
 gem 'will_paginate', '~> 3.0.6'
