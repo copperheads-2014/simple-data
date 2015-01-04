@@ -10,10 +10,14 @@ class ServicesController < ApplicationController
   end
 
   def new
-    @service = Service.new()
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @service }
+    if current_user
+      @service = Service.new()
+      respond_to do |format|
+        format.html # new.html.erb
+        format.json { render json: @service }
+      end
+    else
+      redirect_to "/users/new"
     end
   end
 
