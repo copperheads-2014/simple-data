@@ -9,6 +9,7 @@
       = f.submit "Login", :class => "btn btn-default form_submit"
 .row
   .col-md-4
-  .btn.btn-sm.btn-default
-    = link_to "Create a New User", new_user_path
+  .col-md-2
+    = link_to "Create a New User", new_user_path, :class => "form-control btn btn-default", :id => "new-user-button"
+  .col-md-4
 
