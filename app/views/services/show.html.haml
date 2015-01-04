@@ -41,14 +41,14 @@
   %h4 Service Example
   = @service.records.first.attributes
 
-%h4 Activation
+-if current_user
+  %h4 Activation
+  - if @service.activated && @service.organization_id == current_user.organization_id
+    %p This API is currently activated, meaning anyone can access its data. If you wish to close access to this API, Click below.
+    = form_tag({controller: "services", action: :deactivate}, method: "put", data: { confirm: 'Are you sure you want to deactivate this API? Once you do, Developers will no longer have access to this data. Press OK to deactivate.' })
+    = submit_tag "Deactivate API"
 
-- if @service.activated && @service.organization_id == current_user.organization_id
-  %p This API is currently activated, meaning anyone can access its data. If you wish to close access to this API, Click below.
-  = form_tag({controller: "services", action: :deactivate}, method: "put", data: { confirm: 'Are you sure you want to deactivate this API? Once you do, Developers will no longer have access to this data. Press OK to deactivate.' })
-  = submit_tag "Deactivate API"
-
-- if @service.activated == false && @service.organization_id == current_user.organization_id
-  %p This API is currently deactivated, meaning no one can access its data. If you wish to reopen access to this API, Click below.
-  = form_tag({controller: "services", action: :activate}, method: "put", data: { confirm: 'Are you sure you want to activate this API? Once you do, Developers will be able to access this data. Press OK to activate.' })
-  = submit_tag "Activate API"
+  - if @service.activated == false && @service.organization_id == current_user.organization_id
+    %p This API is currently deactivated, meaning no one can access its data. If you wish to reopen access to this API, Click below.
+    = form_tag({controller: "services", action: :activate}, method: "put", data: { confirm: 'Are you sure you want to activate this API? Once you do, Developers will be able to access this data. Press OK to activate.' })
+    = submit_tag "Activate API"
