@@ -44,6 +44,14 @@ class Service < ActiveRecord::Base
     end
   end
 
+  def deactivate
+    self.update(activated: false)
+  end
+
+  def activate
+    self.update(activated: true)
+  end
+
   protected
 
   def collection
