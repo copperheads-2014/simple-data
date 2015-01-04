@@ -5,19 +5,22 @@
     .navbar-collapse.collapse
       %ul.nav.navbar-nav.navbar-right
         %li
-          = link_to "About Us", about_us_path
+          = link_to "Create API", services_new_path
         %li
-          = link_to "Contact Us", contact_us_path
-        %li
-          = link_to "FAQs", faqs_path
+          = link_to "Browse APIs", services_path
         %li
           - if current_user
-            = link_to "Logout", session_path(session[:user_id]), method: :delete if session[:user_id]
+            .dropdown
+              %button#dropdownMenu1.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "data-toggle" => "dropdown", :type => "button"}
+                = "Logged in as" if session[:user_id]
+                = current_user.name if session[:user_id]
+                %span.caret
+              %ul.dropdown-menu{"aria-labelledby" => "dropdownMenu1", :role => "menu"}
+                %li{:role => "presentation"}
+                  = link_to "Your Profile", user_path(current_user)
+                %li{:role => "presentation"}
+                  = link_to "Your Organization", organization_path(current_user.organization)
+                %li{:role => "presentation"}
+                  = link_to "Logout", session_path(session[:user_id]), method: :delete if session[:user_id]
           - else
             = link_to "Log-In", new_session_path
-    .navbar-collapse.collapse
-      %h6.log-status.navbar-right
-        = "You are currently logged in as" if session[:user_id]
-        = current_user.name if session[:user_id]
-        = ("for" if current_user.organization) if session[:user_id]
-        = (current_user.organization.name if current_user.organization) if session[:user_id]

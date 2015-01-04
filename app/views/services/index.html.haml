@@ -2,8 +2,8 @@
   .col-md-2
   .col-md-8
     .btn.btn-default.new-api
-      = link_to "New API", services_new_path
-    -if params[:page] == "1" || !params[:page]
+      = link_to "Create API", services_new_path
+    -if params[:page] == "1" || !params[:page] && current_user.organization.services.count >= 1
       %h2 Your Organization's APIs:
       %ul.service-list
         - @my_services.each do |s|
@@ -20,6 +20,12 @@
               Created: #{s.created_at.strftime("%B %d, %Y")}
             %p
               Most Recent Update: #{s.created_at.strftime("%B %d, %Y")}
+    -if current_user.organization.services.count == 0
+      %h4
+        %em
+          You haven't created any API's yet. Click
+          %span "Create API"
+          to get started!
     %h2 APIs Available:
     %ul.service-list
       - @services.each do |s|
