@@ -1,141 +1,21 @@
 %h1 Contact Us
 
 .row
+  .col-md-4.col-sm-5.col-lg-4
+    = render 'eleni_card'
+  .col-md-4.col-sm-5.col-lg-4
+    = render 'dave_card'
+  .col-md-4.col-sm-5.col-lg-4
+    = render 'grant_card'
+.row
+  .col-md-4.col-sm-5.col-lg-4
+    = render 'ryan_card'
+  .col-md-4.col-sm-5.col-lg-4
+
+  .col-md-4.col-sm-5.col-lg-4
+    = render 'jordy_card'
+.row
 %h3
   If you have a support request, or a question about SimpleData, please contact us via at
   /= link_to "Contact Us", new_contact_path
 
-%hr
-
-.row
-  .col-md-4.col-sm-3
-    %a{"data-placement" => "top", "data-toggle" => "tooltip", :title => "Eleni Chappen"}
-      = image_tag('team_members/Eleni.jpg', class: "img-circle img-responsive")
-      %ul
-        %li
-          %a{"data-toggle" => "Follow me on Twitter.", "data-placement" => "right", :href => "https://twitter.com/echappen", :rel => "tooltip", target: "_blank"}
-            @echappen
-            %span.fa-stack.fa-lg.pull-left
-              %i.fa.fa-circle.text-danger.fa-stack-2x
-              %i.fa.fa-twitter.fa-stack-1x.fa-inverse
-            %b
-        %li
-          %a{"data-original-title" => "Check me out on LinkedIn.", "data-placement" => "right", :href => "http://www.linkedin.com/pub/eleni-chappen/10/601/a61/", :rel => "tooltip", target: "_blank" }
-            LinkedIn
-            %span.fa-stack.fa-lg.pull-left
-              %i.fa.fa-circle.text-danger.fa-stack-2x
-              %i.fa.fa-linkedin.fa-stack-1x.fa-inverse
-            %b
-        %li
-          %a{"data-original-title" => "Check me out on GitHub.", "data-placement" => "right", :href => "https://github.com/echappen", :rel => "tooltip", target: "_blank" }
-            GitHub
-            %span.fa-stack.fa-lg.pull-left
-              %i.fa.fa-circle.text-danger.fa-stack-2x
-              %i.fa.fa-github.fa-stack-1x.fa-inverse
-            %b
-  .col-md-4.col-sm-3
-    %a{"data-placement" => "top", "data-toggle" => "tooltip", :title => "Dave Chmura"}
-      = image_tag('team_members/David.jpg', class: "img-circle img-responsive")
-      %ul
-        %li
-          %a{"data-toggle" => "Follow me on Twitter.", "data-placement" => "right", :href => "https://twitter.com/humbledaisy", :rel => "tooltip", target: "_blank"}
-            @humbledaisy
-            %span.fa-stack.fa-lg.pull-left
-              %i.fa.fa-circle.text-danger.fa-stack-2x
-              %i.fa.fa-twitter.fa-stack-1x.fa-inverse
-            %b
-        %li
-          %a{"data-original-title" => "Check me out on LinkedIn.", "data-placement" => "right", :href => "http://lnkd.in/VuU9xY", :rel => "tooltip", target: "_blank" }
-            LinkedIn
-            %span.fa-stack.fa-lg.pull-left
-              %i.fa.fa-circle.text-danger.fa-stack-2x
-              %i.fa.fa-linkedin.fa-stack-1x.fa-inverse
-            %b
-        %li
-          %a{"data-original-title" => "Check me out on GitHub.", "data-placement" => "right", :href => "http://github.com/dschmura", :rel => "tooltip", target: "_blank" }
-            GitHub
-            %span.fa-stack.fa-lg.pull-left
-              %i.fa.fa-circle.text-danger.fa-stack-2x
-              %i.fa.fa-github.fa-stack-1x.fa-inverse
-            %b
-
-
-  .col-md-4.col-sm-3
-    %a{"data-placement" => "top", "data-toggle" => "tooltip", :title => "Grant Hummer"}
-      = image_tag('team_members/Grant.jpg', class: "img-circle img-responsive")
-      %ul
-        %li
-          %a{"data-toggle" => "Follow me on Twitter.", "data-placement" => "right", :href => "https://twitter.com/granthummer", :rel => "tooltip", target: "_blank"}
-            @granthummer
-            %span.fa-stack.fa-lg.pull-left
-              %i.fa.fa-circle.text-danger.fa-stack-2x
-              %i.fa.fa-twitter.fa-stack-1x.fa-inverse
-            %b
-        %li
-          %a{"data-original-title" => "Check me out on LinkedIn.", "data-placement" => "right", :href => "https://www.linkedin.com/profile/view?id=23828323", :rel => "tooltip", target: "_blank" }
-            LinkedIn
-            %span.fa-stack.fa-lg.pull-left
-              %i.fa.fa-circle.text-danger.fa-stack-2x
-              %i.fa.fa-linkedin.fa-stack-1x.fa-inverse
-            %b
-        %li
-          %a{"data-original-title" => "Check me out on GitHub.", "data-placement" => "right", :href => "https://github.com/gphummer/", :rel => "tooltip", target: "_blank" }
-            GitHub
-            %span.fa-stack.fa-lg.pull-left
-              %i.fa.fa-circle.text-danger.fa-stack-2x
-              %i.fa.fa-github.fa-stack-1x.fa-inverse
-            %b
-%hr
-.row
-
-  .col-md-4.col-sm-3
-    %a{"data-placement" => "top", "data-toggle" => "tooltip", :title => "Ryan B Jones"}
-      = image_tag('team_members/Ryan.jpg', class: "img-circle img-responsive")
-      %ul
-        %li
-          %a{"data-toggle" => "Follow me on Twitter.", "data-placement" => "right", :href => "https://twitter.com/RyanBJonesy", :rel => "tooltip", target: "_blank"}
-            @RyanBJonesy
-            %span.fa-stack.fa-lg.pull-left
-              %i.fa.fa-circle.text-danger.fa-stack-2x
-              %i.fa.fa-twitter.fa-stack-1x.fa-inverse
-            %b
-        %li
-          %a{"data-original-title" => "Check me out on LinkedIn.", "data-placement" => "right", :href => "https://www.linkedin.com/profile/view?id=175193313", :rel => "tooltip", target: "_blank" }
-            LinkedIn
-            %span.fa-stack.fa-lg.pull-left
-              %i.fa.fa-circle.text-danger.fa-stack-2x
-              %i.fa.fa-linkedin.fa-stack-1x.fa-inverse
-            %b
-        %li
-          %a{"data-original-title" => "Check me out on GitHub.", "data-placement" => "right", :href => "https://github.com/run0391", :rel => "tooltip", target: "_blank" }
-            GitHub
-            %span.fa-stack.fa-lg.pull-left
-              %i.fa.fa-circle.text-danger.fa-stack-2x
-              %i.fa.fa-github.fa-stack-1x.fa-inverse
-            %b
-  .col-md-4.col-sm-3
-  .col-md-4.col-sm-3
-    %a{"data-placement" => "top", "data-toggle" => "tooltip", :title => "Jordy Williams"}
-      = image_tag('team_members/Jordy.jpg', class: "img-circle img-responsive")
-      %ul
-        %li
-          %a{"data-toggle" => "Follow me on Twitter.", "data-placement" => "right", :href => "https://twitter.com/jordthepoet", :rel => "tooltip", target: "_blank"}
-            @jordthepoet
-            %span.fa-stack.fa-lg.pull-left
-              %i.fa.fa-circle.text-danger.fa-stack-2x
-              %i.fa.fa-twitter.fa-stack-1x.fa-inverse
-            %b
-        %li
-          %a{"data-original-title" => "Check me out on LinkedIn.", "data-placement" => "right", :href => "https://www.linkedin.com/in/jordywilliams", :rel => "tooltip", target: "_blank" }
-            LinkedIn
-            %span.fa-stack.fa-lg.pull-left
-              %i.fa.fa-circle.text-danger.fa-stack-2x
-              %i.fa.fa-linkedin.fa-stack-1x.fa-inverse
-            %b
-        %li
-          %a{"data-original-title" => "Check me out on GitHub.", "data-placement" => "right", :href => "http://github.com/wiliajc87", :rel => "tooltip", target: "_blank" }
-            GitHub
-            %span.fa-stack.fa-lg.pull-left
-              %i.fa.fa-circle.text-danger.fa-stack-2x
-              %i.fa.fa-github.fa-stack-1x.fa-inverse
-            %b
