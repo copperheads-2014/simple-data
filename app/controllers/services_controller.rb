@@ -31,7 +31,7 @@ class ServicesController < ApplicationController
     @service.organization_id = current_user.organization.id
     if @service.save
       # uploaded_csv = retrieve_file(params[:service][:file])
-      CsvStorageJob.perform_later(@service.id, current_user.id, params[:service])
+      ApiCreateJob.perform_later(@service.id, current_user.id, params[:service])
       #Redirect to pending view
       redirect_to "/services"
     end
@@ -93,6 +93,8 @@ class ServicesController < ApplicationController
     redirect_to "/services/#{@service.slug}"
   end
 
+  private
+
   def retrieve_file(params)
     file = open(params).read
     CSV.new(file,
@@ -101,8 +103,6 @@ class ServicesController < ApplicationController
       :header_converters => lambda { |h| h.downcase.gsub(' ', '_') unless h.nil? }
       )
   end
-
-  private
 
   def service_params
     params.require(:service).permit(:description, :name)
