@@ -15,7 +15,8 @@ Rails.application.routes.draw do
   post "/services", to: "services#create"
   get "/services/:service_slug/edit", to: "services#edit"
   match "/services/:service_slug", to: "services#update", via: [:put, :patch]
-  delete "/services/:service_slug", to: "services#destroy"
+  put "/services/:service_slug/deactivate", to: "services#deactivate"
+  put "/services/:service_slug/activate", to: "services#activate"
   match "/services/:service_slug", to: "services#show_header_metadata", via: [:options]
   get "/services/:service_slug/documentation", to: "services#documentation"
 
