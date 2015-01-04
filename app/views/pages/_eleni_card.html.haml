@@ -1,0 +1,48 @@
+.card-container
+  .card
+    .front
+      .cover
+
+      .user
+        = image_tag('team_members/Eleni.jpg', class: "img-circle img-responsive")
+      .content
+        .main
+          %h3.name Eleni Chappen
+          %p.profession Team Lead
+          %h5
+            %i.fa.fa-map-marker.fa-fw.text-muted
+            Chicago, IL
+          %h5
+            %i.fa.fa-building-o.fa-fw.text-muted
+            DevBootcamp Chicago
+
+    / end front panel
+    .back
+      .header
+        %h5.motto "To be or not to be, this is my awesome motto!"
+      .content
+        .main
+          %h4.text-center Experince
+          %p Eleni graduated DevBootcamp in January 2015. Before that she...
+          %h4.text-center Areas of Expertise
+          %p Web design, HTML5, CSS3, Ruby, Sinatra, Rails, jquery, and many others...
+          %h5
+            %i.fa.fa-bookmark-o.fa-fw.text-muted
+            =link_to "personal site", "#", target: "_blank"
+          %h5
+            %i.fa.fa-envelope-o.fa-fw.text-muted
+            =mail_to "elenichappen@gmail.com", "My email", encode: "javascript"
+            /=mail_to "elenichappen@gmail.com", nil, replace_at: "_at_", replace_dot: "_dot_", class: "email"
+
+      .footer
+        .social-links.text-center
+
+
+          %a.twitter{:href => "https://twitter.com/echappen"}
+            %i.fa.fa-twitter.fa-fw
+          %a.github{:href => "https://github.com/echappen"}
+            %i.fa.fa-github.fa-fw
+          %a.linkedin{:href => "http://www.linkedin.com/pub/eleni-chappen/10/601/a61/"}
+            %i.fa.fa-linkedin.fa-fw
+          %a.google{:href => "#"}
+            %i.fa.fa-google-plus.fa-fw
