@@ -9,7 +9,7 @@
 %ul
   %li Current Version:
   %li
-    Licence Type:
+    License Type:
     = @service.license
     %a{"title" => "Learn more about the #{@service.license} from the Choose A Licence site.", "data-placement" => "right", "data-toggle" => "tooltip", :href => "http://choosealicense.com/", :rel => "tooltip", target: "_blank" }
       %i.fa.fa-info-circle
@@ -40,3 +40,7 @@
 .service_example_json
   %h4 Service Example
   = @service.records.first.attributes
+
+- if @service.organization_id == current_user.organization_id
+  = form_tag({controller: "services", action: :destroy}, method: "delete", data: { confirm: 'Are you sure you want to delete this API? Developers will no longer have access to your data if you do. Press OK to delete.' })
+  = submit_tag "Delete API"
