@@ -8,5 +8,15 @@
 
 $(document).ready(function(){
   $('.dropdown-toggle').dropdown();
-  $('[data-toggle="tooltip"]').tooltip()
+  $('[data-toggle="tooltip"]').tooltip();
+});
+$(document).ready(function(){
+$( ".fa-cog" ).hover(
+  function() {
+    $( this ).addClass( "fa-spin" );
+    console.log("happened")
+  }, function() {
+    $( this ).removeClass( "fa-spin" );
+  }
+);
 });
