@@ -42,5 +42,5 @@
   = @service.records.first.attributes
 
 - if @service.organization_id == current_user.organization_id
-  = form_tag({controller: "services", action: :destroy}, method: "delete")
+  = form_tag({controller: "services", action: :destroy}, method: "delete", data: { confirm: 'Are you sure you want to delete this API? Developers will no longer have access to your data if you do. Press OK to delete.' })
   = submit_tag "Delete API"
