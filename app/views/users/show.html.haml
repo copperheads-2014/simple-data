@@ -2,22 +2,34 @@
 .col-md-8.user-profile
   %h1
     =@user.name
-  -if @organization != nil
-    %h3
-      Belongs To:
-      =link_to "#{@organization.name}", organization_path(@organization.id)
-  -if @services && @services.count > 0
-    %h3
-      Has Uploaded:
-      %ul.users-services-list
-        -@services.each do |s|
-          %li
-          = link_to "#{s.name}", "/services/#{s.slug}"
   %h3
     Joined
     %span simple-data
     On
     =@user.created_at.strftime("%B %d, %Y")
+  -if @organization != nil
+    %h3
+      Belongs To:
+      =link_to "#{@organization.name}", organization_path(@organization.id)
+  -if @organization && @user.organization.services
+    -log = activity_log(@user)
+    %h3
+    Activity Log:
+    %ul.users-services-list
+      -log[0..-1].each do |s|
+        -if s.class == Service
+          %li
+          Created
+          = link_to "#{s.name}", "/services/#{s.slug}"
+          on
+          =s.created_at.strftime("%B %d, %Y")
+
+        -if s.class == ServiceUpdate
+          %li
+          Updated
+          = link_to "#{Service.find_by(id: s.service_id).name}", "/services/#{Service.find_by(id: s.service_id).slug}"
+          on
+          =s.created_at.strftime("%B %d, %Y")
 .col-md-2
 
 

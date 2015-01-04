@@ -33,9 +33,6 @@ class UsersController < ApplicationController
     if @user.organization
       @organization = @user.organization
     end
-    if @organization && @user.organization.services
-      @services = @user.organization.services
-    end
   end
 
   private
