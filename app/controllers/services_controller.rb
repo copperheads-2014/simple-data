@@ -28,10 +28,10 @@ class ServicesController < ApplicationController
 
   def create
     @service = Service.new(service_params)
-    @service.organization_id = @user.organization.id
+    @service.organization_id = current_user.organization.id
     if @service.save
       # uploaded_csv = retrieve_file(params[:service][:file])
-      CsvStorageWorker.perform_async(@service.id, current_user.id, params[:service])
+      CsvStorageJob.perform_later(@service.id, current_user.id, params[:service])
       #Redirect to pending view
       redirect_to "/services"
     end
@@ -93,12 +93,6 @@ class ServicesController < ApplicationController
     redirect_to "/services/#{@service.slug}"
   end
 
-  private
-
-  def service_params
-    params.require(:service).permit(:description, :name)
-  end
-
   def retrieve_file(params)
     file = open(params).read
     CSV.new(file,
@@ -106,6 +100,12 @@ class ServicesController < ApplicationController
       :converters => :all,
       :header_converters => lambda { |h| h.downcase.gsub(' ', '_') unless h.nil? }
       )
+  end
+
+  private
+
+  def service_params
+    params.require(:service).permit(:description, :name)
   end
 
   def headers_match?(new_file, existing_doc)
