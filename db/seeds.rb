@@ -6,6 +6,8 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+require 'csv'
+
 Organization.create(
   name: "Delian League")
 
@@ -16,10 +18,11 @@ User.create(
   password: 'password',
   password_confirmation: 'password')
 
-police = Service.create(
+police = Service.create!(
   organization_id: 1,
   description: "a list of all the popos",
-  name: "Police Stations")
+  name: "Police Stations",
+  creator_id: 1)
 
 # This downcases all headers and replaces spaces in headers with underscores. Will need to implement this in our app when we convert CSV's to Records.
 popo = CSV.read(
@@ -59,19 +62,20 @@ services = [
 
 services.each do |file|
   org = Organization.create(name: Faker::Company.name)
-  #Create an user to belong to the organization
-  User.create(
-    name: Faker::Name.name,
-    email: Faker::Internet.email,
-    organization_id: org.id,
-    password: 'password',
-    password_confirmation: 'password'
-  )
+  #Create a user to belong to the organization
+  # User.create(
+  #   name: Faker::Name.name,
+  #   email: Faker::Internet.email,
+  #   organization_id: org.id,
+  #   password: 'password',
+  #   password_confirmation: 'password'
+  # )
 
   service = Service.create(
-    organization_id: org.id,
+    organization_id: 1,
     description: "#{file}".chomp('.csv'),
-    name: "#{file}".chomp('.csv'))
+    name: "#{file}".chomp('.csv'),
+    creator_id: 1)
 
   data = CSV.read(
   "db/#{file}",
@@ -81,4 +85,7 @@ services.each do |file|
   )
 
   service.create_records(data)
+
+  update = ServiceUpdate.create!(service_id: service.id, user_id: 1)
+  update.set_records_added(0, service.records.count)
 end
