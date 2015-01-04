@@ -20,6 +20,9 @@
                 -if current_user.organization
                   %li{:role => "presentation"}
                     = link_to "Your Organization", organization_path(current_user.organization)
+                -if !current_user.organization
+                  %li{:role => "presentation"}
+                    = link_to "Create Organization", new_organization_path
                 %li{:role => "presentation"}
                   = link_to "Logout", session_path(session[:user_id]), method: :delete if session[:user_id]
           - else
