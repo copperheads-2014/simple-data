@@ -32,7 +32,7 @@ feature "Browsing the website" do
 
   scenario "Logged out user can browse APIs" do
     visit '/'
-    click_link "Explore APIs"
+    click_link "Browse APIs"
     expect(page.current_path).to eq("/services")
   end
 
