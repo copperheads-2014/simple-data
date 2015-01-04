@@ -1,8 +1,7 @@
 - if current_user
   .col-md-2
   .col-md-8
-    .btn.btn-default.new-api
-      = link_to "Create API", services_new_path
+    = link_to "Create API", services_new_path, :class => "form-control btn btn-default", :id => "new-api"
     -if params[:page] == "1" || !params[:page]
       -if current_user.organization
         %h2 Your Organization's APIs:
