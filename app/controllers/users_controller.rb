@@ -33,7 +33,7 @@ class UsersController < ApplicationController
     if @user.organization
       @organization = @user.organization
     end
-    if @user.organization.services
+    if @organization && @user.organization.services
       @services = @user.organization.services
     end
   end
