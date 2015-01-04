@@ -83,21 +83,28 @@ feature "Creating an account" do
   end
 end
 
-# feature "Uploading an API" do
-#   background do
-#     User.create(name: "TheGreek", email: "Plato@athens.gr", organization_id: 1, password: 'password', password_confirmation: 'password')
-#   end
+feature "Uploading an API" do
+  background do
+    User.create(name: "TheGreek", email: "Plato@athens.gr", organization_id: 1, password: 'password', password_confirmation: 'password')
+    Organization.create(name: "Delian League", description: "A buncha Greeks")
+  end
 
-#   scenario ""
-#     visit "/sessions/new"
+  pending "Upload a CSV file" do
+    Organization.first.users << User.first
+    visit "/sessions/new"
 
-#     page.fill_in "session_email", with: "Plato@athens.gr"
-#     page.fill_in "session_password", with: "password"
-#     click_button "Login"
+    page.fill_in "session_email", with: "Plato@athens.gr"
+    page.fill_in "session_password", with: "password"
+    click_button "Login"
 
-#     attach_file('Choose File', File.absolute_path('./db/'))
+    page.attach_file('file', File.path('db/Ward_Offices.csv'))
 
-# end
+    page.fill_in "service_name", with: "Ward Offices"
+    page.fill_in "service_description", with: "A bunch of wards"
+    click_button "Import"
+    # stuck here
+  end
+end
 
 feature "Retrieving data from API endpoints" do
 end
