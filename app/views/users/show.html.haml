@@ -1,2 +1,22 @@
-%h1 Users#show
-%p Find me in app/views/users/show.html.haml
+.col-md-2
+.col-md-8.user-profile
+  %h1
+    =@user.name
+  -if @organization != nil
+    %h3
+      Belongs To:
+      =link_to "#{@organization.name}", organization_path(@organization.id)
+  -if @services != nil
+    %h3
+      Has Uploaded:
+      -@services.each do |s|
+        = link_to "#{s.name}", "/services/#{s.slug}"
+  %h3
+    Joined
+    %span simple-data
+    On
+    =@user.created_at.strftime("%B %d, %Y")
+.col-md-2
+
+
+/ Should add a "user last updated service at" tag for each service--without any seeding for this stuff, I can't do it right now.
