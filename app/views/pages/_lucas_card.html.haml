@@ -1,0 +1,47 @@
+.card-container
+  .card
+    .front
+      .cover
+
+      .user
+        = image_tag('team_members/lucasv2.jpg', class: "img-circle img-responsive")
+      .content
+        .main
+          %h3.name Lucas Willett
+          %p.profession Coding Sherpa
+          %h5
+            %i.fa.fa-map-marker.fa-fw.text-muted
+            Chicago, IL
+          %h5
+            %i.fa.fa-building-o.fa-fw.text-muted
+            DevBootcamp Chicago
+
+    / end front panel
+    .back
+      .header
+        %h5.motto "Into the sun!"
+      .content
+        .main
+          %h4.text-center Experince
+          %p Lucas started teaching at DevBootcamp in August 2014. Before that he...
+          %h4.text-center Areas of Expertise
+          %p Developing software developers, developing software, git foo
+          %h5
+            %i.fa.fa-bookmark-o.fa-fw.text-muted
+            =link_to "personal site", "#", target: "_blank"
+          %h5
+            %i.fa.fa-envelope-o.fa-fw.text-muted
+            =mail_to "lucas@devbootcamp.com", "My email", encode: "javascript"
+            /=mail_to "lucas@devbootcamp.com", nil, replace_at: "_at_", replace_dot: "_dot_", class: "email"
+
+      .footer
+        .social-links.text-center
+
+          %a.twitter{:href => "https://twitter.com/ltw_"}
+            %i.fa.fa-twitter.fa-fw
+          %a.github{:href => "https://github.com/ltw"}
+            %i.fa.fa-github.fa-fw
+          %a.linkedin{:href => "https://www.linkedin.com/in/lucaswillett"}
+            %i.fa.fa-linkedin.fa-fw
+          %a.google{:href => "#"}
+            %i.fa.fa-google-plus.fa-fw
