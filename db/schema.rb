@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 20150104202547) do
   enable_extension "plpgsql"
 
   create_table "organizations", force: :cascade do |t|
-    t.string   "name",        limit: 255
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "description"
@@ -39,16 +39,16 @@ ActiveRecord::Schema.define(version: 20150104202547) do
   end
 
   create_table "services", force: :cascade do |t|
-    t.integer  "organization_id",                             null: false
-    t.string   "description",     limit: 255
-    t.string   "name",            limit: 255,                 null: false
-    t.string   "slug",            limit: 255,                 null: false
-    t.integer  "version",                     default: 1,     null: false
+    t.integer  "organization_id",                 null: false
+    t.string   "description"
+    t.string   "name",                            null: false
+    t.string   "slug",                            null: false
+    t.integer  "version",         default: 1,     null: false
     t.integer  "total_records"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "license",         limit: 255, default: "MIT"
-    t.boolean  "activated",                   default: true
+    t.string   "license",         default: "MIT"
+    t.boolean  "activated",       default: true
     t.integer  "creator_id"
   end
 
@@ -56,16 +56,16 @@ ActiveRecord::Schema.define(version: 20150104202547) do
   add_index "services", ["organization_id"], name: "index_services_on_organization_id", using: :btree
 
   create_table "tags", force: :cascade do |t|
-    t.string   "name",       limit: 255
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "name",            limit: 255
-    t.string   "email",           limit: 255
+    t.string   "name"
+    t.string   "email"
     t.integer  "organization_id"
-    t.string   "password_digest", limit: 255
+    t.string   "password_digest"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
