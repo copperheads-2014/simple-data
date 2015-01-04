@@ -106,6 +106,23 @@ feature "Creating an account" do
 
     expect(page).to have_text("Name can't be blank")
   end
+
+  scenario "User can join an organization after creating an account" do
+    visit "/"
+    click_link "Create Account"
+    page.fill_in "user_name", with: "US Grant"
+    page.fill_in "user_email", with: "OG_Gettysburg@whitehouse.gov"
+    page.fill_in "user_password", with: "TheNorth"
+    page.fill_in "user_password_confirmation", with: "TheNorth"
+    click_button "Submit"
+
+    click_link "Create Organization"
+    page.fill_in "organization_name", with: "The Union"
+    page.fill_in "organization_description", with: "I lead it"
+    click_button "Create Organization"
+    expect(page).to have_text("Your Organization")
+  end
+
 end
 
 feature "Uploading an API" do
