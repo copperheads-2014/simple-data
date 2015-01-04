@@ -83,6 +83,9 @@ class ServicesController < ApplicationController
   end
 
   def destroy
+    @service = Service.find_by(slug: params[:service_slug])
+    @service.destroy if @service.organization_id == current_user.organization_id
+    redirect_to "/services"
   end
 
   private
