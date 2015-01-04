@@ -1,0 +1,47 @@
+.card-container
+  .card
+    .front
+      .cover
+
+      .user
+        = image_tag('team_members/Grant.jpg', class: "img-circle img-responsive")
+      .content
+        .main
+          %h3.name Grant Hummer
+          %p.profession Developer
+          %h5
+            %i.fa.fa-map-marker.fa-fw.text-muted
+            Chicago, IL
+          %h5
+            %i.fa.fa-building-o.fa-fw.text-muted
+            DevBootcamp Chicago
+
+    / end front panel
+    .back
+      .header
+        %h5.motto "The rhythm is going to get you!"
+      .content
+        .main
+          %h4.text-center Experince
+          %p Grant graduated DevBootcamp in January 2015. Before that he...
+          %h4.text-center Areas of Expertise
+          %p Web design, HTML5, CSS3, Ruby, Sinatra, Rails, jquery, and many others...
+          %h5
+            %i.fa.fa-bookmark-o.fa-fw.text-muted
+            =link_to "personal site", "#", target: "_blank"
+          %h5
+            %i.fa.fa-envelope-o.fa-fw.text-muted
+            =mail_to "gphummer@gmail.com", "My email", encode: "javascript"
+            /=mail_to "gphummer@gmail.com", nil, replace_at: "_at_", replace_dot: "_dot_", class: "email"
+
+      .footer
+        .social-links.text-center
+
+          %a.twitter{:href => "https://twitter.com/granthummer"}
+            %i.fa.fa-twitter.fa-fw
+          %a.github{:href => "https://github.com/gphummer/"}
+            %i.fa.fa-github.fa-fw
+          %a.linkedin{:href => "https://www.linkedin.com/profile/view?id=23828323"}
+            %i.fa.fa-linkedin.fa-fw
+          %a.google{:href => "#"}
+            %i.fa.fa-google-plus.fa-fw
