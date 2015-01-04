@@ -2,7 +2,7 @@ class RecordsController < ApplicationController
   def index
     @service = Service.find_by(slug: params[:service_slug])
     @records = RecordQueryService.new(@service, default_params.merge(params)).fetch_records
-    render json: @records.to_json, status: 200
+    render json: @records.to_json(except: "_id"), status: 200
   end
 
   protected
