@@ -30,6 +30,30 @@ feature "Browsing the website" do
     expect(page.current_path).to eq("/faqs")
   end
 
+  scenario "Logged out user can browse APIs" do
+    visit '/'
+    click_link "Explore APIs"
+    expect(page.current_path).to eq("/services")
+  end
+
+  pending "Logged in user can browse APIs" do
+    #test not working yet
+    greek = User.new(name: "TheGreek", email: "Plato@athens.gr", password: 'password', password_confirmation: 'password')
+    delian = Organization.create(name: "Delian League", description: "A buncha Greeks")
+    zoos = Service.create(name: "Map of Zoos", description: "Description")
+    delian.users << greek
+    delian.services << zoos
+
+    visit "/sessions/new"
+
+    page.fill_in "session_email", with: "Plato@athens.gr"
+    page.fill_in "session_password", with: "password"
+    click_button "Login"
+
+    click_link "simple-data"
+    click_link "Explore APIs"
+    expect(page.current_path).to have_text("Your Organization's APIs:")
+  end
 end
 
 feature "Signing in" do
