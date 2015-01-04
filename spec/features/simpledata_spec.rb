@@ -36,8 +36,7 @@ feature "Browsing the website" do
     expect(page.current_path).to eq("/services")
   end
 
-  pending "Logged in user can browse APIs" do
-    #test not working yet
+  scenario "Logged in user can browse APIs" do
     greek = User.new(name: "TheGreek", email: "Plato@athens.gr", password: 'password', password_confirmation: 'password')
     delian = Organization.create(name: "Delian League", description: "A buncha Greeks")
     zoos = Service.create(name: "Map of Zoos", description: "Description")
@@ -52,7 +51,7 @@ feature "Browsing the website" do
 
     click_link "simple-data"
     click_link "Explore APIs"
-    expect(page.current_path).to have_text("Your Organization's APIs:")
+    expect(page).to have_text("Your Organization's APIs:")
   end
 end
 
