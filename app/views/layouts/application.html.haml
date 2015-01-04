@@ -6,7 +6,9 @@
     = javascript_include_tag 'application'
     = csrf_meta_tags
   %body
-    .container
-      = render 'shared/navigation'
-      = yield
-    = render 'layouts/footer'
+    #wrap
+      #main.container.clear-top
+        = render 'shared/navigation'
+        = yield
+    %footer.footer
+      = render 'layouts/footer'
