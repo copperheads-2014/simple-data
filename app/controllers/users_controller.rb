@@ -29,6 +29,13 @@ class UsersController < ApplicationController
   end
 
   def show
+    @user = User.find_by(id: params[:id])
+    if @user.organization
+      @organization = @user.organization
+    end
+    if @user.organization.services
+      @services = @user.organization.services
+    end
   end
 
   private
