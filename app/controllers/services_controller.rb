@@ -1,4 +1,6 @@
 require "open-uri"
+require 'csv'
+
 class ServicesController < ApplicationController
 
   # shows all services available to use
@@ -67,13 +69,16 @@ class ServicesController < ApplicationController
     #Ensure the individual submitting owns the organization
     if @service.save && (@service.organization_id == current_user.organization_id)
       #Read in the posted file from S3
+
       update_csv = retrieve_file(params[:service][:file]).read
       if headers_match?(update_csv, @service)
-        initial_record_count = @service.records.count
-        @service.create_records(update_csv)
-        @service.set_total_records
-        @update = ServiceUpdate.create!(service_id: @service.id, user_id: current_user.id)
-        @update.set_records_added(initial_record_count, @service.records.count)
+        old_record_count = @service.records.count
+        ApiUpdateJob.perform_later(@service.id, current_user.id, old_record_count, params[:service])
+
+        # @service.create_records(update_csv)
+        # @service.set_total_records
+        # @update = ServiceUpdate.create!(service_id: @service.id, user_id: current_user.id)
+        # @update.set_records_added(initial_record_count, @service.records.count)
         redirect_to "/services/#{@service.slug}/records"
       else
         redirect_to "/services/#{@service.slug}/edit"
