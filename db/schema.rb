@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150104003903) do
+ActiveRecord::Schema.define(version: 20150104164532) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 20150104003903) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "license",         default: "MIT"
+    t.boolean  "activated",       default: true
   end
 
   add_index "services", ["organization_id", "version"], name: "index_services_on_organization_id_and_version", using: :btree

@@ -82,10 +82,16 @@ class ServicesController < ApplicationController
     end
   end
 
-  def destroy
+  def deactivate
     @service = Service.find_by(slug: params[:service_slug])
-    @service.destroy if @service.organization_id == current_user.organization_id
-    redirect_to "/services"
+    @service.deactivate if @service.organization_id == current_user.organization_id
+    redirect_to "/services/#{@service.slug}"
+  end
+
+  def activate
+    @service = Service.find_by(slug: params[:service_slug])
+    @service.activate if @service.organization_id == current_user.organization_id
+    redirect_to "/services/#{@service.slug}"
   end
 
   private
