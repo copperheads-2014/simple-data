@@ -18,5 +18,7 @@
   = f.text_field :name, :class => "form-control"
   = f.label :description
   = f.text_area :description, :class => "form-control"
+  = f.label :tags
+  = f.text_field :tags, :class => "form-control", :placeholder => "separate your tags with commas", :value => nil
   = f.hidden_field :file, value: "https://#{ENV['S3_BUCKET']}.s3.amazonaws.com/"
   = f.submit "Import", :class => "btn btn-default"

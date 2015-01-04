@@ -31,6 +31,8 @@ class ServicesController < ApplicationController
       #Insert the records as Mongo Documents as part of a Mongo Collection
       @service.create_records(uploaded_csv)
       @service.set_total_records
+      # Find or create tags and add them to the service
+      @service.add_tags(params[:service][:tags])
       #Redirect to pending view
       redirect_to "/services/#{@service.slug}/records"
     end

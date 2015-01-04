@@ -1,6 +1,8 @@
 class Service < ActiveRecord::Base
   belongs_to :organization
   has_many :service_updates
+  has_many :service_tags
+  has_many :tags, through: :service_tags
 
   validates :organization_id, presence: true
   validates :name, presence: true, uniqueness: {case_sensitive: false}
@@ -32,6 +34,13 @@ class Service < ActiveRecord::Base
   def create_records(file)
     file.each do |row|
       insert_record(row.to_hash)
+    end
+  end
+
+  def add_tags(params)
+    array = params.split(",").map(&:strip).map(&:downcase)
+    array.each do |name|
+      tags << Tag.find_or_create_by(name: name)
     end
   end
 
