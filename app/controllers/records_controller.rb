@@ -3,7 +3,7 @@ class RecordsController < ApplicationController
     @service = Service.find_by(slug: params[:service_slug])
     if @service.activated
       @records = RecordQueryService.new(@service, default_params.merge(params)).fetch_records
-      render json: @records.to_json(except: "_id"), status: 200
+      render json: @records.to_json(json_options), status: 200
     else
       render json: "This service has been deactivated. Check the service's documentation for details."
     end
