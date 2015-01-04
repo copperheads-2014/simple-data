@@ -14,4 +14,17 @@ class RecordsController < ApplicationController
   def default_params
     {limit: 50, offset: 0}.with_indifferent_access
   end
+
+  def default_options
+    @options = {except: "_id"}
+  end
+
+  def json_options
+    default_options
+    if params[:only]
+      @options[:only] = params[:only].split(",")
+    end
+    @options
+  end
+
 end
