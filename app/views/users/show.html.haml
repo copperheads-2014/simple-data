@@ -6,11 +6,13 @@
     %h3
       Belongs To:
       =link_to "#{@organization.name}", organization_path(@organization.id)
-  -if @services != nil
+  -if @services && @services.count > 0
     %h3
       Has Uploaded:
-      -@services.each do |s|
-        = link_to "#{s.name}", "/services/#{s.slug}"
+      %ul.users-services-list
+        -@services.each do |s|
+          %li
+          = link_to "#{s.name}", "/services/#{s.slug}"
   %h3
     Joined
     %span simple-data
