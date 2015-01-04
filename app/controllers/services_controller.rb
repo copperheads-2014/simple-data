@@ -30,16 +30,10 @@ class ServicesController < ApplicationController
     @service = Service.new(service_params)
     @service.organization_id = @user.organization.id
     if @service.save
-      #Get the file from S3
-      uploaded_csv = retrieve_file(params[:service][:file])
-      #Insert the records as Mongo Documents as part of a Mongo Collection
-      @service.create_records(uploaded_csv)
-      @service.set_total_records
-      @service.update(creator_id: current_user.id)
-      # Find or create tags and add them to the service
-      @service.add_tags(params[:service][:tags])
+      # uploaded_csv = retrieve_file(params[:service][:file])
+      CsvStorageWorker.perform_async(@service.id, current_user.id, params[:service])
       #Redirect to pending view
-      redirect_to "/services/#{@service.slug}/records"
+      redirect_to "/services"
     end
   end
 
