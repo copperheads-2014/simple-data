@@ -35,6 +35,7 @@ class ServicesController < ApplicationController
       #Insert the records as Mongo Documents as part of a Mongo Collection
       @service.create_records(uploaded_csv)
       @service.set_total_records
+      @service.update(creator_id: current_user.id)
       # Find or create tags and add them to the service
       @service.add_tags(params[:service][:tags])
       #Redirect to pending view

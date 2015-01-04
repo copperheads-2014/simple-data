@@ -11,26 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150104164532) do
+ActiveRecord::Schema.define(version: 20150104202547) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "organizations", force: true do |t|
-    t.string   "name"
+  create_table "organizations", force: :cascade do |t|
+    t.string   "name",        limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "description"
   end
 
-  create_table "service_tags", force: true do |t|
+  create_table "service_tags", force: :cascade do |t|
     t.integer  "tag_id"
     t.integer  "service_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "service_updates", force: true do |t|
+  create_table "service_updates", force: :cascade do |t|
     t.integer  "service_id"
     t.integer  "user_id"
     t.integer  "records_added"
@@ -38,33 +38,34 @@ ActiveRecord::Schema.define(version: 20150104164532) do
     t.datetime "updated_at"
   end
 
-  create_table "services", force: true do |t|
-    t.integer  "organization_id",                 null: false
-    t.string   "description"
-    t.string   "name",                            null: false
-    t.string   "slug",                            null: false
-    t.integer  "version",         default: 1,     null: false
+  create_table "services", force: :cascade do |t|
+    t.integer  "organization_id",                             null: false
+    t.string   "description",     limit: 255
+    t.string   "name",            limit: 255,                 null: false
+    t.string   "slug",            limit: 255,                 null: false
+    t.integer  "version",                     default: 1,     null: false
     t.integer  "total_records"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "license",         default: "MIT"
-    t.boolean  "activated",       default: true
+    t.string   "license",         limit: 255, default: "MIT"
+    t.boolean  "activated",                   default: true
+    t.integer  "creator_id"
   end
 
   add_index "services", ["organization_id", "version"], name: "index_services_on_organization_id_and_version", using: :btree
   add_index "services", ["organization_id"], name: "index_services_on_organization_id", using: :btree
 
-  create_table "tags", force: true do |t|
-    t.string   "name"
+  create_table "tags", force: :cascade do |t|
+    t.string   "name",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "users", force: true do |t|
-    t.string   "name"
-    t.string   "email"
+  create_table "users", force: :cascade do |t|
+    t.string   "name",            limit: 255
+    t.string   "email",           limit: 255
     t.integer  "organization_id"
-    t.string   "password_digest"
+    t.string   "password_digest", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
