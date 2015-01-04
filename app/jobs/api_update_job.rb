@@ -3,16 +3,17 @@ require 'csv'
 class ApiUpdateJob < ActiveJob::Base
   queue_as :default
 
-  def perform(service_id, current_user_id, params)
+  def perform(service_id, current_user_id, old_record_count, params)
     #Get the file from S3
-    uploaded_csv = new_retrieve_file(params[:file])
+    update_csv = new_retrieve_file(params[:file]).read
     #Insert the records as Mongo Documents as part of a Mongo Collection
     service = Service.find(service_id)
-    service.create_records(uploaded_csv)
+    service.create_records(update_csv)
     service.set_total_records
-    service.update(creator_id: current_user_id)
-    # Find or create tags and add them to the service
-    service.add_tags(params[:tags])
+
+    # We are creating an update record here.
+    update = ServiceUpdate.create!(service_id: service.id, user_id: current_user_id)
+    update.set_records_added(old_record_count, service.records.count)
   end
 
   def new_retrieve_file(params)
