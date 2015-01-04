@@ -1,4 +1,6 @@
 require "open-uri"
+require 'csv'
+
 class ServicesController < ApplicationController
 
   # shows all services available to use
@@ -28,18 +30,12 @@ class ServicesController < ApplicationController
 
   def create
     @service = Service.new(service_params)
-    @service.organization_id = @user.organization.id
+    @service.organization_id = current_user.organization.id
     if @service.save
-      #Get the file from S3
-      uploaded_csv = retrieve_file(params[:service][:file])
-      #Insert the records as Mongo Documents as part of a Mongo Collection
-      @service.create_records(uploaded_csv)
-      @service.set_total_records
-      @service.update(creator_id: current_user.id)
-      # Find or create tags and add them to the service
-      @service.add_tags(params[:service][:tags])
+      # uploaded_csv = retrieve_file(params[:service][:file])
+      ApiCreateJob.perform_later(@service.id, current_user.id, params[:service])
       #Redirect to pending view
-      redirect_to "/services/#{@service.slug}/records"
+      redirect_to "/services"
     end
   end
 
@@ -73,13 +69,16 @@ class ServicesController < ApplicationController
     #Ensure the individual submitting owns the organization
     if @service.save && (@service.organization_id == current_user.organization_id)
       #Read in the posted file from S3
+
       update_csv = retrieve_file(params[:service][:file]).read
       if headers_match?(update_csv, @service)
-        initial_record_count = @service.records.count
-        @service.create_records(update_csv)
-        @service.set_total_records
-        @update = ServiceUpdate.create!(service_id: @service.id, user_id: current_user.id)
-        @update.set_records_added(initial_record_count, @service.records.count)
+        old_record_count = @service.records.count
+        ApiUpdateJob.perform_later(@service.id, current_user.id, old_record_count, params[:service])
+
+        # @service.create_records(update_csv)
+        # @service.set_total_records
+        # @update = ServiceUpdate.create!(service_id: @service.id, user_id: current_user.id)
+        # @update.set_records_added(initial_record_count, @service.records.count)
         redirect_to "/services/#{@service.slug}/records"
       else
         redirect_to "/services/#{@service.slug}/edit"
@@ -101,10 +100,6 @@ class ServicesController < ApplicationController
 
   private
 
-  def service_params
-    params.require(:service).permit(:description, :name)
-  end
-
   def retrieve_file(params)
     file = open(params).read
     CSV.new(file,
@@ -112,6 +107,10 @@ class ServicesController < ApplicationController
       :converters => :all,
       :header_converters => lambda { |h| h.downcase.gsub(' ', '_') unless h.nil? }
       )
+  end
+
+  def service_params
+    params.require(:service).permit(:description, :name)
   end
 
   def headers_match?(new_file, existing_doc)
