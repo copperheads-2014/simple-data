@@ -69,7 +69,7 @@ feature "Signing in" do
     page.fill_in "session_password", with: "password"
     click_button "Login"
 
-    expect(page.current_path).to eq("/services/new")
+    expect(page.current_path).to eq("/users/#{User.last.id}")
   end
 
   scenario "Signing in with incorrect credentials" do
