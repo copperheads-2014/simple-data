@@ -3,38 +3,45 @@
   .col-md-8
     .btn.btn-default.new-api
       = link_to "Create API", services_new_path
-    -if params[:page] == "1" || !params[:page] && current_user.organization.services.count >= 1
-      %h2 Your Organization's APIs:
-      %ul.service-list
-        - @my_services.each do |s|
-          %li
-            %p
-              = link_to "#{s.name}", "/services/#{s.slug}"
-            %p
-              = link_to "View data", "/services/#{s.slug}/records"
-            %p.service-description
-              = s.description
-            %p
-              Records Count: #{s.records.count}
-            %p
-              Created: #{s.created_at.strftime("%B %d, %Y")}
-            %p
-              Most Recent Update: #{s.created_at.strftime("%B %d, %Y")}
-    -if current_user.organization.services.count == 0
+    -if params[:page] == "1" || !params[:page]
+      -if current_user.organization
+        %h2 Your Organization's APIs:
+        %ul.service-list
+          - @my_services.each do |s|
+            %li
+              %p
+                = link_to "#{s.name}", "/services/#{s.slug}"
+              %p
+                = link_to "View data", "/services/#{s.slug}/records"
+              %p.service-description
+                = s.description
+              %p
+                Records Count: #{s.records.count}
+              %p
+                Created: #{s.created_at.strftime("%B %d, %Y")}
+              %p
+                Most Recent Update: #{s.created_at.strftime("%B %d, %Y")}
+    -if !current_user.organization
       %h4
         %em
-          You haven't created any API's yet. Click
-          %span "Create API"
-          to get started!
+          You haven't created an Organization yet. Click
+          %span "Create Organization"
+          in the User Navbar to get started!
+    -if current_user.organization
+      -if current_user.organization.services.count == 0
+        %h4
+          %em
+            You haven't created any API's yet. Click
+            %span "Create API"
+            to get started!
     %h2 APIs Available:
     %ul.service-list
       - @services.each do |s|
-        -if !current_user.organization.services.include?(s)
-          %li
-            %p
-              = link_to "#{s.name}", "/services/#{s.slug}"
-            %p.service-description
-              = s.description
+        %li
+          %p
+            = link_to "#{s.name}", "/services/#{s.slug}"
+          %p.service-description
+            = s.description
     .custom_pagination
       = will_paginate @services
   .col-md-2
