@@ -17,7 +17,7 @@ gem 'haml-rails'
 gem 'bootstrap-sass', '~> 3.3.1'
 gem 'autoprefixer-rails'
 gem 'font-awesome-rails'
-
+gem 'actionview-encoded_mail_to'
 
 gem 'unicorn'
 gem 'foreman'

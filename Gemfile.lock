@@ -14,6 +14,8 @@ GEM
       activesupport (= 4.1.8)
       builder (~> 3.1)
       erubis (~> 2.7.0)
+    actionview-encoded_mail_to (1.0.5)
+      rails
     activemodel (4.1.8)
       activesupport (= 4.1.8)
       builder (~> 3.1)
@@ -218,6 +220,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  actionview-encoded_mail_to
   autoprefixer-rails
   bcrypt
   better_errors
