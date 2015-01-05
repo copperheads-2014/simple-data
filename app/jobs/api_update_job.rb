@@ -12,7 +12,7 @@ class ApiUpdateJob < ActiveJob::Base
     service.set_total_records
 
     # We are creating an update record here.
-    update = ServiceUpdate.create!(service_id: service.id, user_id: current_user_id)
+    update = VersionUpdate.create!(service_id: service.id, user_id: current_user_id)
     update.set_records_added(old_record_count, service.records.count)
   end
 
