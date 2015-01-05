@@ -12,7 +12,7 @@ class ServicesController < ApplicationController
   end
 
   def new
-    if current_user
+    if current_user.organization == true
       @service = Service.new()
       respond_to do |format|
         if @service.save
@@ -21,8 +21,10 @@ class ServicesController < ApplicationController
         else
           format.html {render :new}
           format.json { render json: @service.errors, status: :unprocessable_entity }
+        end
       end
-      end
+    else
+      redirect_to "/organizations/new"
     end
   end
 
