@@ -3,6 +3,7 @@ class Service < ActiveRecord::Base
   has_many :service_updates
   has_many :service_tags
   has_many :tags, through: :service_tags
+  has_many :versions
 
   validates :organization_id, presence: true
   validates :name, presence: true, uniqueness: {case_sensitive: false}
