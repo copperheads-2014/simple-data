@@ -1,9 +1,15 @@
-%h2
-  = @organization.name
-%ul
+.col-md-2
+.col-md-8
+  %h2
+    = @organization.name
   - @services.each do |service|
-    %li
-      = service.name
-    - if @organization.id == current_user.organization_id
-      = link_to "Update", :controller => "services", :action => "edit", :service_slug => service.slug
-      = service.updated_at.strftime("Last update: %m/%d/%Y")
+    %ul.serv-list
+      %li.serv-name
+        = service.name
+      - if @organization.id == current_user.organization_id
+        %ul
+          %li.updated-at
+            = service.updated_at.strftime("Last update: %m/%d/%Y")
+          %li
+            = link_to "Update", {:controller => "services", :action => "edit", :service_slug => service.slug}, {:id => "update-service-button", :class => "btn btn-default form-control"}
+.col-md-2
