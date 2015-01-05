@@ -93,7 +93,7 @@ feature "Creating an account" do
     page.fill_in "user_password_confirmation", with: "TheNorth"
     click_button "Submit"
 
-    expect(page.current_path).to eq("/services/new")
+    expect(page.current_path).to eq("/organizations/new")
   end
 
   scenario "User tries to create an account without filling in a necessary field" do
