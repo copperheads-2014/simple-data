@@ -7,21 +7,18 @@
         %h2 Your Organization's APIs:
         %ul.service-list
           - @my_services.each do |s|
-            %li
-              %p
+            %ul.serv-list
+              %li
                 = link_to "#{s.name}", "/services/#{s.slug}"
-              %p
-                = link_to "View data", "/services/#{s.slug}/records"
-              %p
-                = link_to "Update", "/services/#{s.slug}/edit"
-              %p.service-description
-                = s.description
-              %p
-                Records Count: #{s.records.count}
-              %p
-                Created: #{s.created_at.strftime("%B %d, %Y")}
-              %p
-                Most Recent Update: #{s.created_at.strftime("%B %d, %Y")}
+                %li.sublist
+                  = s.description
+                %li.sublist
+                  Created: #{s.created_at.strftime("%B %d, %Y")}
+                %li.sublist
+                  Most Recent Update: #{s.created_at.strftime("%B %d, %Y")}
+                %li.sublist
+                  = link_to "Update", {:controller => "services", :action => "edit", :service_slug => s.slug}, {:id => "update-service-button", :class => "btn btn-default form-control"}
+                %hr
     -if !current_user.organization
       %h4
         %em
@@ -41,8 +38,9 @@
         %li
           %p
             = link_to "#{s.name}", "/services/#{s.slug}"
-          %p.service-description
+          %p.service-description.sublist
             = s.description
+          %hr
     .custom_pagination
       = will_paginate @services
   .col-md-2
@@ -55,11 +53,12 @@
     %h2 APIs Available:
     %ul.service-list
       - @services.each do |s|
-        %li
-          %p
+        %ul.serv-list
+          %li
             = link_to "#{s.name}", "/services/#{s.slug}"
-          %p.service-description
+          %li.sublist
             = s.description
+          %hr
     .custom_pagination
       = will_paginate @services
   .col-md-2

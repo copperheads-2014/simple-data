@@ -12,8 +12,9 @@
       Belongs To:
       =link_to "#{@organization.name}", organization_path(@organization.id)
   -if @organization && @user.organization.services
-    %h3
-    Activity Log:
+    %hr
+    %h3.activity-log
+      Activity Log:
     %ul.users-services-list
       -@log[0..-1].each do |s|
         -if s.class == Service
