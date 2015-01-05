@@ -31,10 +31,16 @@ class ServicesController < ApplicationController
   def create
     @service = Service.new(service_params)
     @service.organization_id = current_user.organization.id
-    if @service.save
-      ApiCreateJob.perform_later(@service.id, current_user.id, params[:service])
-      #Redirect to pending view
-      redirect_to "/services"
+
+    respond_to do |format|
+      if @service.save
+        ApiCreateJob.perform_later(@service.id, current_user.id, params[:service])
+        format.html { redirect_to "/services", notice: 'Service was successfully created.' }
+        format.json { render :show, status: :created, location: "/services" }
+      else
+        format.html { render :new }
+        format.json { render json: @service.errors, status: :unprocessable_entity }
+      end
     end
   end
 
