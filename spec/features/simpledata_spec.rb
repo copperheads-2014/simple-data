@@ -57,7 +57,7 @@ feature "Browsing the website" do
   end
 end
 
-feature "Signing in" do
+feature "Signing in and out" do
   background do
     User.create(name: "TheGreek", email: "Plato@athens.gr", organization_id: 1, password: 'password', password_confirmation: 'password')
   end
@@ -80,6 +80,17 @@ feature "Signing in" do
     click_button "Login"
 
     expect(page).to have_text("Create a New User")
+  end
+
+  scenario "Logging out" do
+    visit "/sessions/new"
+
+    page.fill_in "session_email", with: "Plato@athens.gr"
+    page.fill_in "session_password", with: "password"
+    click_button "Login"
+
+    click_link "Logout"
+    expect(page.current_path).to eq("/sessions/new")
   end
 end
 
@@ -131,7 +142,7 @@ feature "Uploading an API" do
     Organization.create(name: "Delian League", description: "A buncha Greeks")
   end
 
-  pending "Upload a CSV file" do
+  scenario "Upload a CSV file" do
     Organization.first.users << User.first
     visit "/sessions/new"
 
@@ -139,7 +150,7 @@ feature "Uploading an API" do
     page.fill_in "session_password", with: "password"
     click_button "Login"
 
-    page.attach_file('file', File.path('db/Ward_Offices.csv'))
+    page.attach_file('file upload', File.path('db/Ward_Offices.csv'))
 
     page.fill_in "service_name", with: "Ward Offices"
     page.fill_in "service_description", with: "A bunch of wards"
