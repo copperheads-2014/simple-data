@@ -22,8 +22,8 @@ class RecordQueryService
 
   def with_filters(scope)
     if options[:filter]
-      # Ex. zip=63630$district=17$city=Chicago => [[:zip, 63630], [:district, 17], [:city, "Chicago"]]
-      scope.where(Hash[format_pairs])
+      format_pairs
+      scope.where(options[:filter])
     else
       scope
     end
