@@ -12,11 +12,10 @@
       Belongs To:
       =link_to "#{@organization.name}", organization_path(@organization.id)
   -if @organization && @user.organization.services
-    -log = activity_log(@user)
     %h3
     Activity Log:
     %ul.users-services-list
-      -log[0..-1].each do |s|
+      -@log[0..-1].each do |s|
         -if s.class == Service
           %li
           Created
@@ -30,6 +29,8 @@
           = link_to "#{Service.find_by(id: s.service_id).name}", "/services/#{Service.find_by(id: s.service_id).slug}"
           on
           =s.created_at.strftime("%B %d, %Y")
+  .custom_pagination
+    = will_paginate @log
 .col-md-2
 
 
