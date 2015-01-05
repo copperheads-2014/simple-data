@@ -5,7 +5,11 @@
 .row.service_banner
 
 
-  .col-md-8
+  .col-md-8.col-sm-8.col-lg-8
+    %h2= @service.name
+    %p= @service.description
+
+  .col-md-3.pull-right
     %h4 Details
     %ul
       %li Current Version:
@@ -20,13 +24,6 @@
       %li= @service.created_at.strftime("Created: %m/%d/%Y")
       %li= @service.updated_at.strftime("Last update: %m/%d/%Y")
 
-  .col-md-3
-    %h2= @service.name
-    %p= @service.description
-
-
-%h1 Title
-%p= @service.name
 
 %h3 Description
 %p
@@ -35,7 +32,7 @@
 
 %hr
 
-%h4 How to use
+%h3 How to use
 %p
   In order to use the
   = @service.name
