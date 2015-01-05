@@ -22,10 +22,6 @@ class Service < ActiveRecord::Base
     records.create!(record)
   end
 
-  def increment_version
-    self.update(version: version += 1)
-  end
-
   def set_initial_total_records
     self.total_records = 0
   end
