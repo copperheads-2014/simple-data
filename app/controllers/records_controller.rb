@@ -4,8 +4,9 @@ class RecordsController < ApplicationController
     v_num = params[:version][1..-1]
     @version = @service.versions.find_by(number: v_num)
     if @service.activated && @version.active
-      @records = RecordQueryService.new(@version, default_params.merge(params)).fetch_records
-      render json: @records.to_json(json_options), status: 200
+      @records = RecordQueryService.new(@service, default_params.merge(params)).fetch_records
+      @formatter = DataFormatter.new(start: params[:start], data: @records.to_json(json_options))
+      render json: @formatter.to_json(except: ["created_at","updated_at","id"]), status: 200
     else
       render json: "This service has been deactivated. Check the service's documentation for details."
     end
