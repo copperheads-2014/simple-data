@@ -34,8 +34,12 @@ $(function() {
       progress: function(e, data){
         // This is what makes everything really cool, thanks to that callback
         // you can now update the progress bar based on the upload progress
-        var percent = Math.round((e.loaded / e.total) * 100)
-        $('.bar').css('width', percent + '%')
+        var percent = Math.round((data.loaded / data.total) * 100);
+        console.log("loaded: " + data.loaded);
+        console.log("total: " + data.total);
+        $('.progress-bar').css('width', percent + '%');
+        $('.progress-bar').css('height', '100%');
+        $('.progress-bar').css('background-color','#3366ff');
       },
       fail: function(e, data) {
         console.log('fail')

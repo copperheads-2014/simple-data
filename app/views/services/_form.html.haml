@@ -15,8 +15,9 @@
   %input{type: :hidden, name: :signature}
   %input{type: :hidden, name: :success_action_status, value: "201"}
   %input{type: :file, name: :file }
-  .progress.progress-striped.active
-    .bar
+    .progress
+      .progress-bar.progress-bar-striped.active
+  #file-completion
 = form_for(@service, multipart: true) do |f|
   = f.label :name
   = f.text_field :name, :class => "form-control"
