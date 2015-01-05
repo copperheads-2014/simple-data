@@ -1,3 +1,7 @@
+- if @service.organization_id == current_user.organization_id
+  %h4
+    = link_to "Update API", "/services/#{@service.slug}/edit"
+
 %h1 Title
 %p= @service.name
 
