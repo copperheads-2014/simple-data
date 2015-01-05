@@ -11,6 +11,10 @@
     %h3
       Belongs To:
       =link_to "#{@organization.name}", organization_path(@organization.id)
+  -if @organization == nil && @user == current_user
+    %h3
+      You must create an organization before creating an API.
+      %h4=link_to "Create Organization", new_organization_path, :class => "btn btn-default form-control", :id => "create-org-btn"
   -if @organization && @user.organization.services
     %hr
     %h3.activity-log
