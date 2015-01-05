@@ -72,15 +72,21 @@ class ServicesController < ApplicationController
   def update
     @service = Service.find_by(slug: params[:service_slug])
     #Ensure the individual submitting owns the organization
-    if @service.save && (@service.organization_id == current_user.organization_id)
-      #Read in the posted file from S3
-      update_csv = retrieve_file(params[:service][:file]).read
+    #
+    respond_to do |format|
+      if @service.save && (@service.organization_id == current_user.organization_id)
+        #Read in the posted file from S3
+        update_csv = retrieve_file(params[:service][:file]).read
       if headers_match?(update_csv, @service)
         old_record_count = @service.records.count
         ApiUpdateJob.perform_later(@service.id, current_user.id, old_record_count, params[:service])
-        redirect_to "/services/#{@service.slug}"
+
+
+        format.html { redirect_to "/services/#{@service.slug}", notice: 'Service was successfully updated.' }
+        format.json { render :show, status: :created, location: "/services/#{@service.slug}" }
       else
-        redirect_to "/services/#{@service.slug}/edit"
+        format.html { redirect_to "/services/#{@service.slug}/edit" }
+        format.json { render json: @service.errors, status: :unprocessable_entity }
       end
     end
   end
