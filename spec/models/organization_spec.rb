@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Organization, :type => :model do
 
-  let(:opec)  { Organization.create(name: "Organization of Petroleum Exporting Countries") }
+  let(:opec)  { Organization.create(name: "Organization of Petroleum Exporting Countries", description: "This is a description for an organization.") }
   let(:timmy) { User.create(name: 'Timmy', email: "Timmy2@gmail.com", password: 'password', password_confirmation: 'password') }
 
   describe "#initialize" do
