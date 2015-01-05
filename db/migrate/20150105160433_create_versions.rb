@@ -1,7 +1,7 @@
 class CreateVersions < ActiveRecord::Migration
   def change
     create_table :versions do |t|
-      t.integer :number
+      t.integer :number, default: 1
       t.integer :service_id
       t.boolean :active, default: true
       t.integer :total_records, null: false, default: 0
