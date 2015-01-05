@@ -22,8 +22,8 @@ class RecordQueryService
 
   def with_filters(scope)
     if options[:filter]
-      # Ex. zip=63630$district=17$city=Chicago => [[:zip, 63630], [:district, 17], [:city, "Chicago"]]
-      scope.where(Hash[format_pairs])
+      format_pairs
+      scope.where(options[:filter])
     else
       scope
     end
@@ -42,14 +42,13 @@ class RecordQueryService
   end
 
   def format_pairs
-    filters = options[:filter].split("$").map do |filter|
-      filter_pair = filter.split("=")
-      key, value = filter_pair[0], filter_pair[1]
-      #make the first element a symbol
-      filter_pair[0] = key.to_sym
-      #make the second element an integer if necessary
-      filter_pair[1] = value.to_i if value == value.to_i.to_s
-      filter_pair
+    # Make the value of a field an integer if it matches that format
+    # Ex. "filter"=>{"zip"=>"60630", "city"=>"Chicago"},
+    # becomes
+    # "filter"=>{"zip"=> 60630, "city"=>"Chicago"}
+    options[:filter].keys.each do |key|
+      value = options[:filter][key]
+      options[:filter][key] = value.to_i if value.to_i.to_s == value
     end
   end
 
