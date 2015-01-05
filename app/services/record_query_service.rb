@@ -8,6 +8,7 @@ class RecordQueryService
 
   def fetch_records
     scope = service.records
+    scope = with_filters(scope)
     scope = with_offset(scope)
     scope = with_limit(scope)
     scope = with_sort(scope)
