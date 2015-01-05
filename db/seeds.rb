@@ -11,29 +11,19 @@ require 'csv'
 Organization.create(
   name: "Delian League", description: "this is the organization's description")
 
-User.create(
+eleni = User.create(
   name: "Eleni Chappen",
   email: "athens@greece.com",
   organization_id: 1,
   password: 'password',
   password_confirmation: 'password')
 
-police = Service.create!(
-  organization_id: 1,
-  description: "a list of all the popos",
-  name: "Police Stations",
-  creator_id: 1)
+police = ServiceCreation.create({
+    description: "a list of all the popos",
+    name: "Police Stations"
+  }, eleni)
 
-# This downcases all headers and replaces spaces in headers with underscores. Will need to implement this in our app when we convert CSV's to Records.
-popo = CSV.read(
-  'db/Police_Stations.csv',
-  headers: true,
-  :converters => :all,
-  :header_converters => lambda { |h| h.downcase.gsub(' ', '_') unless h.nil? }
-  )
-
-police.create_records(popo)
-
+police.create_records('db/Police_Stations.csv')
 
 services = [
   # "311_Service_Requests_-_Tree_Debris.csv",
@@ -61,31 +51,21 @@ services = [
 ]
 
 services.each do |file|
-  org = Organization.create(name: Faker::Company.name, description: "this is a description of the org")
-  #Create a user to belong to the organization
-  # User.create(
-  #   name: Faker::Name.name,
-  #   email: Faker::Internet.email,
-  #   organization_id: org.id,
-  #   password: 'password',
-  #   password_confirmation: 'password'
-  # )
 
-  service = Service.create(
-    organization_id: 1,
-    description: "This is the service's description",
-    name: "#{file}".chomp('.csv'),
-    creator_id: 1)
-
-  data = CSV.read(
-  "db/#{file}",
-  headers: true,
-  :converters => :all,
-  :header_converters => lambda { |h| h.downcase.gsub(' ', '_') unless h.nil? }
+  user = User.create(
+    name: Faker::Name.name,
+    email: Faker::Internet.email,
+    organization: Organization.create(name: Faker::Company.name),
+    password: 'password',
+    password_confirmation: 'password'
   )
 
-  service.create_records(data)
+  service = ServiceCreation.create({
+    description: "#{file}".chomp('.csv'),
+    name: "#{file}".chomp('.csv'),
+    }, user)
 
-  update = ServiceUpdate.create!(service_id: service.id, user_id: 1)
-  update.set_records_added(0, service.records.count)
+  service.create_records("db/#{file}")
+
+  update = VersionUpdate.create!(version_id: service.latest_version.id, user_id: user.id, filename: "db/#{file}", status: :completed)
 end
