@@ -11,6 +11,7 @@ class SessionsController < ApplicationController
       session[:user_id] = @user.id
       redirect_to user_path(current_user)
     else
+      flash[:incorrect_log_in] = "Incorrect email or password"
       render 'sessions/new', status: 401
     end
   end
