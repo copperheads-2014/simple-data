@@ -15,7 +15,7 @@ class RecordsController < ApplicationController
   protected
 
   def default_params
-    {limit: 50, offset: 0, sortby: :insertion_id, order: :asc}.with_indifferent_access
+    {page_size: 50, start: 0, sortby: :insertion_id, order: :asc}.with_indifferent_access
   end
 
   def default_options
