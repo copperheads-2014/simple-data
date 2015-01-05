@@ -2,6 +2,29 @@
   %h4
     = link_to "Update API", "/services/#{@service.slug}/edit"
 
+.row.service_banner
+
+
+  .col-md-8
+    %h4 Details
+    %ul
+      %li Current Version:
+      %li
+        License Type:
+        = @service.license
+        %a{"title" => "Learn more about the #{@service.license} from the Choose A Licence site.", "data-placement" => "right", "data-toggle" => "tooltip", :href => "http://choosealicense.com/", :rel => "tooltip", target: "_blank" }
+          %i.fa.fa-info-circle
+      %li
+        Creator:
+        = @organization.name
+      %li= @service.created_at.strftime("Created: %m/%d/%Y")
+      %li= @service.updated_at.strftime("Last update: %m/%d/%Y")
+
+  .col-md-3
+    %h2= @service.name
+    %p= @service.description
+
+
 %h1 Title
 %p= @service.name
 
@@ -9,20 +32,6 @@
 %p
   = @service.description
 
-%h4 Details
-%ul
-  %li Current Version:
-  %li
-    License Type:
-    = @service.license
-    %a{"title" => "Learn more about the #{@service.license} from the Choose A Licence site.", "data-placement" => "right", "data-toggle" => "tooltip", :href => "http://choosealicense.com/", :rel => "tooltip", target: "_blank" }
-      %i.fa.fa-info-circle
-  %li
-    Creator:
-    = @organization.name
-  %li= @service.created_at.strftime("Created: %m/%d/%Y")
-  %li= @service.updated_at.strftime("Last update: %m/%d/%Y")
-  %li
 
 %hr
 
