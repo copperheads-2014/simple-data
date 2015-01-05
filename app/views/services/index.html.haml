@@ -12,6 +12,8 @@
                 = link_to "#{s.name}", "/services/#{s.slug}"
               %p
                 = link_to "View data", "/services/#{s.slug}/records"
+              %p
+                = link_to "Update", "/services/#{s.slug}/edit"
               %p.service-description
                 = s.description
               %p
