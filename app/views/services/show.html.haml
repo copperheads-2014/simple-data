@@ -1,64 +1,64 @@
-- if current_user && @service.organization_id == current_user.organization_id
-  %h4
-    = link_to "Update API", "/services/#{@service.slug}/edit"
+.col-md-2
+.col-md-8
 
-.row.service_banner
+  - if current_user && @service.organization_id == current_user.organization_id
+    %h4
+      = link_to "Update API", "/services/#{@service.slug}/edit"
+
+  .row.service_banner
+    .col-md-8.col-sm-8.col-lg-8
+      %h2.service-name-header= @service.name
+    .col-md-3.pull-right
+      %h4.details-header Details:
+      %ul.serv-list.serv-show-list
+        %li Current Version:
+        %li
+          License Type:
+          = @service.license
+          %a{"title" => "Learn more about the #{@service.license} from the Choose A Licence site.", "data-placement" => "right", "data-toggle" => "tooltip", :href => "http://choosealicense.com/", :rel => "tooltip", target: "_blank" }
+            %i.fa.fa-info-circle
+        %li
+          Creator:
+          = @organization.name
+        %li= @service.created_at.strftime("Created: %m/%d/%Y")
+        %li= @service.updated_at.strftime("Last update: %m/%d/%Y")
 
 
-  .col-md-8.col-sm-8.col-lg-8
-    %h2= @service.name
-    %p= @service.description
+  %h3 Description
+  %p
+    = @service.description
 
-  .col-md-3.pull-right
-    %h4 Details
+
+  %hr
+
+  %h3 How to use
+  %p
+    In order to use the
+    = @service.name
+    API, do the following things...
+
+
+  .service_headers
+    %h4 API Headers
+    = @service.records.first.attributes.keys[1..-1]
     %ul
-      %li Current Version:
-      %li
-        License Type:
-        = @service.license
-        %a{"title" => "Learn more about the #{@service.license} from the Choose A Licence site.", "data-placement" => "right", "data-toggle" => "tooltip", :href => "http://choosealicense.com/", :rel => "tooltip", target: "_blank" }
-          %i.fa.fa-info-circle
-      %li
-        Creator:
-        = @organization.name
-      %li= @service.created_at.strftime("Created: %m/%d/%Y")
-      %li= @service.updated_at.strftime("Last update: %m/%d/%Y")
+    - @service.records.first.attributes.keys[1..-1].each do |att|
+      %li=att
 
 
-%h3 Description
-%p
-  = @service.description
+  .service_example_json
+    %h4 API Return Example
+    = @service.records.first.attributes
 
+  -if current_user
+    %h4 Activation
+    - if @service.activated && @service.organization_id == current_user.organization_id
+      %p This API is currently activated, meaning anyone can access its data. If you wish to close access to this API, Click below.
+      = form_tag({controller: "services", action: :deactivate}, method: "put", data: { confirm: 'Are you sure you want to deactivate this API? Once you do, Developers will no longer have access to this data. Press OK to deactivate.' })
+      = submit_tag "Deactivate API"
 
-%hr
-
-%h3 How to use
-%p
-  In order to use the
-  = @service.name
-  service, do the following things...
-
-
-.service_headers
-  %h4 Service Headers
-  = @service.records.first.attributes.keys[1..-1]
-  %ul
-  - @service.records.first.attributes.keys[1..-1].each do |att|
-    %li=att
-
-
-.service_example_json
-  %h4 Service Example
-  = @service.records.first.attributes
-
--if current_user
-  %h4 Activation
-  - if @service.activated && @service.organization_id == current_user.organization_id
-    %p This API is currently activated, meaning anyone can access its data. If you wish to close access to this API, Click below.
-    = form_tag({controller: "services", action: :deactivate}, method: "put", data: { confirm: 'Are you sure you want to deactivate this API? Once you do, Developers will no longer have access to this data. Press OK to deactivate.' })
-    = submit_tag "Deactivate API"
-
-  - if @service.activated == false && @service.organization_id == current_user.organization_id
-    %p This API is currently deactivated, meaning no one can access its data. If you wish to reopen access to this API, Click below.
-    = form_tag({controller: "services", action: :activate}, method: "put", data: { confirm: 'Are you sure you want to activate this API? Once you do, Developers will be able to access this data. Press OK to activate.' })
-    = submit_tag "Activate API"
+    - if @service.activated == false && @service.organization_id == current_user.organization_id
+      %p This API is currently deactivated, meaning no one can access its data. If you wish to reopen access to this API, Click below.
+      = form_tag({controller: "services", action: :activate}, method: "put", data: { confirm: 'Are you sure you want to activate this API? Once you do, Developers will be able to access this data. Press OK to activate.' })
+      = submit_tag "Activate API"
+.col-md-2
