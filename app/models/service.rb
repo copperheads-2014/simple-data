@@ -46,6 +46,10 @@ class Service < ActiveRecord::Base
     versions.last
   end
 
+  def create_records(file)
+    latest_version.create_records(file)
+  end
+
   protected
 
   def make_slug
