@@ -10,6 +10,8 @@
             %ul.serv-list
               %li
                 = link_to "#{s.name}", "/services/#{s.slug}"
+                = link_to "(expand)", "#", :class => "displayer"
+              %ul.hideable.hidden
                 %li.sublist
                   = s.description
                 %li.sublist
@@ -17,8 +19,9 @@
                 %li.sublist
                   Most Recent Update: #{s.created_at.strftime("%B %d, %Y")}
                 %li.sublist
+                  = link_to "(expand)", "#", :class => "displayer"
                   = link_to "Update", {:controller => "services", :action => "edit", :service_slug => s.slug}, {:id => "update-service-button", :class => "btn btn-default form-control"}
-                %hr
+              %hr
     -if !current_user.organization
       %h4
         %em
@@ -38,7 +41,8 @@
         %li
           %p
             = link_to "#{s.name}", "/services/#{s.slug}"
-          %p.service-description.sublist
+            = link_to "(hide)", "#", :class => "hider"
+          %p.service-description.sublist.hideable.hidden
             = s.description
           %hr
     .custom_pagination

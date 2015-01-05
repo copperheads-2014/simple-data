@@ -20,3 +20,18 @@ $( ".fa-cog" ).hover(
   }
 );
 });
+
+
+$(document).ready(function(){
+$( ".displayer" ).click( function() {
+  $( '.hideable' ).removeClass( "hidden" );
+  console.log("happened");
+  });
+});
+
+$(document).ready(function(){
+$( ".hider" ).click( function() {
+  $( '.hideable' ).addClass( "hidden" );
+  console.log("happened");
+  });
+});
