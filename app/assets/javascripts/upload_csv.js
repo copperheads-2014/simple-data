@@ -21,6 +21,8 @@ $(function() {
             // the needed data to sign the request
             form.find('input[name=key]').val(data.key);
             var url = $('#service_file').val()+data.key;
+            var fileName = this.url.split("=")[1];
+            $('#file-completion').text(fileName+" is ready to be uploaded.");
             $('#service_file').val(url);
             form.find('input[name=policy]').val(data.policy);
             form.find('input[name=signature]').val(data.signature);
@@ -52,8 +54,10 @@ $(function() {
       },
       done: function (event, data) {
         $('.progress').fadeOut(300, function() {
-          $('.bar').css('width', 0)
+          $('.bar').css('width', 0);
         })
+        $('input[name=file]').toggle();
+        $('#file-completion').fadeIn();
       },
     })
   })
