@@ -12,17 +12,8 @@ class ServicesController < ApplicationController
   end
 
   def new
-    if current_user.organization == true
+    if current_user.organization
       @service = Service.new()
-      respond_to do |format|
-        if @service.save
-          format.html { redirect_to @service, notice: "Service successfully created. Your data is being processed."}
-          format.json { render :show, status: :created, location: @service }
-        else
-          format.html {render :new}
-          format.json { render json: @service.errors, status: :unprocessable_entity }
-        end
-      end
     else
       redirect_to "/organizations/new"
     end

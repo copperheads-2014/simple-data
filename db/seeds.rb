@@ -9,7 +9,7 @@
 require 'csv'
 
 Organization.create(
-  name: "Delian League")
+  name: "Delian League", description: "this is the organization's description")
 
 User.create(
   name: "Eleni Chappen",
@@ -40,7 +40,7 @@ services = [
   # "311_Service_Requests_-_Vacant_and_Abandoned_Buildings_Reported.csv",
   "Affordable_Rental_Housing_Developments.csv",
   "Average_Daily_Traffic_Counts.csv",
-  "Bike_Racks.csv",
+  # "Bike_Racks.csv",
   # "Business_Licenses_-_Current_Active.csv",
   # "Business_Owners.csv",
   # "Census_Data_-_Languages_spoken_in_Chicago__2008__2012",
@@ -61,7 +61,7 @@ services = [
 ]
 
 services.each do |file|
-  org = Organization.create(name: Faker::Company.name)
+  org = Organization.create(name: Faker::Company.name, description: "this is a description of the org")
   #Create a user to belong to the organization
   # User.create(
   #   name: Faker::Name.name,
@@ -73,7 +73,7 @@ services.each do |file|
 
   service = Service.create(
     organization_id: 1,
-    description: "#{file}".chomp('.csv'),
+    description: "This is the service's description",
     name: "#{file}".chomp('.csv'),
     creator_id: 1)
 
