@@ -4,6 +4,8 @@ class Version < ActiveRecord::Base
   has_many :headers
   validates :number, presence: true
   validates :total_records, presence: true
+  has_many :version_updates
+  has_many :updates, class_name: "VersionUpdate"
 
   # after_initialize :set_initial_total_records
 
@@ -29,13 +31,17 @@ class Version < ActiveRecord::Base
   end
 
   def create_records(file)
-    last_count = total_records
-    file.each do |row|
-      row_hash = row.to_hash
-      row_hash[:insertion_id] = last_count += 1
-      insert_record(row_hash)
+    count = total_records
+    new_records = []
+    CSV.foreach(file, {
+        headers: true,
+        header_converters: lambda { |h| h.downcase.gsub(' ', '_') unless h.nil? }
+      }) do |record|
+        record = record.to_hash
+        record[:insertion_id] = count +=1
+        new_records << record
     end
+    records.collection.insert(new_records)
+    set_total_records
   end
-
-
 end
