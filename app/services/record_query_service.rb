@@ -20,6 +20,15 @@ class RecordQueryService
     options[:offset] ? scope.skip(options[:offset]) : scope
   end
 
+  def with_filters(scope)
+    if options[:filter]
+      # Ex. zip=63630$district=17$city=Chicago => [[:zip, 63630], [:district, 17], [:city, "Chicago"]]
+      scope.where(Hash[format_pairs])
+    else
+      scope
+    end
+  end
+
   def with_limit(scope)
     options[:limit] ? scope.limit(options[:limit]) : scope
   end
