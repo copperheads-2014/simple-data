@@ -1,6 +1,9 @@
 class Version < ActiveRecord::Base
 
   belongs_to :service
+  validates :number, presence: true
+  validates :total_records, presence: true
+
   # after_initialize :set_initial_total_records
 
   # def set_initial_total_records
