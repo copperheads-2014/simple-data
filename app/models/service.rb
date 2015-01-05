@@ -15,14 +15,6 @@ class Service < ActiveRecord::Base
 
   before_create :make_slug
 
-  def records
-    Record.with(collection: self.collection)
-  end
-
-  def insert_record(record)
-    records.create!(record)
-  end
-
 
   def set_update_time
     self.update(updated_at: Time.now )
@@ -51,7 +43,6 @@ class Service < ActiveRecord::Base
     versions << Version.create(number: 1, active: true, total_records: 0)
   end
 
-  protected
 
   def latest_version
     versions.last
