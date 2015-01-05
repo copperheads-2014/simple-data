@@ -1,3 +1,11 @@
+- if @service.errors.any?
+  .alert.alert-danger.fade.in
+    %a.close{"data-dismiss" => "alert", :href => "#"} ×
+    %ul
+    - @service.errors.full_messages.each do |msg|
+      %li
+        = msg
+
 = render partial: "create_organization" if @user.organization.nil?
 
 %form(action="https://#{ENV['S3_BUCKET']}.s3.amazonaws.com" method="post" enctype="multipart/form-data" class='direct-upload')
