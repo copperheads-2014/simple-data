@@ -6,7 +6,7 @@
     %ul.serv-list
       %li.serv-name
         = service.name
-      - if @organization.id == current_user.organization_id
+      - if current_user && @organization.id == current_user.organization_id
         %ul
           %li.updated-at
             = service.updated_at.strftime("Last update: %m/%d/%Y")
