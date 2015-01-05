@@ -8,6 +8,8 @@ class Service < ActiveRecord::Base
   validates :name, presence: true, uniqueness: {case_sensitive: false}
   validates :slug, presence: true, on: :save
 
+  after_initialize :set_initial_total_records
+
   before_create :make_slug
 
   def records
@@ -22,6 +24,10 @@ class Service < ActiveRecord::Base
     self.update(version: version += 1)
   end
 
+  def set_initial_total_records
+    self.total_records = 0
+  end
+
   def set_total_records
     # TODO: replace with counter_column maybe?
     self.update(total_records: self.records.count)
@@ -32,8 +38,11 @@ class Service < ActiveRecord::Base
   end
 
   def create_records(file)
+    last_count = total_records
     file.each do |row|
-      insert_record(row.to_hash)
+      row_hash = row.to_hash
+      row_hash[:insertion_id] = last_count += 1
+      insert_record(row_hash)
     end
   end
 

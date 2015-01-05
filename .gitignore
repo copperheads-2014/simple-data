@@ -1,7 +1,7 @@
 *.gem
 *.rbc
 .env
-dump.rdb
+/dump.rdb
 /.config
 /coverage/
 /InstalledFiles

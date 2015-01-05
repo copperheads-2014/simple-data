@@ -72,7 +72,7 @@ class ServicesController < ApplicationController
       if headers_match?(update_csv, @service)
         old_record_count = @service.records.count
         ApiUpdateJob.perform_later(@service.id, current_user.id, old_record_count, params[:service])
-        redirect_to "/services/#{@service.slug}/records"
+        redirect_to "/services/#{@service.slug}"
       else
         redirect_to "/services/#{@service.slug}/edit"
       end
@@ -110,6 +110,7 @@ class ServicesController < ApplicationController
     # to make sure file headers match what's in the database
     existing_headers = existing_doc.records.first.attributes.keys
     existing_headers.shift
+    existing_headers.delete("insertion_id")
     new_file.headers.sort == existing_headers.sort
   end
 
