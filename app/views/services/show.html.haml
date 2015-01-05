@@ -1,4 +1,4 @@
-- if @service.organization_id == current_user.organization_id
+- if current_user && @service.organization_id == current_user.organization_id
   %h4
     = link_to "Update API", "/services/#{@service.slug}/edit"
 
