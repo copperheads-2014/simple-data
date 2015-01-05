@@ -1,9 +1,10 @@
+require 'will_paginate/array'
+
 class UsersController < ApplicationController
   skip_before_action :current_user
 
   def create
     @user = User.new(user_params)
-
     respond_to do |format|
       if @user.save
         session[:user_id] = @user.id
@@ -33,14 +34,31 @@ class UsersController < ApplicationController
     if @user.organization
       @organization = @user.organization
     end
-    if @organization && @user.organization.services
-      @services = @user.organization.services
-    end
+    @log = activity_log(@user)
+    @log = @log[0..-1].paginate(:page => params[:page], :per_page => 10)
   end
 
   private
 
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  end
+
+  def activity_log(user)
+    collect_logs(user)
+  end
+
+  def collect_logs(user)
+    collection = []
+    services = Service.where(creator_id: user.id).to_a
+    updates = ServiceUpdate.where(user_id: user.id).to_a
+    collection << services
+    collection << updates
+    collection.flatten!
+    sort_collection(collection)
+  end
+
+  def sort_collection(collection)
+    @log = collection[0..-1].sort_by { |item| item.created_at }
   end
 end
