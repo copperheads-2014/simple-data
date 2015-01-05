@@ -14,7 +14,7 @@ $(function() {
           url: "/upload_csv",
           type: 'GET',
           dataType: 'json',
-          data: {doc: {title: data.files[0].name}}, // send the file name to the server so it can generate the key param
+          data: {doc: {title: data.files[0].name.replace(/\s+/, '')}}, // send the file name to the server so it can generate the key param
           async: false,
           success: function(data) {
             // Now that we have our data, we update the form so it contains all
