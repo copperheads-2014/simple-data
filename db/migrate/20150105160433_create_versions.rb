@@ -3,8 +3,8 @@ class CreateVersions < ActiveRecord::Migration
     create_table :versions do |t|
       t.integer :number
       t.integer :service_id
-      t.boolean :active
-      t.integer :total_records
+      t.boolean :active, default: true
+      t.integer :total_records, null: false, default: 0
 
       t.timestamps null: false
     end

@@ -11,9 +11,8 @@ class CreateServices < ActiveRecord::Migration
     end
     add_index :services, :organization_id
     # this is a uniqueness validation on lowercase names
-    execute "CREATE UNIQUE INDEX index_services_on_lowercase_name
-             ON services USING btree (lower(name));"
-    add_index :services, [:organization_id, :version]
+    # execute "CREATE UNIQUE INDEX index_services_on_lowercase_name
+    #          ON services USING btree (lower(name));"
   end
 
   def down

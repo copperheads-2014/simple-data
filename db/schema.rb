@@ -20,9 +20,9 @@ ActiveRecord::Schema.define(version: 20150105164656) do
     t.string   "name"
     t.text     "description"
     t.string   "type"
-    t.integer  "version_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "version_id",  default: 1
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   create_table "organizations", force: :cascade do |t|
@@ -52,7 +52,6 @@ ActiveRecord::Schema.define(version: 20150105164656) do
     t.string   "description"
     t.string   "name",                            null: false
     t.string   "slug",                            null: false
-    t.integer  "version",         default: 1,     null: false
     t.integer  "total_records"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -61,7 +60,6 @@ ActiveRecord::Schema.define(version: 20150105164656) do
     t.integer  "creator_id"
   end
 
-  add_index "services", ["organization_id", "version"], name: "index_services_on_organization_id_and_version", using: :btree
   add_index "services", ["organization_id"], name: "index_services_on_organization_id", using: :btree
 
   create_table "tags", force: :cascade do |t|
@@ -82,14 +80,10 @@ ActiveRecord::Schema.define(version: 20150105164656) do
   create_table "versions", force: :cascade do |t|
     t.integer  "number"
     t.integer  "service_id"
-    t.boolean  "active"
-    t.integer  "total records"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  if version.records != total_records
-    p 'your upload isnt finished yet'
+    t.boolean  "active",        default: true
+    t.integer  "total_records", default: 0,    null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
 end
