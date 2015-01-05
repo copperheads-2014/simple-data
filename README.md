@@ -12,6 +12,11 @@ brew install mongo
 
 ## Starting your Rails app
 
+MAKE SURE you have a tmp folder with a pids subfolder
+AKA:
+./tmp
+and ./tmp/pids
+
 After a `bundle install`, run the following to boot the Rails app on port 3000:
 
 ```sh
@@ -77,14 +82,14 @@ Another method we plan to add is filtering. The tests we've been conducting resu
 
 Here's what the structure of a service JSON object currently looks like:
 
-{ Name: Some String, 
-  Description: Some String, 
-  Total_Records: Some Integer, 
-  Version: Some Integer, 
+{ Name: Some String,
+  Description: Some String,
+  Total_Records: Some Integer,
+  Version: Some Integer,
   Records: [{first record}, {second record}, {third record}, etc],
   Header_Metadata: [{first column metadata}, {second column metadata}, {third column metadata}, etc] }
 
-I constructed the header metadata this way because in my opinion it makes the JSON object a lot cleaner/more organized. The alternative would be to remove the header_metadata model and keep all the column metadata on the top level. For a CSV file with many columns though, I can imagine that the top level would quickly become cluttered and unwieldy. 
+I constructed the header metadata this way because in my opinion it makes the JSON object a lot cleaner/more organized. The alternative would be to remove the header_metadata model and keep all the column metadata on the top level. For a CSV file with many columns though, I can imagine that the top level would quickly become cluttered and unwieldy.
 
 
 
