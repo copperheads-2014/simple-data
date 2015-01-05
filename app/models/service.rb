@@ -14,26 +14,9 @@ class Service < ActiveRecord::Base
 
   before_create :make_slug
 
-  def records
-    Record.with(collection: self.collection)
-  end
-
-  def insert_record(record)
-    records.create!(record)
-  end
-
 
   def set_update_time
     self.update(updated_at: Time.now )
-  end
-
-  def create_records(file)
-    last_count = total_records
-    file.each do |row|
-      row_hash = row.to_hash
-      row_hash[:insertion_id] = last_count += 1
-      insert_record(row_hash)
-    end
   end
 
   def add_tags(params)
@@ -59,11 +42,11 @@ class Service < ActiveRecord::Base
     versions << Version.create(number: 1, active: true, total_records: 0)
   end
 
-  protected
-
-  def collection
-    slug.underscore.camelize
+  def latest_version
+    versions.last
   end
+
+  protected
 
   def make_slug
     self.slug = self.name.split(" ").map(&:downcase).join("-")
