@@ -6,10 +6,11 @@
     %ul.serv-list
       %li.serv-name
         = service.name
+        %ul
+          %li.updated-at= service.updated_at.strftime("Last update: %m/%d/%Y")
       - if current_user && @organization.id == current_user.organization_id
         %ul
-          %li.updated-at
-            = service.updated_at.strftime("Last update: %m/%d/%Y")
           %li
             = link_to "Update", {:controller => "services", :action => "edit", :service_slug => service.slug}, {:id => "update-service-button", :class => "btn btn-default form-control"}
+      %hr
 .col-md-2
