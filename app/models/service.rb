@@ -50,10 +50,8 @@ class Service < ActiveRecord::Base
   def make_version
     versions << Version.create(number: 1, active: true, total_records: 0)
   end
-<<<<<<< HEAD
-=======
+
   protected
->>>>>>> starting to implement metadata and versioning
 
   def latest_version
     versions.last
