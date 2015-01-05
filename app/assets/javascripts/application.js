@@ -17,14 +17,13 @@ $( ".fa-cog" ).hover(
     console.log("happened")
   }, function() {
     $( this ).removeClass( "fa-spin" );
-  }
-);
+  });
 });
-
 
 $(document).ready(function(){
 $( ".displayer" ).click( function() {
-  $( '.hideable' ).removeClass( "hidden" );
+  $( this.ch ).removeClass( "hidden" );
+  $( this ).addClass( "hidden");
   console.log("happened");
   });
 });
@@ -32,6 +31,7 @@ $( ".displayer" ).click( function() {
 $(document).ready(function(){
 $( ".hider" ).click( function() {
   $( '.hideable' ).addClass( "hidden" );
+  $( ".displayer" ).removeClass( "hidden" );
   console.log("happened");
   });
 });
