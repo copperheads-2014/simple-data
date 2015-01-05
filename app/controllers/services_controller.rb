@@ -34,6 +34,7 @@ class ServicesController < ApplicationController
   end
 
   def create
+    @service = Service.new(service_params)
     @service.organization_id = current_user.organization.id
 
     respond_to do |format|
