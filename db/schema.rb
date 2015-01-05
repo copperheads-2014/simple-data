@@ -11,10 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150104202547) do
+ActiveRecord::Schema.define(version: 20150105164656) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "headers", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.string   "type"
+    t.integer  "version_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "organizations", force: :cascade do |t|
     t.string   "name"
@@ -68,6 +77,19 @@ ActiveRecord::Schema.define(version: 20150104202547) do
     t.string   "password_digest"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "versions", force: :cascade do |t|
+    t.integer  "number"
+    t.integer  "service_id"
+    t.boolean  "active"
+    t.integer  "total records"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  if version.records != total_records
+    p 'your upload isnt finished yet'
   end
 
 end

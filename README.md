@@ -97,5 +97,9 @@ I constructed the header metadata this way because in my opinion it makes the JS
 
 We're using the mongoid-rspec gem, which adds mongoid functionality to the rspec testing framework. Check out documentation about it at https://github.com/mongoid-rspec/mongoid-rspec.
 
+## Header metadata information entry process
+
+[params.fetch(:per_page, 50), 300].min to return paginated data
+
 
 

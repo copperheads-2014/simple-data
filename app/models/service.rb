@@ -10,7 +10,7 @@ class Service < ActiveRecord::Base
   validates :description, presence: true, length: { :in => 12..300 }
   validates :slug, presence: true, on: :save
 
-  after_initialize :set_initial_total_records
+  after_create :make_version
 
   before_create :make_slug
 
@@ -22,14 +22,6 @@ class Service < ActiveRecord::Base
     records.create!(record)
   end
 
-  def set_initial_total_records
-    self.total_records = 0
-  end
-
-  def set_total_records
-    # TODO: replace with counter_column maybe?
-    self.update(total_records: self.records.count)
-  end
 
   def set_update_time
     self.update(updated_at: Time.now )
@@ -60,9 +52,11 @@ class Service < ActiveRecord::Base
   end
 
   def show_headers
-    headers_array = records.first.attributes.keys[1..-1]
-    headers_array.delete("insertion_id")
-    headers_array
+    latest_version.headers
+  end
+
+  def make_version
+    versions << Version.create(number: 1, active: true, total_records: 0)
   end
 
   protected
