@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Service, :type => :model do
-  let(:zoo) { Service.create(name: "Map of Zoos", description: "Description", organization_id: 1) }
+  let(:zoo) { Service.create(name: "Map of Zoos", description: "Description needs to be 12 characters.", organization_id: 1) }
 
   describe 'validations' do
     it 'requires the presence of a name' do
@@ -18,13 +18,13 @@ RSpec.describe Service, :type => :model do
 
     it 'fails to create a service with the same name' do
       zoo
-      zoo_two = Service.create(name: "Map of Zoos", description: "Description",organization_id: 1)
+      zoo_two = Service.create(name: "Map of Zoos", description: "Description needs to be 12 characters.",organization_id: 1)
       expect(zoo_two.errors[:name][0]).to include("has already been taken")
     end
 
     it 'fails to create a service with the same name of different case sensitivity' do
       zoo
-      zoo_two = Service.create(name: "map of Zoos", description: "Description",organization_id: 1)
+      zoo_two = Service.create(name: "map of Zoos", description: "Description needs to be 12 characters.",organization_id: 1)
       expect(zoo_two.errors[:name][0]).to include("has already been taken")
     end
   end

@@ -15,11 +15,14 @@ class ServicesController < ApplicationController
     if current_user
       @service = Service.new()
       respond_to do |format|
-        format.html # new.html.erb
-        format.json { render json: @service }
+        if @service.save
+          format.html { redirect_to @service, notice: "Service successfully created. Your data is being processed."}
+          format.json { render :show, status: :created, location: @service }
+        else
+          format.html {render :new}
+          format.json { render json: @service.errors, status: :unprocessable_entity }
       end
-    else
-      redirect_to "/users/new"
+      end
     end
   end
 
@@ -29,7 +32,6 @@ class ServicesController < ApplicationController
   end
 
   def create
-    @service = Service.new(service_params)
     @service.organization_id = current_user.organization.id
 
     respond_to do |format|
