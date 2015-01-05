@@ -34,8 +34,8 @@ class RecordQueryService
   end
 
   def with_sort(scope)
-    if options[:sortby] && options[:order]
-      scope.order_by(options[:sortby] + " " + options[:order])
+    if options[:sortby] || options[:order]
+      scope.order_by("#{options[:sortby]} #{options[:order]}")
     else
       scope
     end
