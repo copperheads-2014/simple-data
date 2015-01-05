@@ -40,4 +40,17 @@ class RecordQueryService
       scope
     end
   end
+
+  def format_pairs
+    filters = options[:filter].split("$").map do |filter|
+      filter_pair = filter.split("=")
+      key, value = filter_pair[0], filter_pair[1]
+      #make the first element a symbol
+      filter_pair[0] = key.to_sym
+      #make the second element an integer if necessary
+      filter_pair[1] = value.to_i if value == value.to_i.to_s
+      filter_pair
+    end
+  end
+
 end
