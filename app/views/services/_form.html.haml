@@ -7,26 +7,23 @@
         = msg
 
 = render partial: "create_organization" if @user.organization.nil?
-
-%form(action="https://#{ENV['S3_BUCKET']}.s3.amazonaws.com" method="post" enctype="multipart/form-data" class='direct-upload')
-  %input{type: :hidden, name: :key}
-  %input{type: :hidden, name: "AWSAccessKeyId", value: ENV["AWS_ACCESS_KEY_ID"]}
-  %input{type: :hidden, name: :acl, value: 'public-read'}
-  %input{type: :hidden, name: :policy}
-  %input{type: :hidden, name: :signature}
-  %input{type: :hidden, name: :success_action_status, value: "201"}
-
-  %input{type: :file, name: :file }
-  - # You can recognize some bootstrap markup here :)
-  .progress.progress-striped.active
-    .bar
-
-= form_for(@service, multipart: true) do |f|
-  = f.label :name
-  = f.text_field :name, :class => "form-control"
-  = f.label :description
-  = f.text_area :description, :class => "form-control"
-  = f.label :tags
-  = f.text_field :tags, :class => "form-control", :placeholder => "separate your tags with commas", :value => nil
-  = f.hidden_field :file, value: "https://#{ENV['S3_BUCKET']}.s3.amazonaws.com/"
-  = f.submit "Import", :class => "btn btn-default", data: { confirm: "NOTE: You are about to make this csv's data available to the public. If you are okay with this, Press OK to continue:" }
+= if !@user.organization.nil?
+  %form(action="https://#{ENV['S3_BUCKET']}.s3.amazonaws.com" method="post" enctype="multipart/form-data" class='direct-upload')
+    %input{type: :hidden, name: :key}
+    %input{type: :hidden, name: "AWSAccessKeyId", value: ENV["AWS_ACCESS_KEY_ID"]}
+    %input{type: :hidden, name: :acl, value: 'public-read'}
+    %input{type: :hidden, name: :policy}
+    %input{type: :hidden, name: :signature}
+    %input{type: :hidden, name: :success_action_status, value: "201"}
+    %input{type: :file, name: :file }
+    .progress.progress-striped.active
+      .bar
+  = form_for(@service, multipart: true) do |f|
+    = f.label :name
+    = f.text_field :name, :class => "form-control"
+    = f.label :description
+    = f.text_area :description, :class => "form-control"
+    = f.label :tags
+    = f.text_field :tags, :class => "form-control", :placeholder => "separate your tags with commas", :value => nil
+    = f.hidden_field :file, value: "https://#{ENV['S3_BUCKET']}.s3.amazonaws.com/"
+    = f.submit "Import", :class => "btn btn-default", data: { confirm: "NOTE: You are about to make this data public. Press OK to continue:" }
