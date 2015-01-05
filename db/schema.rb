@@ -39,14 +39,6 @@ ActiveRecord::Schema.define(version: 20150105164656) do
     t.datetime "updated_at"
   end
 
-  create_table "service_updates", force: :cascade do |t|
-    t.integer  "service_id"
-    t.integer  "user_id"
-    t.integer  "records_added"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "services", force: :cascade do |t|
     t.integer  "organization_id",                 null: false
     t.string   "description"
@@ -77,8 +69,17 @@ ActiveRecord::Schema.define(version: 20150105164656) do
     t.datetime "updated_at"
   end
 
+  create_table "version_updates", force: :cascade do |t|
+    t.integer  "version_id"
+    t.integer  "user_id"
+    t.string   "filename"
+    t.integer  "status",     default: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "versions", force: :cascade do |t|
-    t.integer  "number"
+    t.integer  "number",        default: 1
     t.integer  "service_id"
     t.boolean  "active",        default: true
     t.integer  "total_records", default: 0,    null: false
