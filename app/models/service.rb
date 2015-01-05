@@ -15,6 +15,22 @@ class Service < ActiveRecord::Base
 
   before_create :make_slug
 
+  def records
+    Record.with(collection: self.collection)
+  end
+
+  def insert_record(record)
+    records.create!(record)
+  end
+
+  def set_initial_total_records
+    self.total_records = 0
+  end
+
+  def set_total_records
+    # TODO: replace with counter_column maybe?
+    self.update(total_records: self.records.count)
+  end
 
   def set_update_time
     self.update(updated_at: Time.now )
