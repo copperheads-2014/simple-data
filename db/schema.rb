@@ -87,4 +87,8 @@ ActiveRecord::Schema.define(version: 20150105164656) do
     t.datetime "updated_at",                   null: false
   end
 
+  if version.records != total_records
+    p 'your upload isnt finished yet'
+  end
+
 end

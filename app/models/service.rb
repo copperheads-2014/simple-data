@@ -23,14 +23,6 @@ class Service < ActiveRecord::Base
     records.create!(record)
   end
 
-  def set_initial_total_records
-    self.total_records = 0
-  end
-
-  def set_total_records
-    # TODO: replace with counter_column maybe?
-    self.update(total_records: self.records.count)
-  end
 
   def set_update_time
     self.update(updated_at: Time.now )
@@ -58,6 +50,10 @@ class Service < ActiveRecord::Base
   def make_version
     versions << Version.create(number: 1, active: true, total_records: 0)
   end
+<<<<<<< HEAD
+=======
+  protected
+>>>>>>> starting to implement metadata and versioning
 
   def latest_version
     versions.last
