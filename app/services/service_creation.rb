@@ -13,7 +13,6 @@ class ServiceCreation
     @service = Service.new(attributes)
     @service.organization_id = @user.organization_id
     @service.save!
-    @service.versions.create
     @service
   end
 end
