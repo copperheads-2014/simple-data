@@ -1,17 +1,18 @@
 .col-md-2
 .col-md-8
-  .org-banner
-    %h2
-      = @organization.name
-    %p.org-desc
-      = @organization.description
+  %h2
+    = @organization.name
+  %p.org-desc
+    = @organization.description
   %p.org-date
-    Joined simple-data on:
-    = @organization.created_at
+    = @organization.created_at.strftime("Joined simple-data on: %B %d, %Y")
+  %hr
+  %h3
+    = "#{@organization.name}'s APIs:"
   - @services.each do |service|
     %ul.serv-list
       %li.serv-name
-        = service.name
+        = link_to "#{service.name}", "/services/#{service.slug}"
         %ul
           %li.updated-at= service.updated_at.strftime("Last update: %B %d, %Y")
           %li

@@ -7,7 +7,7 @@
         = msg
 = form_for @organization, url: {controller: "organizations", action: "create"} do |f|
   = f.label :name
-  = f.text_field :name, :class => "form-control"
+  = f.text_field :name, :class => "form-control", :placeholder => "All organizations must have a name."
   = f.label :description
-  = f.text_area :description, :class => "form-control"
+  = f.text_area :description, :class => "form-control", :placeholder => "All organizations must have a description that explains to developers what their organization is all about."
   = f.submit
