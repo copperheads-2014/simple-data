@@ -28,10 +28,14 @@ class ServicesController < ApplicationController
     @service = ServiceCreation.create(service_params, current_user)
     @service.organization_id = current_user.organization.id
     @service.versions.last.updates << VersionUpdate.create(filename: params[:service][:file])
-    @service.save
-    CsvImportJob.perform_later(@service.latest_version.updates.last.id, params[:service])
-    #Redirect to pending view
-    redirect_to "/services"
+    if @service.save
+      CsvImportJob.perform_later(@service.latest_version.updates.last.id, params[:service])
+      #Redirect to pending view
+      redirect_to "/services"
+    else
+      redirect '/'
+    end
+
   end
 
   def set_headers
