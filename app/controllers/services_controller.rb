@@ -58,6 +58,7 @@ class ServicesController < ApplicationController
   def show
     @service = Service.find_by(slug: params[:service_slug])
     @organization = Organization.find_by_id(@service.organization_id)
+    @headers = @service.show_headers
   end
 
 # only a member of the service's organization can edit or destroy the service
@@ -112,10 +113,7 @@ class ServicesController < ApplicationController
   end
 
   def headers_match?(new_file, existing_doc)
-    # to make sure file headers match what's in the database
-    existing_headers = existing_doc.records.first.attributes.keys
-    existing_headers.shift
-    existing_headers.delete("insertion_id")
+    existing_headers = existing_doc.show_headers
     new_file.headers.sort == existing_headers.sort
   end
 
