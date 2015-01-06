@@ -1,4 +1,18 @@
-%ul
-  - @organizations.each do |organization|
-    %li
-      = link_to organization.name, organization_path(organization)
+.col-md-2
+.col-md-8
+  %ul.service-list
+    - @organizations.each do |org|
+      %ul.serv-list
+        %li
+          = link_to "#{org.name}",  organization_path(org)
+          = link_to "(expand)", "#", :class => "displayer", :id => "org#{org.id}"
+        %ul.hideable{:id => "org#{org.id}"}
+          %li.sublist
+            = org.description
+          %li.sublist
+            Created: #{org.created_at.strftime("%B %d, %Y")}
+          %li.sublist
+        %hr
+  .custom_pagination
+    = will_paginate @organization
+.col-md-2
