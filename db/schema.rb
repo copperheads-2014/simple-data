@@ -11,10 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150105164656) do
+ActiveRecord::Schema.define(version: 20150107223332) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "data_formatters", force: :cascade do |t|
+    t.integer  "start"
+    t.integer  "end"
+    t.integer  "total"
+    t.integer  "num_pages"
+    t.integer  "page"
+    t.integer  "page_size"
+    t.string   "uri"
+    t.string   "first_page_uri"
+    t.string   "last_page_uri"
+    t.string   "previous_page_uri"
+    t.string   "next_page_uri"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.json     "data"
+  end
 
   create_table "headers", force: :cascade do |t|
     t.string   "name"
@@ -35,6 +52,14 @@ ActiveRecord::Schema.define(version: 20150105164656) do
   create_table "service_tags", force: :cascade do |t|
     t.integer  "tag_id"
     t.integer  "service_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "service_updates", force: :cascade do |t|
+    t.integer  "service_id"
+    t.integer  "user_id"
+    t.integer  "records_added"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
