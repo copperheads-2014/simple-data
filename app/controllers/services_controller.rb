@@ -12,7 +12,7 @@ class ServicesController < ApplicationController
   end
 
   def new
-    if current_user.organization
+    if current_user && current_user.organization
       @service = Service.new()
     else
       redirect_to "/organizations/new"

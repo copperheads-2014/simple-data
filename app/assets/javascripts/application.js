@@ -17,6 +17,19 @@ $( ".fa-cog" ).hover(
     console.log("happened")
   }, function() {
     $( this ).removeClass( "fa-spin" );
-  }
-);
+  });
 });
+
+$(document).ready(function(){
+$( ".displayer" ).click( function(event) {
+  event.preventDefault();
+  var target = $( this ).attr("id")
+  if ( $( "ul#"+target ).is(":hidden") ) {
+    $( "ul#"+target ).slideDown("slow");
+    $( this ).html("(close)")
+  } else {
+    $( "ul#"+target ).slideUp();
+    $( this ).html("(expand)");}
+  });
+});
+

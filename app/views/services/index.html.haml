@@ -10,6 +10,8 @@
             %ul.serv-list
               %li
                 = link_to "#{s.name}", "/services/#{s.slug}"
+                = link_to "(expand)", "#", :class => "displayer", :id => "#{s.slug}"
+              %ul.hideable{:id => "#{s.slug}"}
                 %li.sublist
                   = s.description
                 %li.sublist
@@ -18,7 +20,8 @@
                   Most Recent Update: #{s.created_at.strftime("%B %d, %Y")}
                 %li.sublist
                   = link_to "Update", {:controller => "services", :action => "edit", :service_slug => s.slug}, {:id => "update-service-button", :class => "btn btn-default form-control"}
-                %hr
+              %hr
+
     -if !current_user.organization
       %h4
         %em
@@ -35,12 +38,20 @@
     %h2 APIs Available:
     %ul.service-list
       - @services.each do |s|
-        %li
-          %p
-            = link_to "#{s.name}", "/services/#{s.slug}"
-          %p.service-description.sublist
-            = s.description
-          %hr
+        -unless s.organization_id == current_user.organization_id
+          %ul.serv-list
+            %li
+              = link_to "#{s.name}", "/services/#{s.slug}"
+              = link_to "(expand)", "#", :class => "displayer", :id => "#{s.slug}"
+            %ul.hideable{:id => "#{s.slug}"}
+              %li.sublist
+                = s.description
+              %li.sublist
+                Created: #{s.created_at.strftime("%B %d, %Y")}
+              %li.sublist
+                Most Recent Update: #{s.created_at.strftime("%B %d, %Y")}
+              %li.sublist
+            %hr
     .custom_pagination
       = will_paginate @services
   .col-md-2
@@ -56,8 +67,15 @@
         %ul.serv-list
           %li
             = link_to "#{s.name}", "/services/#{s.slug}"
-          %li.sublist
-            = s.description
+            = link_to "(expand)", "#", :class => "displayer", :id => "#{s.slug}"
+          %ul.hideable{:id => "#{s.slug}"}
+            %li.sublist
+              = s.description
+            %li.sublist
+              Created: #{s.created_at.strftime("%B %d, %Y")}
+            %li.sublist
+              Most Recent Update: #{s.created_at.strftime("%B %d, %Y")}
+            %li.sublist
           %hr
     .custom_pagination
       = will_paginate @services
