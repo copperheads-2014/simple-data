@@ -30,8 +30,9 @@ class CsvImportJob < ActiveJob::Base
   end
 
   def append_with_same_headers
-    p "HERE WE ARE CREATING AN API WITH NO HEADERS!!!!!!!!!!!!!!!!!!!!"
-    download_and_add_records
+    p "HERE WE ARE APPENDING AN API!!!!!!!!!!!!!!!!!!!!"
+    download_and_add_records_and_set_headers
+    #refactor this later
   end
 
   def create_new_version
@@ -60,7 +61,7 @@ class CsvImportJob < ActiveJob::Base
     # parse the headers
     headers = grab_headers(file)
     # create the headers schema
-    create_headers_schema(headers, @version_update)
+    create_headers_schema(headers, @version_update) if @version_update.version.headers.empty?
     # delete the file
     @version_update.update(status: :completed)
   end
