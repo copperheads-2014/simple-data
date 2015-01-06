@@ -69,7 +69,6 @@ class ServicesController < ApplicationController
   def update
     @service = Service.find_by(slug: params[:service_slug])
     p params
-    update_params = params[:service][:update_params]
     respond_to do |format|
       #Ensure the individual submitting owns the organization
       if @service.save && (@service.organization_id == current_user.organization_id)
@@ -80,7 +79,9 @@ class ServicesController < ApplicationController
         if headers_match?(update_csv, @service)
           p "Headers matching"
           # old_record_count = @service.records.count
-          CsvImportJob.perform_later(@service.latest_version.updates.last.id,                         update_params,
+          CsvImportJob.perform_later(@service.latest_version.updates.last.id,                         {updating: params[:service][:updating].to_bool,
+                                     append: params[:service][:append].to_bool,
+                                     new_version: params[:service][:new_version].to_bool },
                                      params[:service])
           format.html { redirect_to "/services/#{@service.slug}", notice: "Service was successfully updated."}
         else
