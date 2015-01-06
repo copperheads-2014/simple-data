@@ -35,7 +35,7 @@
 
 .service_headers
   %h4 Service Headers
-  = @service.records.first.attributes.keys[1..-1]
+  = @headers
   %ul
   - @service.records.first.attributes.keys[1..-1].each do |att|
     %li=att

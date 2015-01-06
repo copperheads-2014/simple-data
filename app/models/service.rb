@@ -62,6 +62,12 @@ class Service < ActiveRecord::Base
     self.update(activated: true)
   end
 
+  def show_headers
+    headers_array = records.first.attributes.keys[1..-1]
+    headers_array.delete("insertion_id")
+    headers_array
+  end
+
   protected
 
   def collection
