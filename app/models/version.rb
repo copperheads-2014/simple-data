@@ -59,4 +59,5 @@ class Version < ActiveRecord::Base
     end
     set_total_records
   end
+
 end
