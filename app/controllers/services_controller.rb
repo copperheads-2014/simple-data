@@ -27,11 +27,12 @@ class ServicesController < ApplicationController
   end
 
   def create
+    update_params = {}
     @service = ServiceCreation.create(service_params, current_user)
     @service.organization_id = current_user.organization.id
     @service.versions.last.updates << VersionUpdate.create(filename: params[:service][:file])
     if @service.save
-      CsvImportJob.perform_later(@service.latest_version.updates.last.id, params[:service])
+      CsvImportJob.perform_later(@service.latest_version.updates.last.id, update_params, params[:service])
       #Redirect to pending view
       redirect_to "/services"
     else
@@ -68,17 +69,28 @@ class ServicesController < ApplicationController
   def update
     @service = Service.find_by(slug: params[:service_slug])
     respond_to do |format|
-
       #Ensure the individual submitting owns the organization
       if @service.save && (@service.organization_id == current_user.organization_id)
-        #Read in the posted file from S3
-        update_csv = retrieve_file(params[:service][:file]).read
-        if headers_match?(update_csv, @service)
-          old_record_count = @service.records.count
-          ApiUpdateJob.perform_later(@service.id, current_user.id, old_record_count, params[:service])
-          format.html { redirect_to "/services/#{@service.slug}", notice: "Service was successfully updated."}
+        if params[:service][:append]
+          update_csv = retrieve_file(params[:service][:file]).read
+          if headers_match?(update_csv, @service)
+            CsvImportJob.perform_later(@service.latest_version.updates.last.id,
+                                      {updating: params[:service][:updating].to_bool,
+                                       append: params[:service][:append].to_bool,
+                                       new_version: params[:service][:new_version].to_bool },
+                                       params[:service])
+            format.html { redirect_to "/services/#{@service.slug}", notice: "Service was successfully updated."}
           else
-          format.html { redirect_to "/services/#{@service.slug}/edit"}
+            format.html { redirect_to "/services/#{@service.slug}/edit", notice: "The headers of your CSV file must match the example headers below. Either select that you want to create a new version, or edit your file so its headers match the headers of the current version."}
+          end
+        else
+          @service.versions.last.updates << VersionUpdate.create(filename: params[:service][:file])
+          CsvImportJob.perform_later(@service.latest_version.updates.last.id,
+                                    {   updating: params[:service][:updating].to_bool,
+                                        append: params[:service][:append].to_bool,
+                                        new_version: params[:service][:new_version].to_bool },
+                                      params[:service])
+          format.html { redirect_to "/services/#{@service.slug}", notice: "New version was successfully created."}
         end
       end
     end
@@ -98,11 +110,11 @@ class ServicesController < ApplicationController
 
   private
 
+
   def retrieve_file(params)
     file = open(params).read
     CSV.new(file,
       headers: true,
-      :converters => :all,
       :header_converters => lambda { |h| h.downcase.gsub(' ', '_') unless h.nil? }
       )
   end
@@ -111,9 +123,12 @@ class ServicesController < ApplicationController
     params.require(:service).permit(:description, :name)
   end
 
-  def headers_match?(new_file, existing_doc)
-    existing_headers = existing_doc.show_headers
-    new_file.headers.sort == existing_headers.sort
+  def headers_match?(new_file, service)
+    existing_headers = service.latest_version.headers.map { |header| header.name.downcase }
+    new_file_headers = new_file.headers.map {|header| header.downcase }
+    p existing_headers
+    p new_file_headers
+    new_file_headers.sort == existing_headers.sort
   end
 
   def get_headers(service)
