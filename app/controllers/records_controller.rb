@@ -7,7 +7,7 @@ class RecordsController < ApplicationController
     @version = @service.versions.find_by(number: v_num)
     if @service.activated && @version.active
       @settings = default_params.merge(params)
-      @records = RecordQueryService.new(@service, settings).fetch_records
+      @records = RecordQueryService.new(@version, settings).fetch_records
       @formatter = DataFormatter.new(metadata_options)
       @formatter.data = @records.to_json(json_options)
       render json: @formatter.to_json(except: ["created_at","updated_at","id"]), status: 200
