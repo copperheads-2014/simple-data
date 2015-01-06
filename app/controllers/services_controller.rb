@@ -113,7 +113,6 @@ class ServicesController < ApplicationController
   end
 
   def headers_match?(new_file, existing_doc)
-    # to make sure file headers match what's in the database
     existing_headers = existing_doc.show_headers
     new_file.headers.sort == existing_headers.sort
   end

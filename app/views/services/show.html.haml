@@ -34,16 +34,16 @@
 
 
 .service_headers
-  %h4 Service Headers
-  = @headers
+  %h4 Headers
+
   %ul
-  - @service.records.first.attributes.keys[1..-1].each do |att|
+  - @headers.each do |att|
     %li=att
 
 
 .service_example_json
-  %h4 Service Example
-  = @service.records.first.attributes
+  %h4 Example Response
+  = @service.records.first.to_json(except: ["insertion_id", "_id"])
 
 -if current_user
   %h4 Activation
