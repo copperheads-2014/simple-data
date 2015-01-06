@@ -1,5 +1,4 @@
-.col-md-2
-.col-md-8
+.col-md-8.col-md-offset-2
   %h2
     = @organization.name
   %p.org-desc
@@ -22,4 +21,6 @@
           %li
             = link_to "Update", {:controller => "services", :action => "edit", :service_slug => service.slug}, {:id => "update-service-button", :class => "btn btn-default form-control"}
       %hr
-.col-md-2
+.custom_pagination
+  = will_paginate @services
+
