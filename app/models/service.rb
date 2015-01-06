@@ -43,7 +43,6 @@ class Service < ActiveRecord::Base
     versions << Version.create(number: 1, active: true, total_records: 0)
   end
 
-
   def latest_version
     versions.last
   end
