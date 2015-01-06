@@ -68,24 +68,29 @@ class ServicesController < ApplicationController
 
   def update
     @service = Service.find_by(slug: params[:service_slug])
-    p params
     respond_to do |format|
       #Ensure the individual submitting owns the organization
       if @service.save && (@service.organization_id == current_user.organization_id)
-        p "Before read"
-        #Read in the posted file from S3
-        update_csv = retrieve_file(params[:service][:file]).read
-        p "After read"
-        if headers_match?(update_csv, @service)
-          p "Headers matching"
-          # old_record_count = @service.records.count
-          CsvImportJob.perform_later(@service.latest_version.updates.last.id,                         {updating: params[:service][:updating].to_bool,
-                                     append: params[:service][:append].to_bool,
-                                     new_version: params[:service][:new_version].to_bool },
-                                     params[:service])
-          format.html { redirect_to "/services/#{@service.slug}", notice: "Service was successfully updated."}
+        if params[:service][:append]
+          update_csv = retrieve_file(params[:service][:file]).read
+          if headers_match?(update_csv, @service)
+            CsvImportJob.perform_later(@service.latest_version.updates.last.id,
+                                      {updating: params[:service][:updating].to_bool,
+                                       append: params[:service][:append].to_bool,
+                                       new_version: params[:service][:new_version].to_bool },
+                                       params[:service])
+            format.html { redirect_to "/services/#{@service.slug}", notice: "Service was successfully updated."}
+          else
+            format.html { redirect_to "/services/#{@service.slug}/edit", notice: "The headers of your CSV file must match the example headers below. Either select that you want to create a new version, or edit your file so its headers match the headers of the current version."}
+          end
         else
-          format.html { redirect_to "/services/#{@service.slug}/edit", notice: "The headers of your CSV file must match the example headers below. Either select that you want to create a new version, or edit your file so its headers match the headers of the current version."}
+          @service.versions.last.updates << VersionUpdate.create(filename: params[:service][:file])
+          CsvImportJob.perform_later(@service.latest_version.updates.last.id,
+                                    {   updating: params[:service][:updating].to_bool,
+                                        append: params[:service][:append].to_bool,
+                                        new_version: params[:service][:new_version].to_bool },
+                                      params[:service])
+          format.html { redirect_to "/services/#{@service.slug}", notice: "New version was successfully created."}
         end
       end
     end
@@ -104,6 +109,7 @@ class ServicesController < ApplicationController
   end
 
   private
+
 
   def retrieve_file(params)
     file = open(params).read
