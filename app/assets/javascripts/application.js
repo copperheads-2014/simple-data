@@ -21,17 +21,15 @@ $( ".fa-cog" ).hover(
 });
 
 $(document).ready(function(){
-$( ".displayer" ).click( function() {
-  $( this.ch ).removeClass( "hidden" );
-  $( this ).addClass( "hidden");
-  console.log("happened");
+$( ".displayer" ).click( function(event) {
+  event.preventDefault();
+  var target = $( this ).attr("id")
+  if ( $( "ul#"+target ).is(":hidden") ) {
+    $( "ul#"+target ).slideDown("slow");
+    $( this ).html("(close)")
+  } else {
+    $( "ul#"+target ).slideUp();
+    $( this ).html("(expand)");}
   });
 });
 
-$(document).ready(function(){
-$( ".hider" ).click( function() {
-  $( '.hideable' ).addClass( "hidden" );
-  $( ".displayer" ).removeClass( "hidden" );
-  console.log("happened");
-  });
-});
