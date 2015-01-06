@@ -1,11 +1,16 @@
 class RecordsController < ApplicationController
+  attr_reader :settings
+
   def index
     @service = Service.find_by(slug: params[:service_slug])
     v_num = params[:version][1..-1]
     @version = @service.versions.find_by(number: v_num)
     if @service.activated && @version.active
-      @records = RecordQueryService.new(@version, default_params.merge(params)).fetch_records
-      render json: @records.to_json(json_options), status: 200
+      @settings = default_params.merge(params)
+      @records = RecordQueryService.new(@service, settings).fetch_records
+      @formatter = DataFormatter.new(metadata_options)
+      @formatter.data = @records.to_json(json_options)
+      render json: @formatter.to_json(except: ["created_at","updated_at","id"]), status: 200
     else
       render json: "This service has been deactivated. Check the service's documentation for details."
     end
@@ -14,7 +19,7 @@ class RecordsController < ApplicationController
   protected
 
   def default_params
-    {limit: 50, offset: 0, sortby: :insertion_id, order: :asc}.with_indifferent_access
+    {page: 0, page_size: 50, start: 0, sortby: :insertion_id, order: :asc}.with_indifferent_access
   end
 
   def default_options
@@ -29,4 +34,71 @@ class RecordsController < ApplicationController
     @options
   end
 
+  def metadata_options
+    {
+      :start => first_record,
+      :end => last_record,
+      :total => @service.records.count,
+      :num_pages => num_pages,
+      :page => page,
+      :page_size => @settings[:page_size],
+      :uri => uri,
+      :first_page_uri => first_page_uri,
+      :last_page_uri => "/services/#{@service.slug}/records?page=0&page_size=50",
+      :previous_page_uri => previous_page_uri,
+      :next_page_uri => next_page_uri
+    }
+  end
+
+  def page
+    [0, @settings[:page]].max
+  end
+
+  def num_pages
+    @service.total_records / @settings[:page_size] + 1
+  end
+
+  def last_record
+    [@settings[:page_size], @service.records.count].min
+  end
+
+  def first_record
+    [@settings[:start], 1].max
+  end
+
+  def uri
+    "/services/#{@service.slug}/records"
+  end
+
+  def first_page_uri
+    "/services/#{@service.slug}/records?page=0&page_size=#{@settings[:page_size]}"
+  end
+
+  def last_page_uri
+    "/services/#{@service.slug}/records?page=#{num_pages-1}&page_size=50"
+  end
+
+  def previous_page_uri
+    "/services/#{@service.slug}/records?page=#{previous_page}&page_size=50" if previous_page
+  end
+
+  def next_page_uri
+    "/services/#{@service.slug}/records?page=#{next_page}&page_size=50" if next_page
+  end
+
+  def previous_page
+    if page == 0
+      nil
+    else
+      page-1
+    end
+  end
+
+  def next_page
+    if page == num_pages-1
+      nil
+    else
+      [page+1]
+    end
+  end
 end

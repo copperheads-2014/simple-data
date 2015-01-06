@@ -17,7 +17,7 @@ class RecordQueryService
   protected
 
   def with_offset(scope)
-    options[:offset] ? scope.skip(options[:offset]) : scope
+    options[:start] ? scope.skip(options[:start]) : scope
   end
 
   def with_filters(scope)
@@ -30,7 +30,7 @@ class RecordQueryService
   end
 
   def with_limit(scope)
-    options[:limit] ? scope.limit(options[:limit]) : scope
+    options[:page_size] ? scope.limit(options[:page_size]) : scope
   end
 
   def with_sort(scope)
