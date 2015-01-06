@@ -11,11 +11,10 @@ class CsvImportJob < ActiveJob::Base
     file = download_file(@version_update.filename)
     # parse the headers
     headers = grab_headers(file)
-    p headers
     # create the headers schema
-    create_headers_schema(headers)
+    create_header_schema(headers)
     # import the data
-    create_records(file, @version_update.version.id)
+    @version_update.version.create_records(file)
     # delete the file
     @version_update.update(status: :completed)
   rescue => e
@@ -23,14 +22,14 @@ class CsvImportJob < ActiveJob::Base
   end
 
   def download_file(filename)
-    file = open(filename).read
+    file = open(filename)
+    return file
     # return the File object (do not open it)
   end
 
   def grab_headers(file)
     headers = []
-    CSV.parse(file) {|row| headers << row; break; }
-    headers.flatten!
+    CSV.foreach(file) {|row| headers << row; break; }
     return headers
   end
 
