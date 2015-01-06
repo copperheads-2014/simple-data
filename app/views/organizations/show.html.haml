@@ -1,13 +1,19 @@
 .col-md-2
 .col-md-8
-  %h2
-    = @organization.name
+  .org-banner
+    %h2
+      = @organization.name
+    %p.org-desc
+      = @organization.description
+  %p.org-date
+    Joined simple-data on:
+    = @organization.created_at
   - @services.each do |service|
     %ul.serv-list
       %li.serv-name
         = service.name
         %ul
-          %li.updated-at= service.updated_at.strftime("Last update: %m/%d/%Y")
+          %li.updated-at= service.updated_at.strftime("Last update: %B %d, %Y")
           %li
             =mail_to service.organization.users.first.email, " Contact email", encode: "javascript", class: "fa fa-envelope"
       - if current_user && @organization.id == current_user.organization_id
