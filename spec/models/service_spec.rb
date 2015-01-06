@@ -35,13 +35,6 @@ RSpec.describe Service, :type => :model do
     end
   end
 
-  describe "#set_total_records" do
-    it "sets total records to count of existing records" do
-      10.times { zoo.records.create() }
-      zoo.set_total_records
-      expect(zoo.total_records).to eq(zoo.records.count)
-    end
-  end
 
   describe "#set_update_time" do
     it "sets updated_at time" do
