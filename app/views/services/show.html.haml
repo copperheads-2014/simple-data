@@ -2,43 +2,33 @@
   %h4
     = link_to "Update API", "/services/#{@service.slug}/edit"
 
-.row.service_banner
-
-
-  .col-md-8.col-sm-8.col-lg-8
-    %h2= @service.name
-    %p= @service.description
-
-  .col-md-3.pull-right
-    %h4 Details
-    %ul
-      %li Current Version:
-      %li
-        License Type:
-        = @service.license
-        %a{"title" => "Learn more about the #{@service.license} from the Choose A Licence site.", "data-placement" => "right", "data-toggle" => "tooltip", :href => "http://choosealicense.com/", :rel => "tooltip", target: "_blank" }
-          %i.fa.fa-info-circle
-      %li
-        Creator:
-        = @organization.name
-      %li= @service.created_at.strftime("Created: %m/%d/%Y")
-      %li= @service.updated_at.strftime("Last update: %m/%d/%Y")
-
-
+.row
+.col-md-2
+.col-md-8
+  %h2= @service.name
+  %p= @service.description
+  %h4 Details
+  %ul
+    %li Current Version:
+    %li
+      License Type:
+      = @service.license
+      %a{"title" => "Learn more about the #{@service.license} from the Choose A Licence site.", "data-placement" => "right", "data-toggle" => "tooltip", :href => "http://choosealicense.com/", :rel => "tooltip", target: "_blank" }
+        %i.fa.fa-info-circle
+    %li
+      Creator:
+      = @organization.name
+    %li= @service.created_at.strftime("Created: %m/%d/%Y")
+    %li= @service.updated_at.strftime("Last update: %m/%d/%Y")
 %h3 Description
 %p
   = @service.description
-
-
 %hr
-
 %h3 How to use
 %p
   In order to use the
   = @service.name
   service, do the following things...
-
-
 .service_headers
   %h4 Headers
 

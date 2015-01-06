@@ -1,7 +1,13 @@
 .col-md-2
 .col-md-8
-  %h2
-    = @organization.name
+  .org-banner
+    %h2
+      = @organization.name
+    %p.org-desc
+      = @organization.description
+  %p.org-date
+    Joined simple-data on:
+    = @organization.created_at
   - @services.each do |service|
     %ul.serv-list
       %li.serv-name
