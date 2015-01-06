@@ -1,6 +1,5 @@
 - if current_user
-  .col-md-2
-  .col-md-8
+  .col-md-8.col-md-offset-2
     = link_to "Create API", services_new_path, :class => "form-control btn btn-default", :id => "new-api"
     -if params[:page] == "1" || !params[:page]
       -if current_user.organization
@@ -55,13 +54,11 @@
             %hr
     .custom_pagination
       = will_paginate @services
-  .col-md-2
 
 
 
 - if !current_user
-  .col-md-2
-  .col-md-8
+  .col-md-8.col-md-offset-2
     %h2 APIs Available:
     %ul.service-list
       - @services.each do |s|
@@ -81,5 +78,3 @@
           %hr
     .custom_pagination
       = will_paginate @services
-  .col-md-2
-
