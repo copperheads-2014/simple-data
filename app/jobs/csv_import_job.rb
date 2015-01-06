@@ -8,19 +8,14 @@ class CsvImportJob < ActiveJob::Base
     @version_update = VersionUpdate.find(version_update_id)
     @version_update.update(status: :processing)
     # download the file locally
-    p "BEFORE FILE"
     file = download_file(@version_update.filename)
     # parse the headers
-    p "BEFORE HEADERS"
     headers = grab_headers(file)
-    p "AFTER HEADERS"
-    p 'TESTING THE PRINT'
     p headers
     # create the headers schema
-    create_header_schema(headers)
-    p 'AFTER SCHEMA CREATION'
+    create_headers_schema(headers)
     # import the data
-    @version_update.version.create_records(file)
+    create_records(file, @version_update.version.id)
     # delete the file
     @version_update.update(status: :completed)
   rescue => e
@@ -42,6 +37,17 @@ class CsvImportJob < ActiveJob::Base
   def create_headers_schema(headers)
     headers.each do |header_name|
       @version_update.version.headers << Header.create(name: header_name)
+    end
+  end
+
+  def create_records(file, version_id)
+    version = Version.find(version_id)
+    last_count = version.total_records
+    CSV.new(file, headers: true, header_converters: lambda { |h| h.downcase.gsub(' ', '_') unless h.nil? }
+      ).each do |row|
+      row_hash = row.to_hash
+      row_hash[:insertion_id] = last_count += 1
+      version.insert_record(row_hash)
     end
   end
 
