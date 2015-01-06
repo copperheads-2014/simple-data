@@ -1,3 +1,7 @@
+%h3
+  -if @error
+    = @error
+
 %h1
   Update
   = @service.name
@@ -21,6 +25,7 @@
 
 = form_for @service, as: :service, url: "/services/"+@service.slug, method: :put, multipart: true do |f|
   = f.hidden_field :file, value: "https://#{ENV['S3_BUCKET']}.s3.amazonaws.com/"
+  = f.hidden_field :update_params, value: {updating: true, append: true}
   = f.submit "Update", data: { confirm: "NOTE: You are about to make this csv's data available to the public. If you are okay with this, Press OK to continue:" }, class: "form-control btn btn-default", :id => "update-service-button"
 
 %h2
