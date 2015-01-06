@@ -4,7 +4,6 @@ require 'open-uri'
 class CsvImportJob < ActiveJob::Base
   queue_as :default
 
-<<<<<<< HEAD
   def perform(version_update_id, update_params = {updating: false, append: false, new_version: false}, params={} )
     @version_update = VersionUpdate.find(version_update_id)
     @version_update.update(status: :processing)
