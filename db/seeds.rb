@@ -20,10 +20,14 @@ eleni = User.create(
 
 police = ServiceCreation.create({
     description: "a list of all the popos",
-    name: "Police Stations"
+    name: "Police Stations",
   }, eleni)
 
-police.create_records('db/Police_Stations.csv')
+police.latest_version.create_records(CSV.read(
+  'db/Police_Stations.csv',
+   headers: true,
+  :header_converters => lambda { |h| h.downcase.gsub(' ','_') unless h.nil?}
+))
 
 services = [
   # "311_Service_Requests_-_Tree_Debris.csv",
@@ -55,17 +59,21 @@ services.each do |file|
   user = User.create(
     name: Faker::Name.name,
     email: Faker::Internet.email,
-    organization: Organization.create(name: Faker::Company.name),
+    organization: Organization.create(name: Faker::Company.name, description: "longggsgsgs description"),
     password: 'password',
     password_confirmation: 'password'
   )
 
   service = ServiceCreation.create({
-    description: "#{file}".chomp('.csv'),
+    description: "longer description than before",
     name: "#{file}".chomp('.csv'),
     }, user)
 
-  service.create_records("db/#{file}")
+  service.latest_version.create_records(CSV.read(
+    "db/#{file}",
+    headers: true,
+    :header_converters => lambda { |h| h.downcase.gsub(' ','_') unless h.nil?}
+    ))
 
   update = VersionUpdate.create!(version_id: service.latest_version.id, user_id: user.id, filename: "db/#{file}", status: :completed)
 end
