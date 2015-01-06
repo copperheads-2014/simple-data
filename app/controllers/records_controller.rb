@@ -1,11 +1,15 @@
 class RecordsController < ApplicationController
+  attr_reader :settings
+
   def index
     @service = Service.find_by(slug: params[:service_slug])
     v_num = params[:version][1..-1]
     @version = @service.versions.find_by(number: v_num)
     if @service.activated && @version.active
-      @records = RecordQueryService.new(@service, default_params.merge(params)).fetch_records
-      @formatter = DataFormatter.new(start: params[:start], data: @records.to_json(json_options))
+      @settings = default_params.merge(params)
+      @records = RecordQueryService.new(@service, settings).fetch_records
+      @formatter = DataFormatter.new(metadata_options)
+      @formatter.data = @records.to_json(json_options)
       render json: @formatter.to_json(except: ["created_at","updated_at","id"]), status: 200
     else
       render json: "This service has been deactivated. Check the service's documentation for details."
