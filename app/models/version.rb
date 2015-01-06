@@ -50,12 +50,13 @@ class Version < ActiveRecord::Base
   # end
   #                       <----------------->
 
-  def old_create_records(file)
+  def create_records(file)
     count = total_records
     file.each do |row|
       row_hash = row.to_hash
       row_hash[:insertion_id] = count += 1
       insert_record(row_hash)
     end
+    set_total_records
   end
 end
