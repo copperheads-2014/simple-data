@@ -32,8 +32,9 @@
     .service_headers
       %h3 Headers:
       %ul
-        %li
-          FIGURE OUT HEADERS
+        - @version.headers.each do |header|
+          %li
+            = header.name
     .service_example_json
       %h3 Example Response:
       = @service.latest_version.records.first.to_json(except: ["insertion_id", "_id"])
