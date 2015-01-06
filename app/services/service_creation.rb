@@ -14,7 +14,6 @@ class ServiceCreation
     @service.organization_id = @user.organization_id
     @service.creator_id = @user.id
     @service.save!
-    @service.versions.create
     @service
   end
 end
