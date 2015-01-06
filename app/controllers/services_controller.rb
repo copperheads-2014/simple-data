@@ -14,8 +14,10 @@ class ServicesController < ApplicationController
   def new
     if current_user && current_user.organization
       @service = Service.new()
+    elsif current_user
+      redirect_to new_organization_path
     else
-      redirect_to "/organizations/new"
+      redirect_to new_user_path
     end
   end
 
