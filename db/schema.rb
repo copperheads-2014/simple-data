@@ -56,14 +56,6 @@ ActiveRecord::Schema.define(version: 20150107223332) do
     t.datetime "updated_at"
   end
 
-  create_table "service_updates", force: :cascade do |t|
-    t.integer  "service_id"
-    t.integer  "user_id"
-    t.integer  "records_added"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "services", force: :cascade do |t|
     t.integer  "organization_id",                 null: false
     t.string   "description"

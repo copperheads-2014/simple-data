@@ -70,7 +70,7 @@ services.each do |file|
     }, user)
 
   service.latest_version.create_records(CSV.read(
-    "db/#{file}",
+    "db/samples/#{file}",
     headers: true,
     :header_converters => lambda { |h| h.downcase.gsub(' ','_') unless h.nil?}
     ))
