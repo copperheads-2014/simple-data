@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :users, except: [:index]
   resources :sessions, only: [:new, :create, :destroy]
   resources :organizations, only: [:new, :create, :show, :index]
+  resources :versions, only: [:index, :show]
 
   get 'about_us' => 'pages#about_us'
   get 'faqs' => 'pages#faqs'
@@ -22,7 +23,10 @@ Rails.application.routes.draw do
 
   match "/services/:service_slug", to: "services#show_header_metadata", via: [:options]
 
+  get "services/:service_slug/versions", to: "versions#index"
+  get "services/:service_slug/versions/:version_id", to: "versions#show"
   get "/services/:service_slug/:version/records", to: "records#index"
+
 
   resources :upload_csv, only: :index
 
