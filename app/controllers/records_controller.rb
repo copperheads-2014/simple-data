@@ -38,7 +38,7 @@ class RecordsController < ApplicationController
     {
       :start => first_record,
       :end => last_record,
-      :total => @version.records.count,
+      :total => @records.length,
       :num_pages => num_pages,
       :page => page,
       :page_size => @settings[:page_size],
