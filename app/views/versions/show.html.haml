@@ -3,38 +3,17 @@
   .org-banner
     %h1
       = @service.name
+      Version:
+      = @version.number
     %p.org-desc
       = @service.description
   %p.org-date
     Created on:
-    = @service.created_at
-  -if current_user && current_user.organization_id == @service.organization_id
-    = link_to "Update", {:controller => "services", :action => "edit", :service_slug => @service.slug}, {:id => "update-service-button", :class => "btn btn-default form-control"}
-  %h3 Status:
-  - if @service.activated && !current_user || @service.activated && current_user.organization_id != @service.organization_id
-    %p This API is currently activated, meaning anyone can access its data.
-  - if !@service.activated && !current_user || !@service.activated && current_user.organization_id != @service.organization_id
-    %p This API is currently deactivated, meaning no one can access its data.
-  -if current_user && current_user.organization_id == @service.organization_id
-    - if @service.activated && @service.organization_id == current_user.organization_id
-      %p This API is currently activated, meaning anyone can access its data. If you wish to close access to this API, Click below.
-      = form_tag({controller: "services", action: :deactivate}, method: "put", data: { confirm: 'Are you sure you want to deactivate this API? Once you do, Developers will no longer have access to this data. Press OK to deactivate.' })
-      = submit_tag "Deactivate API", :class => "btn btn-default form-control activ-serv-btn"
-
-    - if @service.activated == false && @service.organization_id == current_user.organization_id
-      %p This API is currently deactivated, meaning no one can access its data. If you wish to reopen access to this API, Click below.
-      = form_tag({controller: "services", action: :activate}, method: "put", data: { confirm: 'Are you sure you want to activate this API? Once you do, Developers will be able to access this data. Press OK to activate.' })
-      = submit_tag "Activate API", :class => "btn btn-default form-control activ-serv-btn"
+    = @version.created_at
   %ul.serv-list
     %li.serv-name
-    - if current_user && @service.organization_id == current_user.organization_id
-      %ul
-        %li
-    %h3 Details
+    %h3 Version Details:
     %ul
-      %li
-        Current Version:
-        = @service.latest_version.number
       %li
         License Type:
         = @service.license
@@ -43,19 +22,27 @@
       %li
         Creator:
         = link_to "#{@organization.name}", "/organizations/#{@organization.id}"
-      %li= @service.created_at.strftime("Created: %B %d, %Y")
-      %li= @service.updated_at.strftime("Last update: %B %d, %Y")
+      %li= @version.created_at.strftime("Created: %B %d, %Y")
+      %li= @version.updated_at.strftime("Last update: %B %d, %Y")
     %h3 How to Use:
     %p
       In order to use the
       = @service.name
       API, do the following things...
     .service_headers
-      %h4 Headers:
+      %h3 Headers:
       %ul
-      - @headers.each do |att|
-        %li.header-list=att
+        %li
+          FIGURE OUT HEADERS
     .service_example_json
       %h3 Example Response:
       = @service.latest_version.records.first.to_json(except: ["insertion_id", "_id"])
+    .versions
+      %h4
+        This is version
+        =@version.number
+        of
+        ="#{@service.name}" + '.'
+        The latest version is
+        ="#{@service.latest_version.number}" + '.'
 .col-md-2

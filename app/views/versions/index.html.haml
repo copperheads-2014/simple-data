@@ -1,0 +1,18 @@
+.col-md-2
+.col-md-8
+  .org-banner
+    %h1
+      = @service.name
+    %p.org-desc
+      = @service.description
+  -@versions.each do |v|
+    %ul.serv-list
+      %li.serv-name
+        Version:
+        = link_to "#{v.number}", "/services/#{@service.slug}/versions/#{v.number}"
+      %ul
+        %li= v.created_at.strftime("Created: %B %d, %Y")
+      %ul
+        %li= v.updated_at.strftime("Last Updated: %B %d, %Y")
+.col-md-2
+
