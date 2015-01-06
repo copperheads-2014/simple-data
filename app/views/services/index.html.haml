@@ -51,6 +51,7 @@
               %li.sublist
                 Most Recent Update: #{s.created_at.strftime("%B %d, %Y")}
               %li.sublist
+                =mail_to s.organization.users.first.email, " Contact email", encode: "javascript", class: "fa fa-envelope"
             %hr
     .custom_pagination
       = will_paginate @services
@@ -76,6 +77,7 @@
             %li.sublist
               Most Recent Update: #{s.created_at.strftime("%B %d, %Y")}
             %li.sublist
+              =mail_to s.organization.users.first.email, " Contact email", encode: "javascript", class: "fa fa-envelope"
           %hr
     .custom_pagination
       = will_paginate @services
