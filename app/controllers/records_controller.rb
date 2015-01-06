@@ -34,4 +34,71 @@ class RecordsController < ApplicationController
     @options
   end
 
+  def metadata_options
+    {
+      :start => first_record,
+      :end => last_record,
+      :total => @service.records.count,
+      :num_pages => num_pages,
+      :page => page,
+      :page_size => @settings[:page_size],
+      :uri => uri,
+      :first_page_uri => first_page_uri,
+      :last_page_uri => "/services/#{@service.slug}/records?page=0&page_size=50",
+      :previous_page_uri => previous_page_uri,
+      :next_page_uri => next_page_uri
+    }
+  end
+
+  def page
+    [0, @settings[:page]].max
+  end
+
+  def num_pages
+    @service.total_records / @settings[:page_size] + 1
+  end
+
+  def last_record
+    [@settings[:page_size], @service.records.count].min
+  end
+
+  def first_record
+    [@settings[:start], 1].max
+  end
+
+  def uri
+    "/services/#{@service.slug}/records"
+  end
+
+  def first_page_uri
+    "/services/#{@service.slug}/records?page=0&page_size=#{@settings[:page_size]}"
+  end
+
+  def last_page_uri
+    "/services/#{@service.slug}/records?page=#{num_pages-1}&page_size=50"
+  end
+
+  def previous_page_uri
+    "/services/#{@service.slug}/records?page=#{previous_page}&page_size=50" if previous_page
+  end
+
+  def next_page_uri
+    "/services/#{@service.slug}/records?page=#{next_page}&page_size=50" if next_page
+  end
+
+  def previous_page
+    if page == 0
+      nil
+    else
+      page-1
+    end
+  end
+
+  def next_page
+    if page == num_pages-1
+      nil
+    else
+      [page+1]
+    end
+  end
 end
