@@ -35,7 +35,6 @@ class ServicesController < ApplicationController
     else
       redirect '/'
     end
-
   end
 
   def set_headers
