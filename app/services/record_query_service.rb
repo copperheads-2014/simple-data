@@ -1,13 +1,13 @@
 class RecordQueryService
-  attr_reader :service, :options
+  attr_reader :options, :version
 
-  def initialize(service, options={})
-    @service = service
+  def initialize(version, options={})
     @options = options
+    @version = version
   end
 
   def fetch_records
-    scope = service.latest_version.records
+    scope = version.records
     scope = with_filters(scope)
     scope = with_offset(scope)
     scope = with_limit(scope)
