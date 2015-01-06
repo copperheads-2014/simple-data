@@ -31,7 +31,7 @@ class ServicesController < ApplicationController
     @service.organization_id = current_user.organization.id
     @service.versions.last.updates << VersionUpdate.create(filename: params[:service][:file])
     if @service.save
-      CsvImportJob.perform_later(@service.latest_version.updates.last.id, params[:service])
+      CsvImportJob.perform_later(@service.latest_version.updates.last.id, false, params[:service])
       #Redirect to pending view
       redirect_to "/services"
     else
@@ -74,8 +74,9 @@ class ServicesController < ApplicationController
         #Read in the posted file from S3
         update_csv = retrieve_file(params[:service][:file]).read
         if headers_match?(update_csv, @service)
-          old_record_count = @service.records.count
-          ApiUpdateJob.perform_later(@service.id, current_user.id, old_record_count, params[:service])
+          # old_record_count = @service.records.count
+          CsvImportJob.perform_later(@service.latest_version.updates.last.id, true, params[:service])
+
           format.html { redirect_to "/services/#{@service.slug}", notice: "Service was successfully updated."}
           else
           format.html { redirect_to "/services/#{@service.slug}/edit"}
@@ -111,9 +112,10 @@ class ServicesController < ApplicationController
     params.require(:service).permit(:description, :name)
   end
 
-  def headers_match?(new_file, existing_doc)
-    existing_headers = existing_doc.show_headers
-    new_file.headers.sort == existing_headers.sort
+  def headers_match?(new_file, service)
+    existing_headers = service.latest_version.headers.map { |header| header.name.downcase }
+    new_file_headers = new_file.headers.map {|header| header.downcase }
+    new_file_headers.sort == existing_headers.sort
   end
 
   def get_headers(service)
