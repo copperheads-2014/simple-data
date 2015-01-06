@@ -4,14 +4,14 @@ require 'open-uri'
 class CsvImportJob < ActiveJob::Base
   queue_as :default
 
-  def perform(version_update_id, updating=false, append=false, new_version=false, params={})
+  def perform(version_update_id, update_params = {updating: false, append: false, new_version: false}, params={} )
     @version_update = VersionUpdate.find(version_update_id)
     @version_update.update(status: :processing)
 
-    if updating
-      append_with_same_headers if append
+    if update_params[:updating]
+      append_with_same_headers if update_params[:append]
       # maybe write a method: replace_with_same_headers
-      create_new_version if new_version
+      create_new_version if update_params[:new_version]
     else
       create_first_version
     end
@@ -19,6 +19,7 @@ class CsvImportJob < ActiveJob::Base
   end
 
   def create_first_version
+    @version_update.update(status: :processing)
     download_and_add_records
     # parse the headers
     headers = grab_headers(file)
