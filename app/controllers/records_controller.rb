@@ -59,7 +59,7 @@ class RecordsController < ApplicationController
   end
 
   def last_record
-    [@settings[:page_size], @version.records.count].min
+    [@settings[:page_size], @records.count].min
   end
 
   def first_record
