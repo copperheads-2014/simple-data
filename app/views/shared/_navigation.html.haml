@@ -1,7 +1,7 @@
 %nav.navbar.navbar-default{:role => "navigation"}
   .container-fluid
     .navbar-header
-      .navbar-brand= link_to "simple-data", root_path
+      .navbar-brand= link_to "SimpleData", root_path
     .navbar-collapse.collapse
       %ul.nav.navbar-nav.navbar-right
         %li
@@ -13,19 +13,23 @@
         %li
           - if current_user
             .dropdown
-              %button#dropdownMenu1.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "data-toggle" => "dropdown", :type => "button"}
+              %button.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "data-toggle" => "dropdown", :type => "button"}
                 = current_user.name if session[:user_id]
                 %span.caret
               %ul.dropdown-menu{"aria-labelledby" => "dropdownMenu1", :role => "menu"}
                 %li{:role => "presentation"}
+                %i.fa.fa-user
                   = link_to "Your Profile", user_path(current_user)
                 -if current_user.organization
                   %li{:role => "presentation"}
+                  %i.fa.fa-building-o
                     = link_to "Your Organization", organization_path(current_user.organization)
                 -if !current_user.organization
                   %li{:role => "presentation"}
+                  %i.fa.fa-building-o
                     = link_to "Create Organization", new_organization_path
                 %li{:role => "presentation"}
+                %i.fa.fa-times
                   = link_to "Logout", session_path(session[:user_id]), method: :delete if session[:user_id]
           - else
             = link_to "Log In", new_session_path
