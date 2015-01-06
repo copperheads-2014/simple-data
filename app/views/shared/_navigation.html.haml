@@ -9,6 +9,8 @@
         %li
           = link_to "Browse APIs", services_path
         %li
+          = link_to "Browse Organizations", organizations_path
+        %li
           - if current_user
             .dropdown
               %button#dropdownMenu1.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "data-toggle" => "dropdown", :type => "button"}
