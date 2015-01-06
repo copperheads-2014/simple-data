@@ -1,5 +1,6 @@
 class Service < ActiveRecord::Base
   belongs_to :organization
+  belongs_to :creator, class_name: "User"
   has_many :service_updates
   has_many :service_tags
   has_many :tags, through: :service_tags
