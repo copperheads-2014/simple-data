@@ -11,10 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150104202547) do
+ActiveRecord::Schema.define(version: 20150105164656) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "headers", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.string   "type"
+    t.integer  "version_id",  default: 1
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
 
   create_table "organizations", force: :cascade do |t|
     t.string   "name"
@@ -30,20 +39,11 @@ ActiveRecord::Schema.define(version: 20150104202547) do
     t.datetime "updated_at"
   end
 
-  create_table "service_updates", force: :cascade do |t|
-    t.integer  "service_id"
-    t.integer  "user_id"
-    t.integer  "records_added"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "services", force: :cascade do |t|
     t.integer  "organization_id",                 null: false
     t.string   "description"
     t.string   "name",                            null: false
     t.string   "slug",                            null: false
-    t.integer  "version",         default: 1,     null: false
     t.integer  "total_records"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -52,7 +52,6 @@ ActiveRecord::Schema.define(version: 20150104202547) do
     t.integer  "creator_id"
   end
 
-  add_index "services", ["organization_id", "version"], name: "index_services_on_organization_id_and_version", using: :btree
   add_index "services", ["organization_id"], name: "index_services_on_organization_id", using: :btree
 
   create_table "tags", force: :cascade do |t|
@@ -68,6 +67,24 @@ ActiveRecord::Schema.define(version: 20150104202547) do
     t.string   "password_digest"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "version_updates", force: :cascade do |t|
+    t.integer  "version_id"
+    t.integer  "user_id"
+    t.string   "filename"
+    t.integer  "status",     default: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "versions", force: :cascade do |t|
+    t.integer  "number",        default: 1
+    t.integer  "service_id"
+    t.boolean  "active",        default: true
+    t.integer  "total_records", default: 0,    null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
 end

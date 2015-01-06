@@ -44,12 +44,14 @@
 
   %ul
   - @headers.each do |att|
-    %li=att
+    %li=att.name
 
+%h4 Total Records
+=@service.latest_version.records.count
 
 .service_example_json
   %h4 Example Response
-  = @service.records.first.to_json(except: ["insertion_id", "_id"])
+  = @service.latest_version.records.first.to_json(except: ["insertion_id", "_id"])
 
 -if current_user
   %h4 Activation

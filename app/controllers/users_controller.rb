@@ -51,7 +51,7 @@ class UsersController < ApplicationController
   def collect_logs(user)
     collection = []
     services = Service.where(creator_id: user.id).to_a
-    updates = ServiceUpdate.where(user_id: user.id).to_a
+    updates = VersionUpdate.where(user_id: user.id).to_a
     collection << services
     collection << updates
     collection.flatten!

@@ -24,12 +24,12 @@
   = f.submit "Update", data: { confirm: "NOTE: You are about to make this csv's data available to the public. If you are okay with this, Press OK to continue:" }, class: "form-control btn btn-default", :id => "update-service-button"
 
 %h2
-  Example data:
+  Headers:
 
 %ul
-  - @service.records.first.attributes.to_a[1..-1].each do |a|
+  - @service.latest_version.headers.each do |a|
     %li
-      = a[0] + ": " + a[1].to_s
+      = a.name
 / ************* I added some of this for clarification.  This page can be refactored of what information will be truly relevant
 %div.container
   When you are adding data, make sure that the file you are uploading does not contain data that already exists if you do not want duplicate data.
@@ -39,6 +39,6 @@
 
 Make sure that your file has the following headers
 %ul
-  - @service.records.first.attributes.keys[1..-1].each do |key|
+  - @service.latest_version.headers.each do |key|
     %li
-      = key
+      = key.name

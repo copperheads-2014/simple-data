@@ -25,18 +25,15 @@ class ServicesController < ApplicationController
   end
 
   def create
-    @service = Service.new(service_params)
+    @service = ServiceCreation.create(service_params, current_user)
     @service.organization_id = current_user.organization.id
-
-    respond_to do |format|
-      if @service.save
-        ApiCreateJob.perform_later(@service.id, current_user.id, params[:service])
-        format.html { redirect_to "/services", notice: 'Service was successfully created.' }
-        format.json { render :show, status: :created, location: "/services" }
-      else
-        format.html { render :new }
-        format.json { render json: @service.errors, status: :unprocessable_entity }
-      end
+    @service.versions.last.updates << VersionUpdate.create(filename: params[:service][:file])
+    if @service.save
+      CsvImportJob.perform_later(@service.latest_version.updates.last.id, params[:service])
+      #Redirect to pending view
+      redirect_to "/services"
+    else
+      redirect '/'
     end
   end
 
@@ -124,4 +121,7 @@ class ServicesController < ApplicationController
   def set_service
     @service ||= Service.find_by(slug: params[:service_slug])
   end
+
 end
+
+

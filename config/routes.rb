@@ -22,7 +22,7 @@ Rails.application.routes.draw do
 
   match "/services/:service_slug", to: "services#show_header_metadata", via: [:options]
 
-  get "/services/:service_slug/records", to: "records#index"
+  get "/services/:service_slug/:version/records", to: "records#index"
 
   resources :upload_csv, only: :index
 
