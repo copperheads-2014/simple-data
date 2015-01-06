@@ -31,7 +31,7 @@ class ServicesController < ApplicationController
     @service.organization_id = current_user.organization.id
     @service.versions.last.updates << VersionUpdate.create(filename: params[:service][:file])
     if @service.save
-      CsvImportJob.perform_later(@service.latest_version.updates.last.id, false, params[:service])
+      CsvImportJob.perform_later(@service.latest_version.updates.last.id, update_params, params[:service])
       #Redirect to pending view
       redirect_to "/services"
     else
@@ -67,15 +67,15 @@ class ServicesController < ApplicationController
 
   def update
     @service = Service.find_by(slug: params[:service_slug])
+    update_params = params[:update_params]
     respond_to do |format|
-
       #Ensure the individual submitting owns the organization
       if @service.save && (@service.organization_id == current_user.organization_id)
         #Read in the posted file from S3
         update_csv = retrieve_file(params[:service][:file]).read
         if headers_match?(update_csv, @service)
           # old_record_count = @service.records.count
-          CsvImportJob.perform_later(@service.latest_version.updates.last.id, true, params[:service])
+          CsvImportJob.perform_later(@service.latest_version.updates.last.id, update_params, params[:service])
 
           format.html { redirect_to "/services/#{@service.slug}", notice: "Service was successfully updated."}
           else
