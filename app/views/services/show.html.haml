@@ -30,11 +30,11 @@
     - if current_user && @service.organization_id == current_user.organization_id
       %ul
         %li
-    %h3 Details
+    %h3 Details:
     %ul
       %li
         Current Version:
-        = @service.version
+        = @service.latest_version.number
       %li
         License Type:
         = @service.license
@@ -45,17 +45,5 @@
         = link_to "#{@organization.name}", "/organizations/#{@organization.id}"
       %li= @service.created_at.strftime("Created: %B %d, %Y")
       %li= @service.updated_at.strftime("Last update: %B %d, %Y")
-    %h3 How to Use:
-    %p
-      In order to use the
-      = @service.name
-      API, do the following things...
-    .service_headers
-      %h4 Headers:
-      %ul
-      - @headers.each do |att|
-        %li.header-list=att
-    .service_example_json
-      %h3 Example Response:
-      = @service.records.first.to_json(except: ["insertion_id", "_id"])
+    = link_to "Versions", "/services/#{@service.slug}/versions", {:id => "update-service-button", :class => "btn btn-default form-control"}
 .col-md-2
