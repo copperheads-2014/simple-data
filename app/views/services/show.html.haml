@@ -8,6 +8,7 @@
   %p.org-date
     Created on:
     = @service.created_at
+  %hr
   -if current_user && current_user.organization_id == @service.organization_id
     = link_to "Update", {:controller => "services", :action => "edit", :service_slug => @service.slug}, {:id => "update-service-button", :class => "btn btn-default form-control"}
   %h3 Status:
