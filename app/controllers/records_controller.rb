@@ -38,7 +38,7 @@ class RecordsController < ApplicationController
     {
       :start => first_record,
       :end => last_record,
-      :total => @service.records.count,
+      :total => @version.records.count,
       :num_pages => num_pages,
       :page => page,
       :page_size => @settings[:page_size],
@@ -55,11 +55,11 @@ class RecordsController < ApplicationController
   end
 
   def num_pages
-    @service.total_records / @settings[:page_size] + 1
+    @version.total_records / @settings[:page_size] + 1
   end
 
   def last_record
-    [@settings[:page_size], @service.records.count].min
+    [@settings[:page_size], @version.records.count].min
   end
 
   def first_record
