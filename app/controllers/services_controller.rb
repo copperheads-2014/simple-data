@@ -76,6 +76,7 @@ class ServicesController < ApplicationController
         if headers_match?(update_csv, @service)
           # old_record_count = @service.records.count
           CsvImportJob.perform_later(@service.latest_version.updates.last.id, update_params, params[:service])
+
           format.html { redirect_to "/services/#{@service.slug}", notice: "Service was successfully updated."}
           else
           format.html { redirect_to "/services/#{@service.slug}/edit"}
