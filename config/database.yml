@@ -10,8 +10,3 @@ development:
 test:
   <<: *default
   database: simple_data_test
-
-production:
-  <<: *default
-  database: simple_data
-  password: <%= ENV['SIMPLE_DATA_DATABASE_PASSWORD'] %>
