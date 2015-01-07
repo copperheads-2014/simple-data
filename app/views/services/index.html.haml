@@ -2,7 +2,6 @@
   .col-md-8.col-md-offset-2
     -if params[:page] == "1" || !params[:page]
       -if current_user.organization
-        = link_to "Create API", new_service_path, :class => "form-control btn btn-default pull-right", :id => "new-api"
         %h2 Your Organization's APIs:
         %ul.service-list
           - @my_services.each do |s|
@@ -22,7 +21,8 @@
                 %li.sublist
                   = link_to "Update", {:controller => "services", :action => "edit", :service_slug => s.slug}, {:id => "update-service-button", :class => "btn btn-default form-control"}
               %hr
-        = paginate @my_services
+        .custom_pagination
+          = paginate @my_services
 
     -if !current_user.organization
       %h4
@@ -43,59 +43,21 @@
       = f.search_field :name_or_description_or_tags_name_cont, :class => "form-control", :id => "search-bar"
       %p
         = f.submit "Search", :class => "btn btn-default form-control search-btn"
-    -@results.each do |r|
-      %ul.serv-list
-        %li
-          = link_to "#{r.name}", "/services/#{r.slug}"
-          = link_to "(expand)", "#", :class => "displayer", :id => "#{r.slug}"
-        %ul.hideable{:id => "#{r.slug}"}
-          %li.sublist
-            = r.description
-          %li.sublist
-            Created: #{r.created_at.strftime("%B %d, %Y")}
-          %li.sublist
-            Most Recent Update: #{r.created_at.strftime("%B %d, %Y")}
-          %li.sublist
-            =mail_to r.organization.users.first.email, " Contact email", encode: "javascript", class: "fa fa-envelope"
-        %hr
-    .custom_pagination
-      = paginate @results
     %ul.service-list
-      - @services.each do |s|
-        -unless s.organization_id == current_user.organization_id
-          %ul.serv-list
-            %li
-              = link_to "#{s.name}", "/services/#{s.slug}"
-              = link_to "(expand)", "#", :class => "displayer", :id => "#{s.slug}"
-            %ul.hideable{:id => "#{s.slug}"}
-              %li.sublist
-                = s.description
-              %li.sublist
-                Created: #{s.created_at.strftime("%B %d, %Y")}
-              %li.sublist
-                Most Recent Update: #{s.created_at.strftime("%B %d, %Y")}
-              %li.sublist
-                =mail_to s.organization.users.first.email, " Contact email", encode: "javascript", class: "fa fa-envelope"
-            %hr
-    = paginate @services
-
-- if !current_user
-  .col-md-8.col-md-offset-2
-    %h2 APIs Available:
-    %ul.service-list
-      - @services.each do |s|
+      -@results.each do |r|
         %ul.serv-list
           %li
-            = link_to "#{s.name}", "/services/#{s.slug}"
-            = link_to "(expand)", "#", :class => "displayer", :id => "#{s.slug}"
-          %ul.hideable{:id => "#{s.slug}"}
+            = link_to "#{r.name}", "/services/#{r.slug}"
+            = link_to "(expand)", "#", :class => "displayer", :id => "#{r.slug}"
+          %ul.hideable{:id => "#{r.slug}"}
             %li.sublist
-              = s.description
+              = r.description
             %li.sublist
-              Created: #{s.created_at.strftime("%B %d, %Y")}
+              Created: #{r.created_at.strftime("%B %d, %Y")}
             %li.sublist
-              Most Recent Update: #{s.created_at.strftime("%B %d, %Y")}
+              Most Recent Update: #{r.created_at.strftime("%B %d, %Y")}
             %li.sublist
-              =mail_to s.organization.users.first.email, " Contact email", encode: "javascript", class: "fa fa-envelope"
+              =mail_to r.organization.users.first.email, " Contact email", encode: "javascript", class: "fa fa-envelope"
           %hr
-    = paginate @services
+      .custom_pagination
+        = paginate @results
