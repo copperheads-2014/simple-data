@@ -22,8 +22,7 @@
                 %li.sublist
                   = link_to "Update", {:controller => "services", :action => "edit", :service_slug => s.slug}, {:id => "update-service-button", :class => "btn btn-default form-control"}
               %hr
-        .custom_pagination
-          = paginate @my_services
+        = paginate @my_services
 
     -if !current_user.organization
       %h4
@@ -78,8 +77,7 @@
               %li.sublist
                 =mail_to s.organization.users.first.email, " Contact email", encode: "javascript", class: "fa fa-envelope"
             %hr
-    .custom_pagination
-      = paginate @services
+    = paginate @services
 
 - if !current_user
   .col-md-8.col-md-offset-2
@@ -100,5 +98,4 @@
             %li.sublist
               =mail_to s.organization.users.first.email, " Contact email", encode: "javascript", class: "fa fa-envelope"
           %hr
-    .custom_pagination
-      = paginate @services
+    = paginate @services
