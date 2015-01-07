@@ -1,7 +1,8 @@
 class HeadersController < ApplicationController
 
   def index
-    @version = Version.find(params[:version_id])
+    @service = Service.find_by(slug: params[:service_slug])
+    @version = @service.versions.find_by(number: params[:id])
     @headers = @version.headers
   end
 
