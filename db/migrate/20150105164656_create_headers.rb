@@ -4,7 +4,7 @@ class CreateHeaders < ActiveRecord::Migration
       t.string :name
       t.text :description
       t.string :data_type
-      t.integer :version_id, default: 1
+      t.integer :version_id
 
       t.timestamps null: false
     end
