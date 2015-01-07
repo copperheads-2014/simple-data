@@ -41,9 +41,9 @@
     %h2 APIs Available:
     = search_form_for @q do |f|
       = f.label "Search:"
-      = f.search_field :name_or_description_or_tags_name_cont, :class => "search-bar"
+      = f.search_field :name_or_description_or_tags_name_cont, :class => "form-control", :id => "search-bar"
       %p
-        = f.submit "Search", :class => "btn btn-default form-control search-fields"
+        = f.submit "Search", :class => "btn btn-default form-control search-btn"
     -@results.each do |r|
       %ul.serv-list
         %li
@@ -59,6 +59,8 @@
           %li.sublist
             =mail_to r.organization.users.first.email, " Contact email", encode: "javascript", class: "fa fa-envelope"
         %hr
+    .custom_pagination
+      =will_paginate @results
     %ul.service-list
       - @services.each do |s|
         -unless s.organization_id == current_user.organization_id
