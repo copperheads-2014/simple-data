@@ -6,18 +6,7 @@
       What's
       %span= t('site_title')
       ?
-    %p
-      %span= t('site_title')
-      is an attempt to make the Web more free. By creating a place where people can upload the amazing data they have (and making that available to web developers) we can create a stronger, better, more creative Internet--and world.
-.container-fluid
-  -if current_user
-    %a.btn.bubbles.col-xs-6{href: new_service_path} Create API
-  -if !current_user
-    %a.btn.bubbles.col-xs-6{href: new_user_path} Create API
-  %a.btn.bubbles.col-xs-6{href: services_path} Explore APIs
-.container-fluid
-  .row.container-fluid
-  .row
+  .row.blocks-container
     .col-md-4.info_blocks.col-xs-4
       .fa-container
         %i.fa.fa-file.fa-5x
@@ -39,7 +28,10 @@
         Devs make
         %span apps
       %p Coders are hungry for data--because it means they can make things to make the world better. Go ahead--let them have a crack at it!
+
 .container-fluid
-  .row
-    .col-xs-3
-    %a.btn.bubbles.col-xs-8.learn-more{href: faqs_path} Learn More!
+  -if current_user
+    %a.btn.bubbles.col-xs-6{href: new_service_path} Create API
+  -if !current_user
+    %a.btn.bubbles.col-xs-6{href: new_user_path} Create API
+  %a.btn.bubbles.col-xs-6{href: services_path} Explore APIs
