@@ -27,23 +27,3 @@
   = f.hidden_field :append, value: "false"
   / change to true based on click
   = f.submit "Update", data: { confirm: "NOTE: You are about to make this csv's data available to the public. If you are okay with this, Press OK to continue:" }, class: "form-control btn btn-default", :id => "update-service-button"
-
-%h2
-  Headers:
-
-%ul
-  - @service.latest_version.headers.each do |a|
-    %li
-      = a.name
-/ ************* I added some of this for clarification.  This page can be refactored of what information will be truly relevant
-%div.container
-  When you are adding data, make sure that the file you are uploading does not contain data that already exists if you do not want duplicate data.
-  %div
-    To see what data already exists,
-    =link_to "click here.", "/services/#{@service.slug}/records"
-
-Make sure that your file has the following headers
-%ul
-  - @service.latest_version.headers.each do |key|
-    %li
-      = key.name
