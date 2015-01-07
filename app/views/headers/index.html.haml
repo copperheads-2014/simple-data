@@ -3,15 +3,23 @@
   %h1 Add Descriptions to Your Headers
 
   = form_tag "/versions/#{@version.id}/headers", action: :post do
-    %ul
-    - @headers.each do |header|
-      %li
-        = label_tag :header_name
-        = header.name
-        = label_tag :header_description
-        = text_area_tag "headers[][description]", value: header.description
-        = label_tag :data_type
-        = select_tag("headers[][data_type]", options_for_select([["Text", :string], ["Integer", :integer], ["Decimal Number", :float], ["True or False", :boolean]]))
+    %table
+      - @headers.each do |header|
+        %tr
+          %td
+            = label_tag :header_name
+          %td
+            = header.name
+        %tr
+          %td
+            = label_tag :header_description
+          %td
+            = text_area_tag "headers[][description]", value: header.description
+        %tr
+          %td
+            = label_tag :data_type
+          %td
+            = select_tag("headers[][data_type]", options_for_select([["Text", :string], ["Integer", :integer], ["Decimal Number", :float], ["True or False", :boolean]]))
     = submit_tag
 
 
