@@ -7,12 +7,11 @@ class CsvImportJob < ActiveJob::Base
   def perform(version_update_id, update_params = {updating: false, append: false, new_version: false}, params={} )
     @version_update = VersionUpdate.find(version_update_id)
     @version_update.update(status: :processing)
+    @csv_path = "#{Rails.root.to_s}/tmp/csv/#{@version_update.version.service.slug}.csv"
 
-    p update_params
     if update_params[:updating]
       p "HERE WE ARE UPDATING!!!!!!!!!!!!!!!!!!!!"
       append_with_same_headers if update_params[:append]
-      # maybe write a method: replace_with_same_headers
       create_new_version if update_params[:new_version]
     else
       p "HERE WE ARE CREATING!!!!!!!!!!!!!!!!!!!!"
@@ -25,35 +24,34 @@ class CsvImportJob < ActiveJob::Base
     p "HERE WE ARE CREATING THE FIRST VERSION WITH HEADERS!!!!!!!!!!!!!!!!!!!!"
     @version_update.update(status: :processing)
     download_and_add_records_and_set_headers
-    # rescue => e
-    #   @version_update.update(status: :failed)
   end
 
   def append_with_same_headers
     p "HERE WE ARE APPENDING AN API!!!!!!!!!!!!!!!!!!!!"
     download_and_add_records_and_set_headers
-    #refactor this later
   end
 
   def create_new_version
     p "HERE WE ARE CREATING A NEW VERSION WITH HEADERS!!!!!!!!!!!!!!!!!!!!!!!"
-    file = download_file(@version_update.filename)
+    download_file(@version_update.filename)
+    file = open(@csv_path).read
     service_to_update = @version_update.version.service
     current_version = @version_update.version
 
-    new_version = Version.new(number: current_version.number + 1)
-    service_to_update.versions << new_version
+    service_to_update.versions << Version.new(number: current_version.number + 1)
     new_version.make_version_update(@version_update.filename)
 
     headers = grab_headers(file)
     create_headers_schema(headers, new_version.updates.last)
 
     add_records(file, new_version.id)
+    File.delete(@csv_path) if File.exist?(@csv_path)
   end
 
   def download_and_add_records_and_set_headers
     # download the file locally
-    file = download_file(@version_update.filename)
+    download_file(@version_update.filename)
+    file = open(@csv_path).read
     # import the data
     add_records(file, @version_update.version.id)
     # parse the headers
@@ -61,12 +59,16 @@ class CsvImportJob < ActiveJob::Base
     # create the headers schema
     create_headers_schema(headers, @version_update) if @version_update.version.headers.empty?
     # delete the file
+    File.delete(@csv_path) if File.exist?(@csv_path)
     @version_update.update(status: :completed)
   end
 
   def download_file(filename)
-    file = open(filename).read
-    # return the File object (do not open it)
+    p "DOWNLOADING NOW!"
+    p "HERE WE ARE DOWNLOADING TO #{Rails.root.to_s}/tmp FROM THE URL #{filename}"
+    File.open(@csv_path, "wb") do |file|
+      file.write open(filename).read
+    end
   end
 
   def grab_headers(file)
@@ -77,7 +79,6 @@ class CsvImportJob < ActiveJob::Base
   end
 
   def create_headers_schema(headers, version_update)
-    p headers
     headers.each do |header_name|
       version_update.version.headers << Header.create(name: header_name)
     end
