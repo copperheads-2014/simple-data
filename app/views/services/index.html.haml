@@ -7,6 +7,8 @@
         %ul.service-list
           - @my_services.each do |s|
             %ul.serv-list
+              -if s.latest_version.total_records == 0
+                = 'Your API is being processed. Please check back in a few minutes.'
               %li
                 = link_to "#{s.name}", "/services/#{s.slug}"
                 = link_to "(expand)", "#", :class => "displayer", :id => "#{s.slug}"
