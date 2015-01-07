@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'csv'
 
 feature "Browsing the website" do
   scenario "User visits the landing page" do
@@ -134,7 +135,7 @@ feature "Retrieving data from API endpoints" do
   background do
     service = Service.create(organization_id: 1, description: "This is a description of the service", name: "my service", creator_id: 1)
     version = service.latest_version
-    version.create_records(CSV.read('db/Life_Safety_Evaluations.csv',
+    version.create_records(CSV.read('db/samples/Life_Safety_Evaluations.csv',
       headers: true))
 
 
