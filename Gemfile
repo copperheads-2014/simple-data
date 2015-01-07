@@ -34,6 +34,9 @@ gem 'bcrypt'
 gem 'sidekiq', '~> 3.0'
 gem 'redis'
 
+gem 'kaminari'
+
+
 group :development do
   gem 'spring'
   gem 'better_errors'
