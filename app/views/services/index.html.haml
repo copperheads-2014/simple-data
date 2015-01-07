@@ -1,65 +1,64 @@
-- if current_user
-  .col-md-8.col-md-offset-2
-    -if params[:page] == "1" || !params[:page]
-      -if current_user.organization
-        %h2 Your Organization's APIs:
-        %ul.service-list
-          -x = 1
-          - @my_services.each do |s|
-            %ul.serv-list
-              -if s.latest_version.total_records == 0
-                = 'Your API is being processed. Please check back in a few minutes.'
-              %li
-                = link_to "#{s.name}", "/services/#{s.slug}"
-                = link_to "(expand)", "#", :class => "displayer", :id => "#{s.slug}#{x}"
-              %ul.hideable{:id => "#{s.slug}#{x}"}
-                %li.sublist
-                  = s.description
-                %li.sublist
-                  Created: #{s.created_at.strftime("%B %d, %Y")}
-                %li.sublist
-                  Most Recent Update: #{s.created_at.strftime("%B %d, %Y")}
-                %li.sublist
-                  = link_to "Update", {:controller => "services", :action => "edit", :service_slug => s.slug}, {:id => "update-service-button", :class => "btn btn-default form-control"}
-              %hr
-              -x += 1
-        .custom_pagination
-          = paginate @my_services
+.col-md-8.col-md-offset-2
+  -if params[:page] == "1" || !params[:page]
+    -if current_user && current_user.organization
+      %h2 Your Organization's APIs:
+      %ul.service-list
+        -x = 1
+        - @my_services.each do |s|
+          %ul.serv-list
+            -if s.latest_version.total_records == 0
+              = 'Your API is being processed. Please check back in a few minutes.'
+            %li
+              = link_to "#{s.name}", "/services/#{s.slug}"
+              = link_to "(expand)", "#", :class => "displayer", :id => "#{s.slug}#{x}"
+            %ul.hideable{:id => "#{s.slug}#{x}"}
+              %li.sublist
+                = s.description
+              %li.sublist
+                Created: #{s.created_at.strftime("%B %d, %Y")}
+              %li.sublist
+                Most Recent Update: #{s.created_at.strftime("%B %d, %Y")}
+              %li.sublist
+                = link_to "Update", {:controller => "services", :action => "edit", :service_slug => s.slug}, {:id => "update-service-button", :class => "btn btn-default form-control"}
+            %hr
+            -x += 1
+      .custom_pagination
+        = paginate @my_services
 
-    -if !current_user.organization
+  -if current_user && !current_user.organization
+    %h4
+      %em
+        You haven't created an Organization yet. Click
+        %span "Create Organization"
+        in the User Navbar to get started!
+  -if current_user && current_user.organization
+    -if current_user.organization.services.count == 0
       %h4
         %em
-          You haven't created an Organization yet. Click
-          %span "Create Organization"
-          in the User Navbar to get started!
-    -if current_user.organization
-      -if current_user.organization.services.count == 0
-        %h4
-          %em
-            You haven't created any API's yet. Click
-            %span "Create API"
-            to get started!
-    %h2 APIs Available:
-    = search_form_for @q do |f|
-      = f.label "Search:"
-      = f.search_field :name_or_description_or_tags_name_cont, :class => "form-control", :id => "search-bar"
-      %p
-        = f.submit "Search", :class => "btn btn-default form-control search-btn"
-    %ul.service-list
-      -@results.each do |r|
-        %ul.serv-list
-          %li
-            = link_to "#{r.name}", "/services/#{r.slug}"
-            = link_to "(expand)", "#", :class => "displayer", :id => "#{r.slug}"
-          %ul.hideable{:id => "#{r.slug}"}
-            %li.sublist
-              = r.description
-            %li.sublist
-              Created: #{r.created_at.strftime("%B %d, %Y")}
-            %li.sublist
-              Most Recent Update: #{r.created_at.strftime("%B %d, %Y")}
-            %li.sublist
-              =mail_to r.organization.users.first.email, " Contact email", encode: "javascript", class: "fa fa-envelope"
-          %hr
-      .custom_pagination
-        = paginate @results
+          You haven't created any API's yet. Click
+          %span "Create API"
+          to get started!
+  %h2 APIs Available:
+  = search_form_for @q do |f|
+    = f.label "Search:"
+    = f.search_field :name_or_description_or_tags_name_cont, :class => "form-control", :id => "search-bar"
+    %p
+      = f.submit "Search", :class => "btn btn-default form-control search-btn"
+  %ul.service-list
+    -@results.each do |r|
+      %ul.serv-list
+        %li
+          = link_to "#{r.name}", "/services/#{r.slug}"
+          = link_to "(expand)", "#", :class => "displayer", :id => "#{r.slug}"
+        %ul.hideable{:id => "#{r.slug}"}
+          %li.sublist
+            = r.description
+          %li.sublist
+            Created: #{r.created_at.strftime("%B %d, %Y")}
+          %li.sublist
+            Most Recent Update: #{r.created_at.strftime("%B %d, %Y")}
+          %li.sublist
+            =mail_to r.organization.users.first.email, " Contact email", encode: "javascript", class: "fa fa-envelope"
+        %hr
+    .custom_pagination
+      = paginate @results
