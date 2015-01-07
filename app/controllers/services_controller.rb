@@ -71,7 +71,7 @@ class ServicesController < ApplicationController
     respond_to do |format|
       #Ensure the individual submitting owns the organization
       if @service.save && (@service.organization_id == current_user.organization_id)
-        if params[:service][:append]
+        if params[:service][:append].to_bool
           update_csv = retrieve_file(params[:service][:file]).read
           if headers_match?(update_csv, @service)
             CsvImportJob.perform_later(@service.latest_version.updates.last.id,
