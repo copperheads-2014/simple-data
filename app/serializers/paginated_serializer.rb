@@ -10,7 +10,6 @@ class PaginatedSerializer < ActiveModel::ArraySerializer
       total_pages: object.total_pages,
       total_count: object.total_entries,
       links: pagination_links(object)
-      # methods: object.methods.sort - Object.methods
     }
     super(object, options)
   end
