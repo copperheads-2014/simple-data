@@ -222,21 +222,23 @@ feature "Retrieving data from API endpoints" do
 
     ####  This query string is the contents of this in capybara, but works in production
   scenario 'if specified, shows only fields specified' do
-    visit "/services/my-service/v1/records?only=Building%20Street%20Direction%2CBuilding%20Street%20Name"
+    visit version_records_service_path("my-service","v1", {:only => "Building Street Direction,Building Street Name"})
     expect(page).to have_content('{"Building Street Direction":"W.","Building Street Name":"21st"}')
   end
 
-  # scenario 'filters by one field properly' do
-  #   visit "/services/my-service/v1/records?filter[Report%20Status%20-%20Original%20Lse%20Report%20Approved]=No"
+  scenario 'filters by one field properly' do
+    # visit "/services/my-service/v1/records?filter[Report%20Status%20-%20Original%20Lse%20Report%20Approved]=No"
+    visit version_records_service_path("my-service", "v1", {filter: {"Report Status - Original LSE Report Approved" => "No"}})
+    # visit "/services/my-service/v1/records?filter[report_status_-_original_lse_report_approved]=No"
 
-  #   expect(page).to have_content('"total":381')
-  # end
+    expect(page).to have_content('"total":381')
+  end
 
-  # scenario 'filters by two fields properly' do
-  #   visit "/services/my-service/v1/records?filter[Report%20Status%20-%20Original%20Lse%20Report%20Approved]=No&filter[Report%20Status%20-%20Resubmitted%20Report%20Approved]=Yes"
+  scenario 'filters by two fields properly' do
+    visit version_records_service_path("my-service", "v1", {filter: {"Report Status - Original LSE Report Approved" => "No", "Report Status - Resubmitted Report Approved" => "Yes"}})
 
-  #   expect(page).to have_content('"total":359')
-  # end
+    expect(page).to have_content('"total":359')
+  end
 
   scenario 'orders by desc properly' do
     visit "/services/my-service/v1/records?order=desc"
