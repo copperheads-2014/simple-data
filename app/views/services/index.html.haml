@@ -60,7 +60,7 @@
             =mail_to r.organization.users.first.email, " Contact email", encode: "javascript", class: "fa fa-envelope"
         %hr
     .custom_pagination
-      =paginate @results
+      = paginate @results
     %ul.service-list
       - @services.each do |s|
         -unless s.organization_id == current_user.organization_id

@@ -9,8 +9,7 @@ class ServicesController < ApplicationController
       @my_services = current_user.organization.services.order(:name).page params[:page]
     end
     @q = Service.search(params[:q])
-    @results = @q.result.includes(:tags)
-    @results.order(:name).page params[:page]
+    @results = @q.result.includes(:tags).page params[:page]
     @services = Service.order(:name).page params[:page]
     respond_to do |format|
       format.html
