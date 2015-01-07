@@ -151,6 +151,128 @@ feature "Retrieving data from API endpoints" do
 
     expect(page).to have_content('"insertion_id":1')
   end
+
+  scenario 'captures the number of items on a page in the metadata' do
+    visit "/services/my-service/v1/records?page_size=10"
+
+    expect(page).to have_content('page_size":10')
+  end
+
+  scenario 'shows that the starting point is 0' do
+    visit "/services/my-service/v1/records"
+
+    expect(page).to have_content('"start":0')
+  end
+
+
+  scenario 'shows that the ending point for the page is 49' do
+    visit "/services/my-service/v1/records"
+
+    expect(page).to have_content('"end":49')
+  end
+
+  scenario 'tells you the correct number of pages' do
+    visit "/services/my-service/v1/records?page_size=50"
+
+    expect(page).to have_content('"num_pages":15')
+  end
+
+  scenario 'returns the base uri' do
+    visit "/services/my-service/v1/records"
+
+    expect(page).to have_content('"uri":"/services/my-service/v1/records"')
+  end
+
+  scenario 'returns the next page uri' do
+    visit "/services/my-service/v1/records?page=0&page_size=50"
+
+    expect(page).to have_content('"next_page_uri":"/services/my-service/v1/records?page=1&page_size=50"')
+  end
+
+  scenario 'returns the previous page uri' do
+    visit "/services/my-service/v1/records?page=1&page_size=50"
+
+    expect(page).to have_content('"previous_page_uri":"/services/my-service/v1/records?page=0&page_size=50"')
+  end
+
+  scenario 'returns null for previous page uri if on the first page' do
+    visit "/services/my-service/v1/records?page=0"
+
+    expect(page).to have_content('"previous_page_uri":null')
+  end
+
+  scenario 'returns null for next page uri if on the last page' do
+    visit "/services/my-service/v1/records?page=15&page_size=50"
+
+    expect(page).to have_content('"next_page_uri":null')
+  end
+
+  scenario 'returns data as an array' do
+    visit "/services/my-service/v1/records"
+
+    expect(page).to have_content('"data":[')
+  end
+
+  scenario 'does not show a field when specified not to show through "except"' do
+    visit "/services/my-service/v1/records"
+
+    expect(page).to have_content('bad')
+  end
+
+  scenario 'if specified, shows only fields specified' do
+    visit "/services/my-service/v1/records"
+
+    expect(page).to have_content('bad')
+  end
+
+  scenario 'filters by one field properly' do
+    visit "/services/my-service/v1/records"
+
+    expect(page).to have_content('bad')
+  end
+
+  scenario 'filters by two fields properly' do
+    visit "/services/my-service/v1/records"
+
+    expect(page).to have_content('bad')
+  end
+
+  scenario 'orders by desc properly' do
+    visit "/services/my-service/v1/records"
+
+    expect(page).to have_content('bad')
+  end
+
+  scenario 'orders by asc properly' do
+    visit "/services/my-service/v1/records"
+
+    expect(page).to have_content('bad')
+  end
+
+  scenario 'skips records properly' do
+    visit "/services/my-service/v1/records"
+
+    expect(page).to have_content('bad')
+  end
+
+  scenario 'orders by desc properly' do
+    visit "/services/my-service/v1/records"
+
+    expect(page).to have_content('bad')
+  end
+
+  scenario 'sorts properly' do
+    visit "/services/my-service/v1/records"
+
+    expect(page).to have_content('bad')
+  end
+
+  scenario 'limits the number of results' do
+    visit "/services/my-service/v1/records"
+
+    expect(page).to have_content('bad')
+  end
+
 end
 
 
