@@ -1,4 +1,4 @@
 web: bundle exec unicorn -p $PORT -c ./config/unicorn.rb
-mongo: mongod --config /usr/local/etc/mongod.conf
-redis: redis-server /usr/local/etc/redis.conf
+mongo: mongod
+redis: redis-server
 sidekiq: bundle exec sidekiq -C config/sidekiq.yml
