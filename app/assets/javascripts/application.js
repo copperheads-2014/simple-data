@@ -7,6 +7,7 @@
 //= require jquery.fileupload
 
 $(document).ready(function(){
+  $('.col-md-4').hide();
   $('.dropdown-toggle').dropdown();
   $('[data-toggle="tooltip"]').tooltip();
 });
