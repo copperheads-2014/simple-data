@@ -1,6 +1,6 @@
 = search_form_for @q do |f|
-  = f.label :name_cont
-  = f.search_field :name_cont
+  = f.label :Search
+  = f.search_field :name_or_description_or_tags_name_cont
   = f.submit
   -@results.each do |r|
     = link_to "#{r.name}", "/services/#{r.slug}"

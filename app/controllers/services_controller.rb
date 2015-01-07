@@ -9,7 +9,7 @@ class ServicesController < ApplicationController
       @my_services = current_user.organization.services.paginate(:page => params[:page], :per_page => 5)
     end
     @q = Service.search(params[:q])
-    @results = @q.result(distinct: true)
+    @results = @q.result.includes(:tags)
     @results.paginate(:page => params[:page], :per_page => 10)
     @services = Service.paginate(:page => params[:page], :per_page => 10)
   end
