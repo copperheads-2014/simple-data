@@ -18,6 +18,7 @@ gem 'bootstrap-sass', '~> 3.3.1'
 gem 'autoprefixer-rails'
 gem 'font-awesome-rails'
 gem 'actionview-encoded_mail_to'
+gem 'active_model_serializers', '~> 0.8.3'
 
 gem 'unicorn'
 gem 'foreman'

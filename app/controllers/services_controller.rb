@@ -12,6 +12,10 @@ class ServicesController < ApplicationController
     @results = @q.result.includes(:tags)
     @results.paginate(:page => params[:page], :per_page => 10)
     @services = Service.paginate(:page => params[:page], :per_page => 10)
+    respond_to do |format|
+      format.html
+      format.json { render_json_collection @services }
+    end
   end
 
   def new
@@ -62,6 +66,10 @@ class ServicesController < ApplicationController
     @service = Service.find_by(slug: params[:service_slug])
     @organization = Organization.find_by_id(@service.organization_id)
     @headers = @service.show_headers
+    respond_to do |format|
+      format.html
+      format.json { render json: @service }
+    end
   end
 
 # only a member of the service's organization can edit or destroy the service
