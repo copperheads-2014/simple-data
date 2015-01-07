@@ -32,5 +32,11 @@ $( ".displayer" ).click( function(event) {
     $( "ul#"+target ).slideUp();
     $( this ).html("(expand)");}
   });
+
+  var delay = 3600;
+  $('.col-md-4').each(function(index) {
+    $(this).fadeIn(delay);
+    delay = delay + 2000;
+  });
 });
 
