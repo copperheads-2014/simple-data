@@ -34,8 +34,6 @@ gem 'bcrypt'
 gem 'sidekiq', '~> 3.0'
 gem 'redis'
 
-gem 'will_paginate', '~> 3.0.6'
-
 group :development do
   gem 'spring'
   gem 'better_errors'
