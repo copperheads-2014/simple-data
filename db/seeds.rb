@@ -24,7 +24,7 @@ police = ServiceCreation.create({
   }, eleni)
 
 police.latest_version.create_records(CSV.read(
-  'db/Police_Stations.csv',
+  'db/samples/Police_Stations.csv',
    headers: true,
   :header_converters => lambda { |h| h.downcase.gsub(' ','_') unless h.nil?}
 ))
