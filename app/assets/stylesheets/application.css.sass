@@ -7,7 +7,6 @@
 @import "bootstrap"
 @import "font-awesome"
 
-
 html, body
   height: 100%
   background-color: #ccc
@@ -35,7 +34,7 @@ a:hover
   color: white
   text-decoration: none
 
-.btn:hover, .btn-default:hover
+.btn:hover, .btn-default:hover, .hovered
   background-color: #36F
   color: white
   border-color: #36F
@@ -58,50 +57,20 @@ a:hover
 .navbar-brand a:hover
   text-decoration: none
 
+.navbar-nav, .navbar-nav > li
+  text-align: center
+
 .dropdown
   font-size: 1.1em
   padding-top: 7px
 
+
 span
   color: #36F
 
-#push
-  height: 60px
-
-#wrap
-  min-height: 100%
-  margin: 0 auto -5%
-
-#main
-  overflow: auto
-  padding-bottom: 5%
-
-.fa-copyright
-  margin-left: 20%
-
-.push
-  height: 5%
-
-.footer
-  color: black
-  margin: 0px 0 0
-  height: 5%
-  .social-links
-    font-size: 18px
-    a
-      margin: 0 7px
-
 footer
-  margin-top: 2em
-  background-color: #CCC
-  .navbar-nav
-    background-color: #CCC
-    width: 110%
-    margin-left: -5%
+  .fa-copyright
     text-align: center
-    li
-      float: none
-      display: inline-block
 
 .hideable
   display: none

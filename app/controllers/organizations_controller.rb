@@ -23,7 +23,7 @@ class OrganizationsController < ApplicationController
 
   def show
     @organization = Organization.find(params[:id])
-    @services = @organization.services
+    @services = Service.where(organization: @organization.id).paginate(:page => params[:page], :per_page => 5)
   end
 
   private

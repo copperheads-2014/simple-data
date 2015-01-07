@@ -1,24 +1,26 @@
-.col-md-2
-.col-md-8
-  .org-banner
-    %h2
-      = @organization.name
-    %p.org-desc
-      = @organization.description
+.col-md-8.col-md-offset-2
+  %h2
+    = @organization.name
+  %p.org-desc
+    = @organization.description
   %p.org-date
-    Joined simple-data on:
-    = @organization.created_at
+    = @organization.created_at.strftime("Joined simple-data on: %B %d, %Y")
+  %p
+    =mail_to @organization.users.first.email, " Contact email", encode: "javascript", class: "fa fa-envelope"
+  %hr
+  %h3
+    = "#{@organization.name}'s APIs:"
   - @services.each do |service|
     %ul.serv-list
       %li.serv-name
-        = service.name
+        = link_to "#{service.name}", "/services/#{service.slug}"
         %ul
           %li.updated-at= service.updated_at.strftime("Last update: %B %d, %Y")
-          %li
-            =mail_to service.organization.users.first.email, " Contact email", encode: "javascript", class: "fa fa-envelope"
       - if current_user && @organization.id == current_user.organization_id
         %ul
           %li
             = link_to "Update", {:controller => "services", :action => "edit", :service_slug => service.slug}, {:id => "update-service-button", :class => "btn btn-default form-control"}
       %hr
-.col-md-2
+.custom_pagination
+  = will_paginate @services
+

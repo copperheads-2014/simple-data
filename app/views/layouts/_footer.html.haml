@@ -1,27 +1,14 @@
-%footer.footer
-  %nav.navbar.navbar-default{:role => "navigation"}
-    .container-fluid
-      .navbar-footer
-        %button.navbar-toggle{"data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", :type => "button"}
-          %span.sr-only Toggle navigation
-          %span.icon-bar
-          %span.icon-bar
-          %span.icon-bar
-
-      #bs-example-navbar-collapse-1.collapse.navbar-collapse
-        %ul.nav.navbar-nav
-          %li
-            = link_to "Home", root_path
-          %li
-            = link_to "About Us", about_us_path
-          %li
-            = link_to "Contact Us", contact_us_path
-          %li
-            = link_to "FAQs", faqs_path
-        %br
-.row
-.col-md-4
-.col-md-4
-  .fa.fa-copyright
+%footer
+  %nav.col-md-8.col-md-offset-4
+    %ul.nav.navbar-nav
+      %li
+        = link_to "Home", root_path
+      %li
+        = link_to "About Us", about_us_path
+      %li
+        = link_to "Contact Us", contact_us_path
+      %li
+        = link_to "FAQs", faqs_path
+  .col-md-5.col-md-offset-3.fa.fa-copyright
     Copyright 2015, All Rights Reserved
-.col-md-4
+

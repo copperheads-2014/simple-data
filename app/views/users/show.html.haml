@@ -1,10 +1,9 @@
-.col-md-2
-.col-md-8.user-profile
+.col-md-8.col-md-offset-2.user-profile
   %h1
     =@user.name
   %h3
     Joined
-    %span simple-data
+    %span= t('site_title')
     On
     =@user.created_at.strftime("%B %d, %Y")
   -if @organization != nil
@@ -15,7 +14,7 @@
     %h3
       You must create an organization before creating an API.
       %h4=link_to "Create Organization", new_organization_path, :class => "btn btn-default form-control", :id => "create-org-btn"
-  -if @organization && @user.organization.services
+  -if @organization && @log[0]
     %hr
     %h3.activity-log
       Activity Log:
@@ -36,4 +35,3 @@
           =s.created_at.strftime("%B %d, %Y")
   .custom_pagination
     = will_paginate @log
-.col-md-2

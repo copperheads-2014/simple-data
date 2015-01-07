@@ -2,7 +2,6 @@
   .card
     .front
       .cover
-
       .user
         = image_tag('team_members/David.jpg', class: "img-circle img-responsive")
       .content
@@ -15,7 +14,6 @@
           %h5
             %i.fa.fa-building-o.fa-fw.text-muted
             DevBootcamp Chicago
-
     / end front panel
     .back
       .header
@@ -33,10 +31,8 @@
             %i.fa.fa-envelope-o.fa-fw.text-muted
             =mail_to "dschmura@humbledaisy.com", "My email", encode: "javascript"
             /=mail_to "dschmura@humbledaisy.com", nil, replace_at: "_at_", replace_dot: "_dot_", class: "email"
-
       .footer
         .social-links.text-center
-
           %a.twitter{:href => "https://twitter.com/humbledaisy"}
             %i.fa.fa-twitter.fa-fw
           %a.github{:href => "http://github.com/dschmura"}
