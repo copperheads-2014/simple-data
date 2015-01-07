@@ -19,8 +19,8 @@ class OrganizationsController < ApplicationController
   end
 
   def show
-    @organization = Organization.find(params[:id])
-    @services = Service.where(organization: @organization.id).paginate(:page => params[:page], :per_page => 5)
+    @organization = Organization.includes(:services).find(params[:id])
+    @services = @organization.services.paginate(:page => params[:page], :per_page => 5)
   end
 
   private
