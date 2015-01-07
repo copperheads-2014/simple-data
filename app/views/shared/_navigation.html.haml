@@ -4,7 +4,7 @@
       .navbar-brand= link_to t('site_title'), root_path
     .navbar-collapse.collapse
       %ul.nav.navbar-nav.navbar-right
-        %li
+        %li#createapi
           = link_to "Create API", new_service_path
         %li
           = link_to "Browse APIs", services_path

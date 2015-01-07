@@ -12,9 +12,10 @@ class OrganizationsController < ApplicationController
   end
 
   def create
-    @organization = current_user.organizations.new(organization_params)
+    @organization = Organization.new(organization_params)
     respond_to do |format|
       if @organization.save
+        current_user.update(organization_id: @organization.id)
         format.html { redirect_to new_service_path, notice: 'Organization was successfully created.' }
         format.json { render location: organization_path(@organization),  status: :created }
       else
