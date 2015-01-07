@@ -24,6 +24,7 @@ gem 'foreman'
 gem 'pry'
 gem 'capybara'
 gem 'faker'
+gem 'ransack'
 
 gem 'mongoid'
 gem 'newrelic_rpm'
