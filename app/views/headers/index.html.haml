@@ -1,18 +1,17 @@
-.col-md-2
-.col-md-8
-  %h1 Add Descriptions to Your Headers
-
-  = form_tag "/versions/#{@version.id}/headers", action: :post do
-    %ul
-    - @headers.each do |header|
-      %li
-        = label_tag :header_name
-        = header.name
-        = label_tag :header_description
-        = text_area_tag "headers[][description]"
-        = label_tag :data_type
-        = select_tag("headers[][data_type]", options_for_select([["Text", :string], ["Integer", :integer], ["Decimal Number", :float], ["True or False", :boolean]]))
-    = submit_tag
-
-
-.col-md-2
+.col-md-8.col-md-offset-2
+  %h1 Describe your headers:
+  = form_tag "/versions/#{@version.id}/headers", :class => "headers-form", action: :post do
+    .header-form
+      %ul
+      - @headers.each do |header|
+        %li
+          %p.header-name
+            Label:
+            = header.name
+          %p
+          = label_tag "Description:"
+          %p
+            = text_area_tag "headers[][description]"
+          = label_tag "Data Type:"
+          = select_tag("headers[][data_type]", options_for_select([["Text", :string], ["Integer", :integer], ["Decimal Number", :float], ["True or False", :boolean]]))
+      = submit_tag "Submit", :class => "btn btn-default"
