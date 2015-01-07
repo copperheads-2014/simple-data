@@ -8,7 +8,7 @@
     - @versions.each do |v|
       %li.serv-name
         Version:
-        = link_to "#{v.number}", service_version_path(@service.slug, v)
+        = link_to "#{v.number}", service_version_path(@service.slug, v.number)
       %ul
         %li= v.created_at.strftime("Created: %B %d, %Y")
       %ul
