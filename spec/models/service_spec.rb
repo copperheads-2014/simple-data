@@ -50,10 +50,23 @@ RSpec.describe Service, :type => :model do
       expect(zoo.latest_version.number).to eq(1)
     end
 
-    it "sets the version number to 3 after three versions are made" do
+    it 'contains a collection of versions' do
+      3.times { zoo.make_version }
+      expect(zoo.versions.count).to eq(4)
+    end
+
+    it 'you can access old versions' do
+      zoo.versions << Version.create(active: true)
+      3.times { zoo.make_version }
+      expect(zoo.versions.first.number).to eq(1)
+    end
+
+    it "sets the version number to 3 after two additional versions are made" do
       2.times { zoo.make_version }
       expect(zoo.latest_version.number).to eq(3)
     end
+
+
   end
 
 
