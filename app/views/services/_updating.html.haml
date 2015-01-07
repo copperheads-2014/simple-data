@@ -14,7 +14,6 @@
   %input{type: :hidden, name: :success_action_status, value: "201"}
 
   %input{type: :file, name: :file }
-  - # You can recognize some bootstrap markup here :)
   .progress
     .progress-bar.progress-bar-striped.active
   #file-completion
@@ -23,7 +22,5 @@
   = f.hidden_field :file, value: "https://#{ENV['S3_BUCKET']}.s3.amazonaws.com/"
   = f.hidden_field :updating, value: "true"
   = f.hidden_field :new_version, value: "false"
-  / change to true based on click
   = f.hidden_field :append, value: "false"
-  / change to true based on click
   = f.submit "Update", data: { confirm: "NOTE: You are about to make this csv's data available to the public. If you are okay with this, Press OK to continue:" }, class: "form-control btn btn-default", :id => "update-service-button"
