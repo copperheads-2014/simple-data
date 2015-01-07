@@ -136,6 +136,15 @@ feature "Retrieving data from API endpoints" do
     version = service.latest_version
     version.create_records(CSV.read('db/Life_Safety_Evaluations.csv',
       headers: true))
+
+
+  end
+  scenario 'returns total number of record' do
+    visit "/services/my-service/v1/records"
+
+    expect(page).to have_content('"total":733')
+
+  end
 end
 
 
