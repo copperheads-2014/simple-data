@@ -4,14 +4,15 @@
       -if current_user.organization
         %h2 Your Organization's APIs:
         %ul.service-list
+          -x = 1
           - @my_services.each do |s|
             %ul.serv-list
               -if s.latest_version.total_records == 0
                 = 'Your API is being processed. Please check back in a few minutes.'
               %li
                 = link_to "#{s.name}", "/services/#{s.slug}"
-                = link_to "(expand)", "#", :class => "displayer", :id => "#{s.slug}"
-              %ul.hideable{:id => "#{s.slug}"}
+                = link_to "(expand)", "#", :class => "displayer", :id => "#{s.slug}#{x}"
+              %ul.hideable{:id => "#{s.slug}#{x}"}
                 %li.sublist
                   = s.description
                 %li.sublist
@@ -21,6 +22,7 @@
                 %li.sublist
                   = link_to "Update", {:controller => "services", :action => "edit", :service_slug => s.slug}, {:id => "update-service-button", :class => "btn btn-default form-control"}
               %hr
+              -x += 1
         .custom_pagination
           = paginate @my_services
 
