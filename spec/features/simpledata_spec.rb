@@ -220,19 +220,19 @@ feature "Retrieving data from API endpoints" do
   end
 
     ####  This query string is the contents of this in capybara, but works in production
-  # scenario 'if specified, shows only fields specified' do
-  #   visit "/services/my-service/v1/records?only=building_street_direction%2Cbuilding_street_name"
-  #   expect(page).to have_content('{"building_street_direction":"W.","building_street_name":"21st"}')
-  # end
+  scenario 'if specified, shows only fields specified' do
+    visit "/services/my-service/v1/records?only=Building%20Street%20Direction%2CBuilding%20Street%20Name"
+    expect(page).to have_content('{"Building Street Direction":"W.","Building Street Name":"21st"}')
+  end
 
   # scenario 'filters by one field properly' do
-  #   visit "/services/my-service/v1/records?filter[report_status_-_original_lse_report_approved]=No"
+  #   visit "/services/my-service/v1/records?filter[Report%20Status%20-%20Original%20Lse%20Report%20Approved]=No"
 
   #   expect(page).to have_content('"total":381')
   # end
 
   # scenario 'filters by two fields properly' do
-  #   visit "/services/my-service/v1/records?filter[report_status_-_original_lse_report_approved]=No&filter[report_status_-_resubmitted_report_approved]=Yes"
+  #   visit "/services/my-service/v1/records?filter[Report%20Status%20-%20Original%20Lse%20Report%20Approved]=No&filter[Report%20Status%20-%20Resubmitted%20Report%20Approved]=Yes"
 
   #   expect(page).to have_content('"total":359')
   # end
@@ -259,10 +259,10 @@ feature "Retrieving data from API endpoints" do
   scenario 'sorts properly' do
     visit "/services/my-service/v1/records?sortby=building_street_name"
 
-    expect(page).to have_content('"building_street_name":"3030"')
+    expect(page).to have_content('"Building Street Number":"3030"')
   end
 
-  pending 'limits the number of results' do
+  scenario 'limits the number of results' do
     visit "/services/my-service/v1/records?page_size=1"
 
     expect(page).to_not have_content('"insertion_id":2')
