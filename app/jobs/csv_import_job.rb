@@ -2,6 +2,23 @@ require 'csv'
 require 'open-uri'
 require 'fileutils'
 
+# class CsvImporter
+#   attr_reader :version_update
+
+#   def initializer(version_update_id)
+#     @version_update = VersionUpdate.find(version_update_id)
+#   end
+
+#   def import(options)
+#     if options[:updating]
+#       update if options[:append]
+#       create_version if options[:new_version]
+#     else
+#       create_new
+#     end
+#   end
+# end
+
 class CsvImportJob < ActiveJob::Base
   queue_as :default
 
@@ -17,6 +34,17 @@ class CsvImportJob < ActiveJob::Base
       p "HERE WE ARE UPDATING!!!!!!!!!!!!!!!!!!!!"
       append_with_same_headers if update_params[:append]
       create_new_version if update_params[:new_version]
+    # importer = CsvImporter.new(version_update_id) #creates the VersionUpdate
+    # importer.start_processing #sets status to processing?
+
+    # importer.import(update_params) #case statement
+
+    # p update_params
+    # if update_params[:updating]
+    #   p "HERE WE ARE UPDATING!!!!!!!!!!!!!!!!!!!!"
+    #   importer.update(params) if update_params[:append]
+    #   # maybe write a method: replace_with_same_headers
+    #   importer.create_version(params) if update_params[:new_version]
     else
       p "HERE WE ARE CREATING!!!!!!!!!!!!!!!!!!!!"
       create_first_version
