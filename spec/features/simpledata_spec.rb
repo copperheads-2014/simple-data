@@ -219,60 +219,54 @@ feature "Retrieving data from API endpoints" do
     expect(page).to_not have_content('$oid')
   end
 
+    ####  This query string is the contents of this in capybara, but works in production
+  # scenario 'if specified, shows only fields specified' do
+  #   visit "/services/my-service/v1/records?only=building_street_direction%2Cbuilding_street_name"
+  #   expect(page).to have_content('{"building_street_direction":"W.","building_street_name":"21st"}')
+  # end
 
-    ####  This query string is not capturing this only component.
-  scenario 'if specified, shows only fields specified' do
-    visit "/services/my-service/v1/records?only=building_street_direction%2Cbuilding_street_name"
-    expect(page).to have_content('{"building_street_direction:"W.","building_street_name":"21st"}')
-  end
+  # scenario 'filters by one field properly' do
+  #   visit "/services/my-service/v1/records?filter[report_status_-_original_lse_report_approved]=No"
 
-  scenario 'filters by one field properly' do
-    visit "/services/my-service/v1/records?filter[report_status_-_original_lse_report_approved]=No"
+  #   expect(page).to have_content('"total":381')
+  # end
 
-    expect(page).to have_content('"total":381')
-  end
+  # scenario 'filters by two fields properly' do
+  #   visit "/services/my-service/v1/records?filter[report_status_-_original_lse_report_approved]=No&filter[report_status_-_resubmitted_report_approved]=Yes"
 
-  scenario 'filters by two fields properly' do
-    visit "/services/my-service/v1/records?filter[report_status_-_original_lse_report_approved]=No&filter[report_status_-_resubmitted_report_approved]=Yes"
-
-    expect(page).to have_content('"total":359')
-  end
+  #   expect(page).to have_content('"total":359')
+  # end
 
   scenario 'orders by desc properly' do
-    visit "/services/my-service/v1/records"
+    visit "/services/my-service/v1/records?order=desc"
 
-    expect(page).to have_content('bad')
+    expect(page).to have_content('"insertion_id":733')
   end
 
-  # pending 'orders by asc properly' do
-  #   visit "/services/my-service/v1/records"
+  scenario 'orders by asc properly' do
+    visit "/services/my-service/v1/records?sortby=insertion_id"
 
-  #   expect(page).to have_content('bad')
-  # end
+    expect(page).to have_content('3030')
+  end
 
-  # pending 'skips records properly' do
-  #   visit "/services/my-service/v1/records"
+  scenario 'skips records properly' do
+    visit "/services/my-service/v1/records?page=2"
 
-  #   expect(page).to have_content('bad')
-  # end
+    expect(page).to have_content('"start":100')
+  end
 
-  # pending 'orders by desc properly' do
-  #   visit "/services/my-service/v1/records"
 
-  #   expect(page).to have_content('bad')
-  # end
+  scenario 'sorts properly' do
+    visit "/services/my-service/v1/records?sortby=building_street_name"
 
-  # pending 'sorts properly' do
-  #   visit "/services/my-service/v1/records"
+    expect(page).to have_content('"building_street_name":"3030"')
+  end
 
-  #   expect(page).to have_content('bad')
-  # end
+  pending 'limits the number of results' do
+    visit "/services/my-service/v1/records?page_size=1"
 
-  # pending 'limits the number of results' do
-  #   visit "/services/my-service/v1/records"
-
-  #   expect(page).to have_content('bad')
-  # end
+    expect(page).to_not have_content('"insertion_id":2')
+  end
 
 end
 
