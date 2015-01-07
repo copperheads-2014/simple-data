@@ -145,6 +145,12 @@ feature "Retrieving data from API endpoints" do
     expect(page).to have_content('"total":733')
 
   end
+
+  scenario 'contains an insertion id' do
+    visit "/services/my-service/v1/records"
+
+    expect(page).to have_content('"insertion_id":1')
+  end
 end
 
 
