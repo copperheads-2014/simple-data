@@ -3,7 +3,7 @@ class CreateHeaders < ActiveRecord::Migration
     create_table :headers do |t|
       t.string :name
       t.text :description
-      t.string :type
+      t.string :data_type
       t.integer :version_id
 
       t.timestamps null: false

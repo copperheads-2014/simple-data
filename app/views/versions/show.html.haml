@@ -22,7 +22,8 @@
         Creator:
         = link_to "#{@organization.name}", "/organizations/#{@organization.id}"
       %li= @version.created_at.strftime("Created: %B %d, %Y")
-      %li= @version.updated_at.strftime("Last update: %B %d, %Y")
+      %li= @version.updated_at.strftime("Last Update: %B %d, %Y")
+      %li= 'Total Records: ' + @version.total_records.to_s
     %h3 How to Use:
     %p
       In order to use the
@@ -34,6 +35,8 @@
         - @version.headers.each do |header|
           %li
             = header.name
+      - if @version.headers && @version.headers.first.description == nil
+        = link_to "Add Descriptions to your headers", "/versions/#{@version.id}/headers/update"
     .service_example_json
       %h3 Example Response:
       = @service.latest_version.records.first.to_json(except: ["insertion_id", "_id"])

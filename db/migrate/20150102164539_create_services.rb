@@ -5,7 +5,6 @@ class CreateServices < ActiveRecord::Migration
       t.string :description
       t.string :name, null: false
       t.string :slug, null: false
-      t.integer :total_records
 
       t.timestamps
     end

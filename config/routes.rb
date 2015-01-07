@@ -27,6 +27,8 @@ Rails.application.routes.draw do
   get "services/:service_slug/versions/:version_id", to: "versions#show"
   get "/services/:service_slug/:version/records", to: "records#index"
 
+  get "versions/:version_id/headers/update", to: "headers#index"
+  post "versions/:version_id/headers", to: "headers#create"
 
   resources :upload_csv, only: :index
 
