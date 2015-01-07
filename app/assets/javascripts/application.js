@@ -7,7 +7,7 @@
 //= require jquery.fileupload
 
 $(document).ready(function(){
-  $('.col-md-4').hide();
+  // $('.col-md-4').hide();
   $('.dropdown-toggle').dropdown();
   $('[data-toggle="tooltip"]').tooltip();
 });
@@ -33,10 +33,10 @@ $( ".displayer" ).click( function(event) {
     $( this ).html("(expand)");}
   });
 
-  var delay = 3600;
-  $('.col-md-4').each(function(index) {
-    $(this).fadeIn(delay);
-    delay = delay + 2000;
-  });
+  // var delay = 3600;
+  // $('.col-md-4').each(function(index) {
+  //   $(this).fadeIn(delay);
+  //   delay = delay + 2000;
+  // });
 });
 
