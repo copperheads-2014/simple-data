@@ -44,7 +44,6 @@
       %li
         Creator:
         = link_to "#{@organization.name}", "/organizations/#{@organization.id}"
-      %li= @service.created_at.strftime("Created: %B %d, %Y")
       %li= @service.updated_at.strftime("Last update: %B %d, %Y")
       %li
         =mail_to @service.organization.users.first.email, " Contact email", encode: "javascript", class: "fa fa-envelope"
