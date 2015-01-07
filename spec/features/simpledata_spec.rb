@@ -50,8 +50,7 @@ feature "Browsing the website" do
     page.fill_in "session_password", with: "password"
     click_button "Login"
 
-    click_link "simple-data"
-    click_link "Explore APIs"
+    click_link "Browse APIs"
 
     expect(page).to have_text("Your Organization's APIs:")
   end
