@@ -1,13 +1,13 @@
 .col-md-8.col-md-offset-2.user-profile
   %h1
     =@user.name
-  %h3
+  %h2
     Joined
     %span= t('site_title')
     On
     =@user.created_at.strftime("%B %d, %Y")
   -if @organization != nil
-    %h3
+    %h2
       Belongs To:
       =link_to "#{@organization.name}", organization_path(@organization.id)
   -if @organization == nil && @user == current_user

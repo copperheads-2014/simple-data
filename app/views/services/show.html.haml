@@ -11,7 +11,7 @@
   %hr
   -if current_user && current_user.organization_id == @service.organization_id
     = link_to "Update", {:controller => "services", :action => "edit", :service_slug => @service.slug}, {:id => "update-service-button", :class => "btn btn-default form-control"}
-  %h3 Status:
+  %h2 Status:
   - if @service.activated && !current_user || @service.activated && current_user.organization_id != @service.organization_id
     %p This API is currently activated, meaning anyone can access its data.
   - if !@service.activated && !current_user || !@service.activated && current_user.organization_id != @service.organization_id
@@ -31,7 +31,7 @@
     - if current_user && @service.organization_id == current_user.organization_id
       %ul
         %li
-    %h3
+    %h2
       Details:
       = link_to "(expand)", "#", :class => "displayer", :id => "#{@service.slug}"
     %ul.hideable{:id => "#{@service.slug}"}

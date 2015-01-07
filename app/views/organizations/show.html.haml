@@ -1,5 +1,5 @@
 .col-md-8.col-md-offset-2
-  %h2
+  %h1
     = @organization.name
   %p.org-desc
     = @organization.description
@@ -8,7 +8,7 @@
   %p
     =mail_to @organization.users.first.email, " Contact email", encode: "javascript", class: "fa fa-envelope"
   %hr
-  %h3
+  %h2
     = "#{@organization.name}'s APIs:"
   - @services.each do |service|
     %ul.serv-list
