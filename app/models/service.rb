@@ -40,7 +40,8 @@ class Service < ActiveRecord::Base
   end
 
   def make_version
-    versions << Version.create(number: 1, active: true, total_records: 0)
+    versions << Version.create(number: self.latest_version.number + 1, active: true) if Version.exists?(service_id: self.id)
+    versions << Version.create(number: 1, active: true) unless Version.exists?(service_id: self.id)
   end
 
   def latest_version

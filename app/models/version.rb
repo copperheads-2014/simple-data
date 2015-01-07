@@ -17,7 +17,7 @@ class Version < ActiveRecord::Base
   end
 
   def make_version_update(filename)
-    self.updates << VersionUpdate.create(user_id: self.service.creator.id, filename: filename)
+    self.updates << VersionUpdate.create(user_id: self.service.creator_id, filename: filename)
   end
 
   def insert_record(record)

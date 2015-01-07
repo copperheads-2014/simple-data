@@ -37,9 +37,9 @@ ActiveRecord::Schema.define(version: 20150107223332) do
     t.string   "name"
     t.text     "description"
     t.string   "type"
-    t.integer  "version_id",  default: 1
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.integer  "version_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "organizations", force: :cascade do |t|
