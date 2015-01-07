@@ -16,12 +16,13 @@
     .progress
       .progress-bar.progress-bar-striped.active
   #file-completion
-= form_for(@service, multipart: true) do |f|
-  = f.label :name
-  = f.text_field :name, :class => "form-control"
-  = f.label :description
-  = f.text_area :description, :class => "form-control"
-  = f.label :tags
-  = f.text_field :tags, :class => "form-control", :placeholder => "separate your tags with commas", :value => nil
-  = f.hidden_field :file, value: "https://#{ENV['S3_BUCKET']}.s3.amazonaws.com/"
-  = f.submit "Import", :class => "btn btn-default", data: { confirm: "NOTE: You are about to make this data public. Press OK to continue:" }
+.create-api-form
+  = form_for(@service, multipart: true) do |f|
+    = f.label "Title:"
+    = f.text_field :name, :class => "form-control", :placeholder => "Don't overthink it."
+    = f.label "Purpose:"
+    = f.text_area :description, :class => "form-control", :placeholder => "Tell us a bit about your data and how you'd like to see it used."
+    = f.label "Tags:"
+    = f.text_field :tags, :class => "form-control", :placeholder => "Separate tags with commas. Descriptive tags make your API more visible to the developer community.", :value => nil
+    = f.hidden_field :file, value: "https://#{ENV['S3_BUCKET']}.s3.amazonaws.com/"
+    = f.submit "Import", :class => "btn btn-default", data: { confirm: "NOTE: You are about to make this data public. Press OK to continue:" }
