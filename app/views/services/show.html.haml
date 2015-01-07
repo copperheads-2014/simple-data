@@ -1,6 +1,8 @@
 .col-md-2
 .col-md-8
   .org-banner
+    - if @service.latest_version.total_records == 0
+      = 'Your API is being processed. Please check back in a few minutes.'
     %h1
       = @service.name
     %p.org-desc
