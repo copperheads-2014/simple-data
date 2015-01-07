@@ -216,67 +216,63 @@ feature "Retrieving data from API endpoints" do
   scenario 'does not show mongo id"' do
     visit "/services/my-service/v1/records"
 
-    expect(page).to_not have_content('_id')
+    expect(page).to_not have_content('$oid')
   end
 
-  pending 'if specified, shows only fields specified' do
-    visit "/services/my-service/v1/records?only="
-'{building_street_direction: "W.",
 
- building_street_name: "21st"}'
-
-    expect(page).to have_content('{"building_street_direction: "W.","build{building_street_direction: "W.",
-
- building_street_name: "21st"}')
+    ####  This query string is not capturing this only component.
+  scenario 'if specified, shows only fields specified' do
+    visit "/services/my-service/v1/records?only=building_street_direction%2Cbuilding_street_name"
+    expect(page).to have_content('{"building_street_direction:"W.","building_street_name":"21st"}')
   end
 
-  pending 'filters by one field properly' do
+  scenario 'filters by one field properly' do
+    visit "/services/my-service/v1/records?filter[report_status_-_original_lse_report_approved]=No"
+
+    expect(page).to have_content('"total":381')
+  end
+
+  scenario 'filters by two fields properly' do
+    visit "/services/my-service/v1/records?filter[report_status_-_original_lse_report_approved]=No&filter[report_status_-_resubmitted_report_approved]=Yes"
+
+    expect(page).to have_content('"total":359')
+  end
+
+  scenario 'orders by desc properly' do
     visit "/services/my-service/v1/records"
 
     expect(page).to have_content('bad')
   end
 
-  pending 'filters by two fields properly' do
-    visit "/services/my-service/v1/records"
+  # pending 'orders by asc properly' do
+  #   visit "/services/my-service/v1/records"
 
-    expect(page).to have_content('bad')
-  end
+  #   expect(page).to have_content('bad')
+  # end
 
-  pending 'orders by desc properly' do
-    visit "/services/my-service/v1/records"
+  # pending 'skips records properly' do
+  #   visit "/services/my-service/v1/records"
 
-    expect(page).to have_content('bad')
-  end
+  #   expect(page).to have_content('bad')
+  # end
 
-  pending 'orders by asc properly' do
-    visit "/services/my-service/v1/records"
+  # pending 'orders by desc properly' do
+  #   visit "/services/my-service/v1/records"
 
-    expect(page).to have_content('bad')
-  end
+  #   expect(page).to have_content('bad')
+  # end
 
-  pending 'skips records properly' do
-    visit "/services/my-service/v1/records"
+  # pending 'sorts properly' do
+  #   visit "/services/my-service/v1/records"
 
-    expect(page).to have_content('bad')
-  end
+  #   expect(page).to have_content('bad')
+  # end
 
-  pending 'orders by desc properly' do
-    visit "/services/my-service/v1/records"
+  # pending 'limits the number of results' do
+  #   visit "/services/my-service/v1/records"
 
-    expect(page).to have_content('bad')
-  end
-
-  pending 'sorts properly' do
-    visit "/services/my-service/v1/records"
-
-    expect(page).to have_content('bad')
-  end
-
-  pending 'limits the number of results' do
-    visit "/services/my-service/v1/records"
-
-    expect(page).to have_content('bad')
-  end
+  #   expect(page).to have_content('bad')
+  # end
 
 end
 
