@@ -35,8 +35,8 @@
         - @version.headers.each do |header|
           %li
             = header.name
-      - if @version.headers && @version.headers.first.description == nil
-        = link_to "Add Descriptions to your headers", "/services/#{@service.slug}/versions/#{@version.number}/headers/update"
+      - if @service.organization_id == current_user.organization_id
+        = link_to "Modify header descriptions", "/versions/#{@version.id}/headers/update"
     .service_example_json
       %h3 Example Response:
       = @service.latest_version.records.first.to_json(except: ["insertion_id", "_id"])
