@@ -6,12 +6,11 @@ class ServicesController < ApplicationController
   # shows all services available to use
   def index
     if current_user && current_user.organization
-      @my_services = current_user.organization.services.paginate(:page => params[:page], :per_page => 5)
+      @my_services = current_user.organization.services.order(:name).page params[:page]
     end
     @q = Service.search(params[:q])
-    @results = @q.result.includes(:tags)
-    @results.paginate(:page => params[:page], :per_page => 10)
-    @services = Service.paginate(:page => params[:page], :per_page => 10)
+    @results = @q.result.includes(:tags).page params[:page]
+    @services = Service.order(:name).page params[:page]
     respond_to do |format|
       format.html
       format.json { render_json_collection @services }

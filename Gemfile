@@ -34,7 +34,8 @@ gem 'bcrypt'
 gem 'sidekiq', '~> 3.0'
 gem 'redis'
 
-gem 'will_paginate', '~> 3.0.6'
+gem 'kaminari'
+
 
 group :development do
   gem 'spring'

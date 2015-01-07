@@ -5,6 +5,7 @@ class Version < ActiveRecord::Base
   validates :number, presence: true
   validates :total_records, presence: true
   has_many :updates, class_name: "VersionUpdate"
+  paginates_per 10
 
   before_create :set_initial_total_records
 

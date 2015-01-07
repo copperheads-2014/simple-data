@@ -1,5 +1,4 @@
-.col-md-2
-.col-md-8
+.col-md-8.col-md-offset-2
   .org-banner
     - if @service.latest_version.total_records == 0
       = 'Your API is being processed. Please check back in a few minutes.'
@@ -51,4 +50,3 @@
       %li
         =mail_to @service.organization.users.first.email, " Contact email", encode: "javascript", class: "fa fa-envelope"
     = link_to "Versions", "/services/#{@service.slug}/versions", {:id => "update-service-button", :class => "btn btn-default form-control"}
-.col-md-2
