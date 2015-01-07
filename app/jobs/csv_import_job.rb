@@ -78,16 +78,11 @@ class CsvImportJob < ActiveJob::Base
   end
 
   def grab_headers(file)
-    headers = []
-    CSV.parse(file) {|row| headers << row; break; }
-    headers.flatten!
-    return headers
+    CSV.readlines(file).first
   end
 
   def create_headers_schema(headers, version_update)
-    headers.each do |header_name|
-      version_update.version.headers << Header.create(name: header_name)
-    end
+    version_update.version.headers = headers.map { |name| Header.create(name: name) }
   end
 
   def add_records(file, version_id)
