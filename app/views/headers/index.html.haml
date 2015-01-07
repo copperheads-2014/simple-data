@@ -9,7 +9,7 @@
         = label_tag :header_name
         = header.name
         = label_tag :header_description
-        = text_area_tag "headers[][description]"
+        = text_area_tag "headers[][description]", value: header.description
         = label_tag :data_type
         = select_tag("headers[][data_type]", options_for_select([["Text", :string], ["Integer", :integer], ["Decimal Number", :float], ["True or False", :boolean]]))
     = submit_tag
