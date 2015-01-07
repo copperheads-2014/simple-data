@@ -8,7 +8,7 @@
   .col-md-8.col-md-offset-2
     -if params[:page] == "1" || !params[:page]
       -if current_user.organization
-        = link_to "Create API", services_new_path, :class => "form-control btn btn-default pull-right", :id => "new-api"
+        = link_to "Create API", new_service_path, :class => "form-control btn btn-default pull-right", :id => "new-api"
         %h2 Your Organization's APIs:
         %ul.service-list
           - @my_services.each do |s|

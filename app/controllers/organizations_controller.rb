@@ -11,7 +11,7 @@ class OrganizationsController < ApplicationController
     @organization = current_user.organizations.new(organization_params)
     respond_to do |format|
       if @organization.save
-        format.html {redirect_to services_new_path, notice: 'Organization was successfully created.' }
+        format.html {redirect_to new_service_path, notice: 'Organization was successfully created.' }
       else
         format.html {render :new}
       end
