@@ -31,8 +31,10 @@
     - if current_user && @service.organization_id == current_user.organization_id
       %ul
         %li
-    %h3 Details:
-    %ul
+    %h3
+      Details:
+      = link_to "(expand)", "#", :class => "displayer", :id => "#{@service.slug}"
+    %ul.hideable{:id => "#{@service.slug}"}
       %li
         Current Version:
         = @service.latest_version.number
