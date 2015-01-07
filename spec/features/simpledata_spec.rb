@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'csv'
 
 feature "Browsing the website" do
   scenario "User visits the landing page" do
@@ -131,6 +132,145 @@ feature "Uploading an API" do
 end
 
 feature "Retrieving data from API endpoints" do
+  background do
+    service = Service.create(organization_id: 1, description: "This is a description of the service", name: "my service", creator_id: 1)
+    version = service.latest_version
+    version.create_records(CSV.read('db/samples/Life_Safety_Evaluations.csv',
+      headers: true))
+
+
+  end
+  scenario 'returns total number of record' do
+    visit "/services/my-service/v1/records"
+
+    expect(page).to have_content('"total":733')
+
+  end
+
+  scenario 'contains an insertion id' do
+    visit "/services/my-service/v1/records"
+
+    expect(page).to have_content('"insertion_id":1')
+  end
+
+  scenario 'captures the number of items on a page in the metadata' do
+    visit "/services/my-service/v1/records?page_size=10"
+
+    expect(page).to have_content('page_size":10')
+  end
+
+  scenario 'shows that the starting point is 0' do
+    visit "/services/my-service/v1/records"
+
+    expect(page).to have_content('"start":0')
+  end
+
+
+  scenario 'shows that the ending point for the page is 49' do
+    visit "/services/my-service/v1/records"
+
+    expect(page).to have_content('"end":49')
+  end
+
+  scenario 'tells you the correct number of pages' do
+    visit "/services/my-service/v1/records?page_size=50"
+
+    expect(page).to have_content('"num_pages":15')
+  end
+
+  scenario 'returns the base uri' do
+    visit "/services/my-service/v1/records"
+
+    expect(page).to have_content('"uri":"/services/my-service/v1/records"')
+  end
+
+  scenario 'returns the next page uri' do
+    visit "/services/my-service/v1/records?page=0&page_size=50"
+
+    expect(page).to have_content('"next_page_uri":"/services/my-service/v1/records?page=1&page_size=50"')
+  end
+
+  scenario 'returns the previous page uri' do
+    visit "/services/my-service/v1/records?page=1&page_size=50"
+
+    expect(page).to have_content('"previous_page_uri":"/services/my-service/v1/records?page=0&page_size=50"')
+  end
+
+  scenario 'returns null for previous page uri if on the first page' do
+    visit "/services/my-service/v1/records?page=0"
+
+    expect(page).to have_content('"previous_page_uri":null')
+  end
+
+  scenario 'returns null for next page uri if on the last page' do
+    visit "/services/my-service/v1/records?page=15&page_size=50"
+
+    expect(page).to have_content('"next_page_uri":null')
+  end
+
+  scenario 'returns data as an array' do
+    visit "/services/my-service/v1/records"
+
+    expect(page).to have_content('"data":[')
+  end
+
+  scenario 'does not show mongo id"' do
+    visit "/services/my-service/v1/records"
+
+    expect(page).to_not have_content('$oid')
+  end
+
+    ####  This query string is the contents of this in capybara, but works in production
+  scenario 'if specified, shows only fields specified' do
+    visit version_records_service_path("my-service","v1", {:only => "Building Street Direction,Building Street Name"})
+    expect(page).to have_content('{"Building Street Direction":"W.","Building Street Name":"21st"}')
+  end
+
+  scenario 'filters by one field properly' do
+    # visit "/services/my-service/v1/records?filter[Report%20Status%20-%20Original%20Lse%20Report%20Approved]=No"
+    visit version_records_service_path("my-service", "v1", {filter: {"Report Status - Original LSE Report Approved" => "No"}})
+    # visit "/services/my-service/v1/records?filter[report_status_-_original_lse_report_approved]=No"
+
+    expect(page).to have_content('"total":381')
+  end
+
+  scenario 'filters by two fields properly' do
+    visit version_records_service_path("my-service", "v1", {filter: {"Report Status - Original LSE Report Approved" => "No", "Report Status - Resubmitted Report Approved" => "Yes"}})
+
+    expect(page).to have_content('"total":359')
+  end
+
+  scenario 'orders by desc properly' do
+    visit "/services/my-service/v1/records?order=desc"
+
+    expect(page).to have_content('"insertion_id":733')
+  end
+
+  scenario 'orders by asc properly' do
+    visit "/services/my-service/v1/records?sortby=insertion_id"
+
+    expect(page).to have_content('3030')
+  end
+
+  scenario 'skips records properly' do
+    visit "/services/my-service/v1/records?page=2"
+
+    expect(page).to have_content('"start":100')
+  end
+
+
+  scenario 'sorts properly' do
+    visit "/services/my-service/v1/records?sortby=building_street_name"
+
+    expect(page).to have_content('"Building Street Number":"3030"')
+  end
+
+  scenario 'limits the number of results' do
+    visit "/services/my-service/v1/records?page_size=1"
+
+    expect(page).to_not have_content('"insertion_id":2')
+  end
+
 end
 
 

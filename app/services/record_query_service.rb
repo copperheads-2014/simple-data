@@ -22,7 +22,6 @@ class RecordQueryService
 
   def with_filters(scope)
     if options[:filter]
-      format_pairs
       scope.where(options[:filter])
     else
       scope
@@ -38,17 +37,6 @@ class RecordQueryService
       scope.order_by("#{options[:sortby]} #{options[:order]}")
     else
       scope
-    end
-  end
-
-  def format_pairs
-    # Make the value of a field an integer if it matches that format
-    # Ex. "filter"=>{"zip"=>"60630", "city"=>"Chicago"},
-    # becomes
-    # "filter"=>{"zip"=> 60630, "city"=>"Chicago"}
-    options[:filter].keys.each do |key|
-      value = options[:filter][key]
-      options[:filter][key] = value.to_i if value.to_i.to_s == value
     end
   end
 

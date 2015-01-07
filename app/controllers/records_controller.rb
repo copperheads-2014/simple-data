@@ -38,56 +38,60 @@ class RecordsController < ApplicationController
     {
       :start => first_record,
       :end => last_record,
-      :total => @version.records.count,
+      :total => total_retrieved,
       :num_pages => num_pages,
       :page => page,
       :page_size => @settings[:page_size],
       :uri => uri,
       :first_page_uri => first_page_uri,
-      :last_page_uri => "/services/#{@service.slug}/records?page=0&page_size=50",
+      :last_page_uri => last_page_uri,
       :previous_page_uri => previous_page_uri,
       :next_page_uri => next_page_uri
     }
   end
 
+  def total_retrieved
+    @records.count
+  end
+
   def page
-    [0, @settings[:page]].max
+    @settings[:page].to_i
   end
 
   def num_pages
-    @version.total_records / @settings[:page_size] + 1
+    (@records.count / @settings[:page_size].to_i) + 1
   end
 
   def last_record
-    [@settings[:page_size], @version.records.count].min
+    (@settings[:page_size].to_i * page) + @settings[:page_size].to_i - 1
   end
 
   def first_record
-    [@settings[:start], 1].max
+    @settings[:page_size].to_i * page
   end
 
   def uri
-    "/services/#{@service.slug}/records"
+    "/services/#{@service.slug}/v1/records"
   end
 
   def first_page_uri
-    "/services/#{@service.slug}/records?page=0&page_size=#{@settings[:page_size]}"
+    "/services/#{@service.slug}/v1/records?page=0&page_size=#{@settings[:page_size]}"
   end
 
   def last_page_uri
-    "/services/#{@service.slug}/records?page=#{num_pages-1}&page_size=50"
+    "/services/#{@service.slug}/v1/records?page=#{num_pages-1}&page_size=#{@settings[:page_size]}"
   end
 
   def previous_page_uri
-    "/services/#{@service.slug}/records?page=#{previous_page}&page_size=50" if previous_page
+    "/services/#{@service.slug}/v1/records?page=#{previous_page}&page_size=#{@settings[:page_size]}" if previous_page
   end
 
   def next_page_uri
-    "/services/#{@service.slug}/records?page=#{next_page}&page_size=50" if next_page
+    "/services/#{@service.slug}/v1/records?page=#{next_page}&page_size=#{@settings[:page_size]}" if next_page
   end
 
   def previous_page
-    if page == 0
+    if page <= 0
       nil
     else
       page-1
@@ -95,10 +99,10 @@ class RecordsController < ApplicationController
   end
 
   def next_page
-    if page == num_pages-1
+    if page >= num_pages - 1
       nil
     else
-      [page+1]
+      page+1
     end
   end
 end
