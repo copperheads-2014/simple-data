@@ -6,4 +6,9 @@ namespace :db do
     Rake::Task["db:migrate"].invoke
   end
 
+  task yolo2: :environment do
+    Rake::Task["db:mongoid:drop"].invoke
+    Rake::Task["db:seed"].invoke
+  end
+
 end
