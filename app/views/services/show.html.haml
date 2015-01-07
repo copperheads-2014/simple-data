@@ -7,8 +7,7 @@
     %p.org-desc
       = @service.description
   %p.org-date
-    Created on:
-    = @service.created_at
+    = @service.created_at.strftime("Created on: %B %d, %Y")
   %hr
   -if current_user && current_user.organization_id == @service.organization_id
     = link_to "Update", {:controller => "services", :action => "edit", :service_slug => @service.slug}, {:id => "update-service-button", :class => "btn btn-default form-control"}
@@ -32,8 +31,10 @@
     - if current_user && @service.organization_id == current_user.organization_id
       %ul
         %li
-    %h3 Details:
-    %ul
+    %h3
+      Details:
+      = link_to "(expand)", "#", :class => "displayer", :id => "#{@service.slug}"
+    %ul.hideable{:id => "#{@service.slug}"}
       %li
         Current Version:
         = @service.latest_version.number
@@ -45,7 +46,6 @@
       %li
         Creator:
         = link_to "#{@organization.name}", "/organizations/#{@organization.id}"
-      %li= @service.created_at.strftime("Created: %B %d, %Y")
       %li= @service.updated_at.strftime("Last update: %B %d, %Y")
       %li
         =mail_to @service.organization.users.first.email, " Contact email", encode: "javascript", class: "fa fa-envelope"
