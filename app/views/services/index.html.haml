@@ -1,9 +1,3 @@
-= search_form_for @q do |f|
-  = f.label :Search
-  = f.search_field :name_or_description_or_tags_name_cont
-  = f.submit
-  -@results.each do |r|
-    = link_to "#{r.name}", "/services/#{r.slug}"
 - if current_user
   .col-md-8.col-md-offset-2
     -if params[:page] == "1" || !params[:page]
@@ -45,6 +39,26 @@
             %span "Create API"
             to get started!
     %h2 APIs Available:
+    = search_form_for @q do |f|
+      = f.label "Search:"
+      = f.search_field :name_or_description_or_tags_name_cont, :class => "search-bar"
+      %p
+        = f.submit "Search", :class => "btn btn-default form-control search-fields"
+    -@results.each do |r|
+      %ul.serv-list
+        %li
+          = link_to "#{r.name}", "/services/#{r.slug}"
+          = link_to "(expand)", "#", :class => "displayer", :id => "#{r.slug}"
+        %ul.hideable{:id => "#{r.slug}"}
+          %li.sublist
+            = r.description
+          %li.sublist
+            Created: #{r.created_at.strftime("%B %d, %Y")}
+          %li.sublist
+            Most Recent Update: #{r.created_at.strftime("%B %d, %Y")}
+          %li.sublist
+            =mail_to r.organization.users.first.email, " Contact email", encode: "javascript", class: "fa fa-envelope"
+        %hr
     %ul.service-list
       - @services.each do |s|
         -unless s.organization_id == current_user.organization_id
@@ -64,8 +78,6 @@
             %hr
     .custom_pagination
       = will_paginate @services
-
-
 
 - if !current_user
   .col-md-8.col-md-offset-2
