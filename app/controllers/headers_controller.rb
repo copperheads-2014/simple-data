@@ -13,7 +13,7 @@ class HeadersController < ApplicationController
       header.update(description: params[:headers][i][:description],
                     data_type: params[:headers][i][:data_type])
     end
-    redirect_to "/services"
+    redirect_to "/services/#{@version.service.slug}/versions/#{@version.number}"
   end
 
 end
