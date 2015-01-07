@@ -17,7 +17,7 @@ class RecordQueryService
   protected
 
   def with_offset(scope)
-    options[:start] ? scope.skip(options[:start]) : scope
+    options[:page] ? scope.skip(options[:page]) : scope
   end
 
   def with_filters(scope)
