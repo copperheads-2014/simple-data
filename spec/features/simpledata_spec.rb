@@ -131,6 +131,11 @@ feature "Uploading an API" do
 end
 
 feature "Retrieving data from API endpoints" do
+  background do
+    service = Service.create(organization_id: 1, description: "This is a description of the service", name: "my service", creator_id: 1)
+    version = service.latest_version
+    version.create_records(CSV.read('db/Life_Safety_Evaluations.csv',
+      headers: true))
 end
 
 
