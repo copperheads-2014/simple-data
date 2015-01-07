@@ -1,6 +1,6 @@
 class OrganizationsController < ApplicationController
   def index
-    @organizations = Organization.paginate(:page => params[:page], :per_page => 10)
+    @organizations = Organization.order(:name).page params[:page]
     respond_to do |format|
       format.html
       format.json { render_json_collection @organizations }
@@ -27,7 +27,7 @@ class OrganizationsController < ApplicationController
 
   def show
     @organization = Organization.includes(:services).find(params[:id])
-    @services = @organization.services.paginate(:page => params[:page], :per_page => 5)
+    @services = @organization.services.order(:name).page params[:page]
     respond_to do |format|
       format.html
       format.json { render json: @organization }
