@@ -11,7 +11,7 @@
     = @version.created_at
   %ul.serv-list
     %li.serv-name
-    %h3 Version Details:
+    %h2 Version Details:
     %ul
       %li
         License Type:
@@ -24,7 +24,7 @@
       %li= @version.created_at.strftime("Created: %B %d, %Y")
       %li= @version.updated_at.strftime("Last Update: %B %d, %Y")
       %li= 'Total Records: ' + @version.total_records.to_s
-    %h3 How to Use:
+    %h2 How to Use:
     %p
       In order to use the
       = @service.name
