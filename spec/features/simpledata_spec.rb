@@ -197,7 +197,7 @@ feature "Retrieving data from API endpoints" do
   scenario 'returns the next page uri' do
     visit "/services/my-service/v1/records?page=0&page_size=50"
 
-    expect(page).to have_content('"next_p age_uri":"/services/my-service/v1/records?page=1&page_size=50"')
+    expect(page).to have_content('"next_page_uri":"/services/my-service/v1/records?page=1&page_size=50"')
   end
 
   scenario 'returns the previous page uri' do
