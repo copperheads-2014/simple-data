@@ -55,7 +55,7 @@ class RecordsController < ApplicationController
   end
 
   def page
-    [0, @settings[:page].to_i].max
+    @settings[:page].to_i
   end
 
   def num_pages
@@ -67,7 +67,7 @@ class RecordsController < ApplicationController
   end
 
   def first_record
-    [@settings[:start], 0].max
+    @settings[:page_size].to_i * page
   end
 
   def uri
