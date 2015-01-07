@@ -36,7 +36,7 @@
           %li
             = header.name
       - if @service.organization_id == current_user.organization_id
-        = link_to "Modify header descriptions", "/versions/#{@version.id}/headers/update"
+        = link_to "Modify header descriptions", "/services/#{@version.service.slug}/versions/#{@version.number}/headers/update"
     .service_example_json
       %h3 Example Response:
       = @service.latest_version.records.first.to_json(except: ["insertion_id", "_id"])
