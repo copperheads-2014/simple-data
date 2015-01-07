@@ -49,8 +49,6 @@ class CsvImportJob < ActiveJob::Base
     create_headers_schema(headers, new_version.updates.last)
 
     add_records(file, new_version.id)
-
-    new_version.set_total_records
   end
 
   def download_and_add_records_and_set_headers
@@ -94,6 +92,7 @@ class CsvImportJob < ActiveJob::Base
       row_hash[:insertion_id] = last_count += 1
       version.insert_record(row_hash)
     end
+    version.set_total_records
   end
 
 end

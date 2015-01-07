@@ -22,7 +22,8 @@
         Creator:
         = link_to "#{@organization.name}", "/organizations/#{@organization.id}"
       %li= @version.created_at.strftime("Created: %B %d, %Y")
-      %li= @version.updated_at.strftime("Last update: %B %d, %Y")
+      %li= @version.updated_at.strftime("Last Update: %B %d, %Y")
+      %li= 'Total Records: ' + @version.total_records.to_s
     %h3 How to Use:
     %p
       In order to use the
