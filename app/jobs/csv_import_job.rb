@@ -59,7 +59,7 @@ class CsvImportJob < ActiveJob::Base
   def download_and_add_records_and_set_headers
     # download the file locally
     download_file(@version_update.filename)
-    file = open(@csv_path).read
+    file = open(@csv_path)
     # import the data
     add_records(file, @version_update.version.id)
     # parse the headers
@@ -70,8 +70,6 @@ class CsvImportJob < ActiveJob::Base
   end
 
   def download_file(filename)
-    p "DOWNLOADING NOW!"
-    p "HERE WE ARE DOWNLOADING TO #{ROOT_CSV_PATH} FROM THE URL #{filename}"
     File.open(@csv_path, "wb") do |file|
       file.write open(filename).read
     end
@@ -88,8 +86,7 @@ class CsvImportJob < ActiveJob::Base
   def add_records(file, version_id)
     version = Version.find(version_id)
     last_count = version.total_records
-    CSV.new(file, headers: true, header_converters: lambda { |h| h.downcase.gsub(' ', '_') unless h.nil? }
-      ).each do |row|
+    CSV.foreach(file, headers: true) do |row|
       row_hash = row.to_hash
       row_hash[:insertion_id] = last_count += 1
       version.insert_record(row_hash)
