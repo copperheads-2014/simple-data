@@ -8,7 +8,7 @@ class Service < ActiveRecord::Base
 
   validates :organization_id, presence: true
   validates :name, presence: true, uniqueness: {case_sensitive: false}
-  validates :description, presence: true, length: { :in => 12..300 }
+  validates :description, presence: true
   validates :slug, presence: true, on: :save
 
   after_create :make_version
