@@ -110,12 +110,9 @@
       .panel-body.display-uri
         %code
           = @service.latest_version.records.first.to_json(except: ["insertion_id", "_id"])
-  %p.org-date
-    Created on:
-    = @version.created_at
   %ul.serv-list
     %li.serv-name
-    %h2 Version Details:
+    %h4 Version Details:
     %ul
       %li
         License Type:
