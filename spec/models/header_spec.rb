@@ -5,13 +5,14 @@ RSpec.describe Header, :type => :model do
   let(:zoo_v1) {Version.create(service_id: zoo.id, active: true)}
 
   describe "Initialization" do
-    it "Can be created" do
-      Header.create(name: "Arbitrary", description: "An arbitrary header", version_id: 1)
-      expect(Header.last.name).to eq("Arbitrary")
-    end
     it "Fails to save to the database if a version_id is not provided" do
       Header.create(name: "More Arbitrary", description: "Can this get any more generic?")
       expect(Header.exists?(name: "More Arbitrary")).to eq(false)
+    end
+
+    it "Can be created" do
+      Header.create(name: "Arbitrary", description: "An arbitrary header", version_id: 1)
+      expect(Header.last.name).to eq("Arbitrary")
     end
   end
 
