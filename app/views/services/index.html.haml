@@ -17,6 +17,8 @@
           %li.sublist
             = r.description
           %li.sublist
+            = "Organization: #{r.organization.name}"
+          %li.sublist
             Created: #{r.created_at.strftime("%B %d, %Y")}
           %li.sublist
             Most Recent Update: #{r.created_at.strftime("%B %d, %Y")}

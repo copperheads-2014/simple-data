@@ -16,9 +16,9 @@
         Example
     %br
     %br
-    %h3
+    %h3#resource_uri
       Resource URI
-    %code
+    %code.display-uri
       ="https://dbc-simpledata.herokuapp.com/services/#{@version.service.slug}/v#{@version.number}/records"
     %table.table.table-striped.table-bordered
       %caption
@@ -101,21 +101,18 @@
     .panel.panel-default
       .panel-heading
         Query
-      .panel-body
+      .panel-body.display-uri
         %code
           ="https://dbc-simpledata.herokuapp.com/services/#{@version.service.slug}/v#{@version.number}/records?only=field1%2Cfield2&filter[field1]=value1&filter[field2]=value2&sortby=field1&order=asc&page=0&page_size=50&limit=100"
     .panel.panel-default
       .panel-heading
         Example Response:
-      .panel-body
+      .panel-body.display-uri
         %code
           = @service.latest_version.records.first.to_json(except: ["insertion_id", "_id"])
-  %p.org-date
-    Created on:
-    = @version.created_at
   %ul.serv-list
     %li.serv-name
-    %h2 Version Details:
+    %h4 Version Details:
     %ul
       %li
         License Type:
