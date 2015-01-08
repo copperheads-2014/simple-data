@@ -82,10 +82,13 @@ class ServicesController < ApplicationController
     @service = Service.find_by(slug: params[:service_slug])
     respond_to do |format|
       #Ensure the individual submitting owns the organization
-      if @service.save && (@service.organization_id == current_user.organization_id)
+      if @service && (@service.organization_id == current_user.organization_id)
         if params[:service][:append].to_bool
+          p "SERVICE CHECK PASSED"
           update_csv = retrieve_file(params[:service][:file]).read
+          p "CSV HEADERS CHECK PASSED"
           if headers_match?(update_csv, @service)
+            p "JOB ABOUT TO START"
             CsvImportJob.perform_later(@service.latest_version.updates.last.id,
                                       {updating: params[:service][:updating].to_bool,
                                        append: params[:service][:append].to_bool,
@@ -126,8 +129,7 @@ class ServicesController < ApplicationController
   def retrieve_file(params)
     file = open(params).read
     CSV.new(file,
-      headers: true,
-      :header_converters => lambda { |h| h.downcase.gsub(' ', '_') unless h.nil? }
+      headers: true
       )
   end
 
