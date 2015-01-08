@@ -1,11 +1,15 @@
 class UploadCsvController < ApplicationController
   def index
-    render json: {
-    policy: s3_upload_policy_document,
-    signature: s3_upload_signature,
-    key: "uploads/#{SecureRandom.uuid}/#{params[:doc][:title]}",
-    success_action_redirect: "/"
-    }
+    if params[:doc][:title] =~ /.+(.csv)/
+      render json: {
+      policy: s3_upload_policy_document,
+      signature: s3_upload_signature,
+      key: "uploads/#{SecureRandom.uuid}/#{params[:doc][:title]}",
+      success_action_redirect: "/"
+      }
+    else
+      render status: 406
+    end
   end
 
   private
