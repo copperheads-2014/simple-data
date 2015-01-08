@@ -6,7 +6,7 @@
       %ul.serv-list
         %li
         = link_to "#" do
-          = link_to "#{org.name}", "/services/#{org.id}"
+          = link_to "#{org.name}", "/organizations/#{org.id}"
           = link_to "#" do
             %i.fa.fa-chevron-circle-down{:id => "org#{org.id}", :class => "displayer"}
         %ul.hideable{:id => "org#{org.id}"}
