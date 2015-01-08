@@ -1,7 +1,4 @@
 .col-md-8.col-md-offset-2
-  %h1
-    Update
-    = @service.name
   %div.update-container
     %div.choice-container
       %div.col-md-6
@@ -30,7 +27,7 @@
     %br
     %table.table.table-striped.table-bordered
       %caption
-        Headers of your most recent version
+        ="Headers of your most recent version of '#{@service.name}'"
       %tr
         %th
           Header

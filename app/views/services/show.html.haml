@@ -8,18 +8,42 @@
       = @service.description
   %p.org-desc
     = @service.created_at.strftime("Created on: %B %d, %Y")
+  %p
+    Status:
+    -if @service.activated
+      %span.success
+        Active
+    -else
+      %span.danger
+        Inactive
+
   %hr
-  %h2 Status:
-  - if @service.activated && !current_user || @service.activated && current_user.organization_id != @service.organization_id
-    %p This API is currently activated, meaning anyone can access its data.
-  - if !@service.activated && !current_user || !@service.activated && current_user.organization_id != @service.organization_id
-    %p This API is currently deactivated, meaning no one can access its data.
-  -if current_user && current_user.organization_id == @service.organization_id
-    - if @service.activated && @service.organization_id == current_user.organization_id
-      %p This API is currently activated, meaning anyone can access its data.
-    - if @service.activated == false && @service.organization_id == current_user.organization_id
-      %p This API is currently deactivated, meaning no one can access its data. If you wish to reopen access to this API, Click below.
+
+  / - if @service.activated && !current_user || @service.activated && current_user.organization_id != @service.organization_id
+  /   %p This API is currently activated, meaning anyone can access its data.
+  / - if !@service.activated && !current_user || !@service.activated && current_user.organization_id != @service.organization_id
+  /   %p This API is currently deactivated, meaning no one can access its data.
+  / -if current_user && current_user.organization_id == @service.organization_id
+  /   - if @service.activated && @service.organization_id == current_user.organization_id
+  /     %p This API is currently activated, meaning anyone can access its data.
+  /   - if @service.activated == false && @service.organization_id == current_user.organization_id
+  /     %p This API is currently deactivated, meaning no one can access its data. If you wish to reopen access to this API, Click below.
   .row
+    .col-md-6
+      %ul.serv-list
+        %li.serv-name
+          %h2
+            Versions:
+            %a.displayer#version-lists{href: "#"}
+              %i.fa.fa-chevron-circle-down
+          %ul.serv-list.hideable{:id => "version-lists"}
+            - @service.versions.each do |v|
+              %li.sublist
+                = link_to "Version #{v.number}", service_version_path(@service.slug, v.number)
+              %ul.sublist
+                %li= v.created_at.strftime("Created: %B %d, %Y")
+              %ul.sublist
+                %li= v.updated_at.strftime("Last Updated: %B %d, %Y")
     .col-md-5.offset-3
       %ul.serv-list
         %li.serv-name
@@ -43,31 +67,15 @@
               = @service.updated_at.strftime("Last update: %B %d, %Y")
             %li.sublist
               =mail_to @service.organization.users.first.email, " Contact email", encode: "javascript", class: "fa fa-envelope"
-    .col-md-6
-      %ul.serv-list
-        %li.serv-name
-          %h2
-            Versions:
-            %a.displayer#version-lists{href: "#"}
-              %i.fa.fa-chevron-circle-down
-          %ul.serv-list.hideable{:id => "version-lists"}
-            - @service.versions.each do |v|
-              %li.sublist
-                = link_to "Version #{v.number}", service_version_path(@service.slug, v.number)
-              %ul.sublist
-                %li= v.created_at.strftime("Created: %B %d, %Y")
-              %ul.sublist
-                %li= v.updated_at.strftime("Last Updated: %B %d, %Y")
   .row
     .container-fluid.service-show-bubbles
       -if current_user && current_user.organization_id == @service.organization_id
         %a.btn.bubbles.col-xs-6{href: edit_service_path(@service.slug)} Update API
-      - if @service.activated && @service.organization_id == current_user.organization_id
-        %a.btn.bubbles.col-xs-6{href: new_user_path} Deactivate API
       - if @service.activated == false && @service.organization_id == current_user.organization_id
         = form_tag({controller: "services", action: :activate}, method: "put", data: { confirm: 'Are you sure you want to activate this API? Once you do, Developers will be able to access this data. Press OK to activate.' })
         = submit_tag "Activate API", :class => "btn bubbles col-xs-6"
-
+  - if @service.activated && @service.organization_id == current_user.organization_id
+    =link_to "Deactivate API", deactivate_service_path(@service)
 
 
 
