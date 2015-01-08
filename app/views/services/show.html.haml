@@ -1,4 +1,10 @@
 .col-md-8.col-md-offset-2
+  %ol.breadcrumb
+    %li
+      = link_to "Home", root_path
+    %li.active
+      = link_to "Services", services_path
+    
   .org-banner
     - if @service.latest_version.records.count == 0
       = 'Your API is being processed. Please check back in a few minutes.'
