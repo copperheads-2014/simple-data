@@ -35,7 +35,7 @@ class ServicesController < ApplicationController
   def create
     update_params = {}
     @service = ServiceCreation.create(service_params, current_user)
-    @service.organizatioFormn_id = current_user.organization.id
+    @service.organization = current_user.organization
     @service.versions.last.updates << VersionUpdate.create(filename: params[:service][:file])
     if @service.save
       CsvImportJob.perform_later(@service.latest_version.updates.last.id, update_params, params[:service])
