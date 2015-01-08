@@ -1,9 +1,8 @@
 class Organization < ActiveRecord::Base
   has_many :users
   has_many :services
-  paginates_per 10
-
   validates :name, presence: true
   validates :description, presence: true, length: { :in => 12..300 }
+  self.per_page = 10
 
 end
