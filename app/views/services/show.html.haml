@@ -1,54 +1,48 @@
 .col-md-8.col-md-offset-2
   .org-banner
-    - if @service.latest_version.total_records == 0
+    - if @service.latest_version.records.count == 0
       = 'Your API is being processed. Please check back in a few minutes.'
     %h1
       = @service.name
     %p.org-desc
       = @service.description
-  %p.org-desc
-    = @service.created_at.strftime("Created on: %B %d, %Y")
   %p
     Status:
     -if @service.activated
-      %span.success
+      %span.success{"title"=> "Data is accessible to the public.","data-placement" => "right", "data-toggle" => "tooltip"}
         Active
     -else
-      %span.danger
+      %span.danger{"title"=> "Data is no longer accessible to the public.","data-placement" => "right", "data-toggle" => "tooltip"}
         Inactive
 
   %hr
-
-  / - if @service.activated && !current_user || @service.activated && current_user.organization_id != @service.organization_id
-  /   %p This API is currently activated, meaning anyone can access its data.
-  / - if !@service.activated && !current_user || !@service.activated && current_user.organization_id != @service.organization_id
-  /   %p This API is currently deactivated, meaning no one can access its data.
-  / -if current_user && current_user.organization_id == @service.organization_id
-  /   - if @service.activated && @service.organization_id == current_user.organization_id
-  /     %p This API is currently activated, meaning anyone can access its data.
-  /   - if @service.activated == false && @service.organization_id == current_user.organization_id
-  /     %p This API is currently deactivated, meaning no one can access its data. If you wish to reopen access to this API, Click below.
   .row
-    .col-md-6
-      %ul.serv-list
-        %li.serv-name
-          %h2
-            Versions:
-            %a.displayer#version-lists{href: "#"}
-              %i.fa.fa-chevron-circle-down
-          %ul.serv-list.hideable{:id => "version-lists"}
-            - @service.versions.each do |v|
-              %li.sublist
-                = link_to "Version #{v.number}", service_version_path(@service.slug, v.number)
-              %ul.sublist
-                %li= v.created_at.strftime("Created: %B %d, %Y")
-              %ul.sublist
-                %li= v.updated_at.strftime("Last Updated: %B %d, %Y")
+    .col-md-5
+      %h2
+        Versions
+      %div.serv-list{:id => "version-lists"}
+      %br
+        %table.table.table-striped.table-condensed.table-bordered
+          %tr
+            %th
+              Version
+            %th
+              Created
+            %th
+              Updated
+          - @service.versions.each do |v|
+            %tr
+              %td
+                = link_to "#{v.number}", service_version_path(@service.slug, v.number)
+              %td
+                = v.created_at.strftime("%b %d, %Y")
+              %td
+                = v.updated_at.strftime("%b %d, %Y")
     .col-md-5.offset-3
       %ul.serv-list
         %li.serv-name
           %h2
-            Details:
+            Details
             %a.displayer#detail-lists{href: "#"}
               %i.fa.fa-chevron-circle-down
           %ul.hideable{:id => "detail-lists"}
