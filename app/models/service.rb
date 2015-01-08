@@ -12,9 +12,9 @@ class Service < ActiveRecord::Base
   validates :description, presence: true
   validates :slug, presence: true, on: :save
 
-  after_create :make_version
+  after_save :make_version
 
-  before_create :make_slug
+  before_save :make_slug
 
 
   def set_update_time
