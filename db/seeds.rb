@@ -9,7 +9,7 @@
 require 'csv'
 
 Organization.create(
-  name: "Delian League", description: "this is the organization's description")
+  name: "Delian League", description: "Keeping peace in the Mediterranean")
 
 eleni = User.create(
   name: "Eleni Chappen",
@@ -19,7 +19,7 @@ eleni = User.create(
   password_confirmation: 'password')
 
 police = ServiceCreation.create({
-    description: "a list of all the popos",
+    description: "A list of police stations",
     name: "Police Stations",
   }, eleni)
 
@@ -59,13 +59,13 @@ services.each do |file|
   user = User.create(
     name: Faker::Name.name,
     email: Faker::Internet.email,
-    organization: Organization.create(name: Faker::Company.name, description: "longggsgsgs description"),
+    organization: Organization.create(name: Faker::Company.name, description: Faker::Company.catch_phrase),
     password: 'password',
     password_confirmation: 'password'
   )
 
   service = ServiceCreation.create({
-    description: "longer description than before",
+    description: Faker::Company.bs,
     name: "#{file}".chomp('.csv'),
     }, user)
 
@@ -76,4 +76,9 @@ services.each do |file|
     ))
 
   update = VersionUpdate.create!(version_id: service.latest_version.id, user_id: user.id, filename: "db/#{file}", status: :completed)
+
+  headers = CSV.readlines("db/samples/#{file}").first
+  service.latest_version.headers = headers.map { |name| Header.create(name: name) }
+  service.latest_version.save!
+
 end

@@ -84,6 +84,8 @@
     .service_headers
       %h3#headers
         Headers
+      -if current_user && current_user.organization_id == @service.organization_id
+        =link_to "Update Header Descriptions", "/services/#{@service.slug}/versions/#{@version.number}/headers/update", :class => "btn update-headers-btn btn-primary form-control"
       %table.table.table-striped.table-bordered
         %tr
           %th
