@@ -28,12 +28,11 @@ $( ".displayer" ).click( function(event) {
   var target = $( this ).attr("id")
   if ( $( "ul#"+target ).is(":hidden") ) {
     $( "ul#"+target ).slideDown("slow");
-    $( this ).html("(close)")
   } else {
-    $( "ul#"+target ).slideUp();
-    $( this ).html("(expand)");}
+    $( "ul#"+target ).slideUp();}
   });
 });
+
 $(document).ready(function(){
   $('.info_blocks').hide();
   var delay = 1500;
