@@ -25,8 +25,9 @@
         %li.serv-name
           %h2
             Details:
-            = link_to "(expand)", "#", :class => "displayer", :id => "#{@service.slug}"
-          %ul.hideable{:id => "#{@service.slug}"}
+            %a.displayer#detail-lists{href: "#"}
+              %i.fa.fa-chevron-circle-down
+          %ul.hideable{:id => "detail-lists"}
             %li.sublist
               Current Version:
               = @service.latest_version.number
@@ -47,7 +48,8 @@
         %li.serv-name
           %h2
             Versions:
-            = link_to "(expand)", "#", :class => "displayer", :id => "version-lists"
+            %a.displayer#version-lists{href: "#"}
+              %i.fa.fa-chevron-circle-down
           %ul.serv-list.hideable{:id => "version-lists"}
             - @service.versions.each do |v|
               %li.sublist
