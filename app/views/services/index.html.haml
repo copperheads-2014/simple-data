@@ -1,24 +1,27 @@
 .col-md-8.col-md-offset-2
   %h2 APIs Available:
+  = form_tag(services_path, :method => "get", class: "navbar-form", id: "search-form") do
+    = text_field_tag :search, params[:search], placeholder: "Search APIs"
   %ul.service-list
-    -@services.each do |r|
+    -@services.each do |s|
       %ul.serv-list
         %li
+        = s.name
         = link_to "#" do
-          = link_to "#{r.name}", "/services/#{r.slug}"
+          = link_to "#{s.name}", "/services/#{s.slug}"
           = link_to "#" do
-            %i.fa.fa-chevron-circle-down{:id => "#{r.slug}", :class => "displayer"}
-        %ul.hideable{:id => "#{r.slug}"}
+            %i.fa.fa-chevron-circle-down{:id => "#{s.slug}", :class => "displayer"}
+        %ul.hideable{:id => "#{s.slug}"}
           %li.sublist
-            = r.description
+            = s.description
           %li.sublist
-            = "Organization: #{r.organization.name}"
+            = "Organization: #{s.organization.name}"
           %li.sublist
-            Created: #{r.created_at.strftime("%B %d, %Y")}
+            Created: #{s.created_at.strftime("%B %d, %Y")}
           %li.sublist
-            Most Recent Update: #{r.created_at.strftime("%B %d, %Y")}
+            Most Recent Update: #{s.created_at.strftime("%B %d, %Y")}
           %li.sublist
-            =mail_to r.organization.users.first.email, " Contact email", encode: "javascript", class: "fa fa-envelope"
+            =mail_to s.organization.users.first.email, " Contact email", encode: "javascript", class: "fa fa-envelope"
         %hr
     .custom_pagination
-      = will_paginate @results
+      = will_paginate @services

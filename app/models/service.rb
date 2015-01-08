@@ -1,4 +1,5 @@
 class Service < ActiveRecord::Base
+  attr_accessor :name, :description
   belongs_to :organization
   belongs_to :creator, class_name: "User"
   has_many :service_updates
@@ -16,6 +17,10 @@ class Service < ActiveRecord::Base
   before_save :make_slug
   self.per_page = 10
 
+  def self.search(query)
+    # where(:title, query) -> This would return an exact match of the query
+    where("title like ?", "%#{query}%")
+  end
 
   def set_update_time
     self.update(updated_at: Time.now )
