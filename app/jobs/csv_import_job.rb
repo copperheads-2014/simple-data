@@ -2,6 +2,23 @@ require 'csv'
 require 'open-uri'
 require 'fileutils'
 
+# class CsvImporter
+#   attr_reader :version_update
+
+#   def initializer(version_update_id)
+#     @version_update = VersionUpdate.find(version_update_id)
+#   end
+
+#   def import(options)
+#     if options[:updating]
+#       update if options[:append]
+#       create_version if options[:new_version]
+#     else
+#       create_new
+#     end
+#   end
+# end
+
 class CsvImportJob < ActiveJob::Base
   queue_as :default
 
@@ -17,6 +34,17 @@ class CsvImportJob < ActiveJob::Base
       p "HERE WE ARE UPDATING!!!!!!!!!!!!!!!!!!!!"
       append_with_same_headers if update_params[:append]
       create_new_version if update_params[:new_version]
+    # importer = CsvImporter.new(version_update_id) #creates the VersionUpdate
+    # importer.start_processing #sets status to processing?
+
+    # importer.import(update_params) #case statement
+
+    # p update_params
+    # if update_params[:updating]
+    #   p "HERE WE ARE UPDATING!!!!!!!!!!!!!!!!!!!!"
+    #   importer.update(params) if update_params[:append]
+    #   # maybe write a method: replace_with_same_headers
+    #   importer.create_version(params) if update_params[:new_version]
     else
       p "HERE WE ARE CREATING!!!!!!!!!!!!!!!!!!!!"
       create_first_version
@@ -59,7 +87,7 @@ class CsvImportJob < ActiveJob::Base
   def download_and_add_records_and_set_headers
     # download the file locally
     download_file(@version_update.filename)
-    file = open(@csv_path).read
+    file = open(@csv_path)
     # import the data
     add_records(file, @version_update.version.id)
     # parse the headers
@@ -70,31 +98,23 @@ class CsvImportJob < ActiveJob::Base
   end
 
   def download_file(filename)
-    p "DOWNLOADING NOW!"
-    p "HERE WE ARE DOWNLOADING TO #{ROOT_CSV_PATH} FROM THE URL #{filename}"
     File.open(@csv_path, "wb") do |file|
       file.write open(filename).read
     end
   end
 
   def grab_headers(file)
-    headers = []
-    CSV.parse(file) {|row| headers << row; break; }
-    headers.flatten!
-    return headers
+    CSV.readlines(file).first
   end
 
   def create_headers_schema(headers, version_update)
-    headers.each do |header_name|
-      version_update.version.headers << Header.create(name: header_name)
-    end
+    version_update.version.headers = headers.map { |name| Header.create(name: name) }
   end
 
   def add_records(file, version_id)
     version = Version.find(version_id)
     last_count = version.total_records
-    CSV.new(file, headers: true, header_converters: lambda { |h| h.downcase.gsub(' ', '_') unless h.nil? }
-      ).each do |row|
+    CSV.foreach(file, headers: true) do |row|
       row_hash = row.to_hash
       row_hash[:insertion_id] = last_count += 1
       version.insert_record(row_hash)

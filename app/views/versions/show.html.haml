@@ -24,11 +24,60 @@
       %li= @version.created_at.strftime("Created: %B %d, %Y")
       %li= @version.updated_at.strftime("Last Update: %B %d, %Y")
       %li= 'Total Records: ' + @version.total_records.to_s
-    %h2 How to Use:
+    %h3 Resource URI:
+    / Let's put this in a gray box to make it very easy to identify
+    ="https://dbc-simpledata.herokuapp.com/services/#{@version.service.slug}/v#{@version.number}/records"
+    %table.table.table-striped.table-bordered
+      %caption
+        Optional Parameters
+      %th
+        Parameter
+      %th
+        Description
+      %tr
+        %td
+          only
+        %td
+          Select which fields will be returned for each record.  Multiple fields can be delimited with a comma.
+          If not specified, all fields will be returned.
+      %tr
+        %td
+          filter[fieldName]
+        %td
+          Filter results based around field equality. A field name and value must be provided. Multiple fields can have a filter in the same query.
+          If not specified, no filter is applied.
+      %tr
+        %td
+          sortby
+        %td
+          Specify a field by which to sort the dataset.
+          f not specified, defaults to insertion_id.
+      %tr
+        %td
+          order
+        %td
+          Specify ordering of records by the `sortby` field. Either "asc" or "desc".
+          If not specified, defaults to "asc".
+      %tr
+        %td
+          page
+        %td
+          Specify which page of the data to return.
+          If not specified, defaults to 0.
+      %tr
+        %td
+          page_size
+        %td
+          Specify the number of records to return per page.
+          If not specified, defaults to 50.
+      %tr
+        %td
+          limit
+        %td
+          Specify the maximum number of records to return in total.
+    %h4 Example Query
     %p
-      In order to use the
-      = @service.name
-      API, do the following things...
+      ="https://dbc-simpledata.herokuapp.com/services/#{@version.service.slug}/v#{@version.number}/records?only=field1%2Cfield2&filter[field1]=value1&filter[field2]=value2&sortby=field1&order=asc&page=0&page_size=50&limit=100"
     .service_headers
       %h3 Headers:
       %ul

@@ -146,6 +146,8 @@ feature "Retrieving data from API endpoints" do
     version.create_records(CSV.read('db/samples/Life_Safety_Evaluations.csv',
       headers: true))
 
+    # CsvImporter.
+
 
   end
   scenario 'returns total number of record' do
@@ -228,16 +230,13 @@ feature "Retrieving data from API endpoints" do
     expect(page).to_not have_content('$oid')
   end
 
-    ####  This query string is the contents of this in capybara, but works in production
   scenario 'if specified, shows only fields specified' do
     visit version_records_service_path("my-service","v1", {:only => "Building Street Direction,Building Street Name"})
     expect(page).to have_content('{"Building Street Direction":"W.","Building Street Name":"21st"}')
   end
 
   scenario 'filters by one field properly' do
-    # visit "/services/my-service/v1/records?filter[Report%20Status%20-%20Original%20Lse%20Report%20Approved]=No"
     visit version_records_service_path("my-service", "v1", {filter: {"Report Status - Original LSE Report Approved" => "No"}})
-    # visit "/services/my-service/v1/records?filter[report_status_-_original_lse_report_approved]=No"
 
     expect(page).to have_content('"total":381')
   end
