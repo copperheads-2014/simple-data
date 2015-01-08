@@ -84,6 +84,8 @@
     .service_headers
       %h3#headers
         Headers
+      -if current_user && current_user.organization_id == @service.organization_id
+        %p working
       %table.table.table-striped.table-bordered
         %tr
           %th
