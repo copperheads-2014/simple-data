@@ -7,7 +7,7 @@ class HeadersController < ApplicationController
   end
 
   def create
-    @version = Version.find(params[:version_id])
+    @version = Version.find(params[:id])
     @headers = @version.headers
     @headers.each_with_index do |header, i|
       header.update(description: params[:headers][i][:description],
