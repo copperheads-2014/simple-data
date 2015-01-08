@@ -25,7 +25,7 @@ gem 'foreman'
 gem 'pry'
 gem 'capybara'
 gem 'faker'
-gem 'ransack'
+
 
 gem 'mongoid'
 gem 'newrelic_rpm'
@@ -34,7 +34,7 @@ gem 'bcrypt'
 gem 'sidekiq', '~> 3.0'
 gem 'redis'
 
-gem 'kaminari'
+gem 'will_paginate'
 
 
 group :development do
