@@ -30,26 +30,8 @@ class Version < ActiveRecord::Base
   end
 
   def set_total_records
-    # TODO: replace with counter_column maybe?
     self.update(total_records: self.records.count)
   end
-
-  # Faster but not yet working <----------------->
-  # def create_records(file)
-  #   count = total_records
-  #   new_records = []
-  #   CSV.foreach(file, {
-  #       headers: true,
-  #       header_converters: lambda { |h| h.downcase.gsub(' ', '_') unless h.nil? }
-  #     }) do |record|
-  #       record = record.to_hash
-  #       record[:insertion_id] = count +=1
-  #       new_records << record
-  #   end
-  #   records.collection.insert(new_records)
-  #   set_total_records
-  # end
-  #                       <----------------->
 
   def create_records(file)
     count = total_records
