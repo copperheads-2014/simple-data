@@ -2,13 +2,29 @@
   %h1
     Update
     = @service.name
-  %div#explanation.col-md-6
-    = link_to "Append", "#", :class => "update-api btn btn-default form-control", :id => "append-api"
-    %p
-      Do you want to add data to your API? To avoid duplicate data, ensure the file you upload does not contain data already in your API. To see what data already exists
-      =link_to "click here.", "/services/#{@service.slug}/#{@service.latest_version.number}/report"
-  %div.col-md-6
-    = link_to "New Version", "#", :class => "update-api btn btn-default form-control", :id => "new-api-version"
-    %p Did you add or delete headers from your API? Click "New Version"!
-  %div#add-info.update-form.hideable
-    =render partial: "updating"
+  %div.update-container
+    %div.choice-container
+      %div.col-md-6
+        .col-md-offset-5
+          %i.glyphicon.glyphicon-plus-sign.fa-4x
+        %br
+        .col-md-offset-3
+          = link_to "Append", "#", :class => "update-api btn btn-default form-control", :id => "append-api"
+        %br
+        %p
+          Do you want to add data to your API? To avoid duplicate data, ensure the file you upload does not contain data already in your API. To see what data already exists
+          =link_to "click here.", "/services/#{@service.slug}/v#{@service.latest_version.number}/report"
+      %div.col-md-6
+        .col-md-offset-6
+          %i.glyphicon.glyphicon-file.fa-4x
+        %br
+        .col-md-offset-3
+          = link_to "New Version", "#", :class => "update-api btn btn-default form-control", :id => "new-api-version"
+        %br
+        %p
+          Did you add or delete headers from your API? Click "New Version!"
+        %br
+        %br
+    %div#add-info.update-form.hideable
+      =render partial: "updating"
+    %br
