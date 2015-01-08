@@ -35,7 +35,7 @@ class ServicesController < ApplicationController
     @service = Service.new(service_params)
     # @service = ServiceCreation.new(service_params, current_user)
     @service.organization = current_user.organization
-    if @service.save
+    if @service.save # Saving a service automatically creates a new version with a callback.
       @service.versions.last.updates << VersionUpdate.create(filename: params[:service][:file])
       CsvImportJob.perform_later(@service.latest_version.updates.last.id, update_params, params[:service])
       #Redirect to pending view
