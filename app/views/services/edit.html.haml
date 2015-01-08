@@ -28,3 +28,13 @@
     %div#add-info.update-form.hideable
       =render partial: "updating"
     %br
+    %table.table.table-striped.table-bordered
+      %caption
+        Headers of your most recent version
+      %tr
+        %th
+          Header
+      - @headers.each do |header|
+        %tr
+          %td
+            = header.name
