@@ -1,13 +1,17 @@
 require 'csv'
 require 'open-uri'
+require 'fileutils'
 
 class CsvImportJob < ActiveJob::Base
   queue_as :default
 
+  ROOT_CSV_PATH="#{Rails.root.to_s}/tmp/csv/"
+
   def perform(version_update_id, update_params = {updating: false, append: false, new_version: false}, params={} )
     @version_update = VersionUpdate.find(version_update_id)
     @version_update.update(status: :processing)
-    @csv_path = "#{Rails.root.to_s}/tmp/csv/#{@version_update.version.service.slug}.csv"
+    FileUtils.mkdir_p ROOT_CSV_PATH
+    @csv_path = "#{ROOT_CSV_PATH}/#{friendly_filename(@version_update.version.service.slug)}.csv"
 
     if update_params[:updating]
       p "HERE WE ARE UPDATING!!!!!!!!!!!!!!!!!!!!"
@@ -17,7 +21,12 @@ class CsvImportJob < ActiveJob::Base
       p "HERE WE ARE CREATING!!!!!!!!!!!!!!!!!!!!"
       create_first_version
     end
+  end
 
+  def friendly_filename(filename)
+    filename.gsub(/[^\w\s_-]+/, '')
+            .gsub(/(^|\b\s)\s+($|\s?\b)/, '\\1\\2')
+            .gsub(/\s+/, '_')
   end
 
   def create_first_version
@@ -45,7 +54,6 @@ class CsvImportJob < ActiveJob::Base
     create_headers_schema(headers, new_version.updates.last)
 
     add_records(file, new_version.id)
-    File.delete(@csv_path) if File.exist?(@csv_path)
   end
 
   def download_and_add_records_and_set_headers
@@ -58,14 +66,12 @@ class CsvImportJob < ActiveJob::Base
     headers = grab_headers(file)
     # create the headers schema
     create_headers_schema(headers, @version_update) if @version_update.version.headers.empty?
-    # delete the file
-    File.delete(@csv_path) if File.exist?(@csv_path)
     @version_update.update(status: :completed)
   end
 
   def download_file(filename)
     p "DOWNLOADING NOW!"
-    p "HERE WE ARE DOWNLOADING TO #{Rails.root.to_s}/tmp FROM THE URL #{filename}"
+    p "HERE WE ARE DOWNLOADING TO #{ROOT_CSV_PATH} FROM THE URL #{filename}"
     File.open(@csv_path, "wb") do |file|
       file.write open(filename).read
     end

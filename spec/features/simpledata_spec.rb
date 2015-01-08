@@ -53,10 +53,12 @@ feature "Browsing the website" do
     page.fill_in "session_password", with: "password"
     click_button "Login"
 
-    click_link "Browse APIs"
+    click_link "Your Organization"
 
-    expect(page).to have_text("Your Organization's APIs:")
+    expect(page).to have_text("Delian League's APIs:")
   end
+
+
 end
 
 feature "Signing in" do
