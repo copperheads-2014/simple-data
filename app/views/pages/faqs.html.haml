@@ -1,28 +1,46 @@
 - @page_title = "Frequently Asked Questions"
 
-%h1 Frequently Asked Questions
+.col-md-offset-2
+  %h1 Frequently Asked Questions
 
-%h2
-  What is
-  = t('site_title')
-  ?
-%p
-  Answer
+  %hr
 
-%h2
-  Is
-  = t('site_title')
-  free to use?
-%p
-  Answer
+  %h2
+    What is
+    = t('site_title')
+    ?
+  %p.faq-box
+    SimpleData connects developers looking for data-driven projects with groups of people who have lots of data to share. SimpleData will autogenerate API's from CSV files that users upload, making this data available to developers everywhere in a standardized and efficient way.
 
-%h2 Can I use this tool for good or evil?
+  %hr
 
-%p
-  Answer
+  %h2 How does it work?
 
-%h2
-  What types of licenses do you support?
+  %p.faq-box
+    %h3 For Data Creators:
+    %p
+      Upload a CSV file through our file uploading process, adding descriptions of the purpose of your data and what each column row means. Uploading a file will automatically make your data available to the public.
 
-%p
-  Answer
+    %h3 For Developers:
+    %p
+      Developers can browse our list of available API's, select the API and version they wish to use, then use the Resource URI specified on the version's detail page in their app. The version page has a list of query parameters that can be used to make data queries more specific.
+
+  %hr
+
+  %h2
+    Is
+    = t('site_title')
+    free to use?
+  %p.faq-box
+    SimpleData is free for anyone to use, whether you're adding data or using any of the API's.
+
+  %hr
+
+  %h2
+    What types of licenses do you support?
+
+  %p.faq-box
+    Every API created on SimpleData uses the MIT license, which is a permissive free software license that is considered the most flexible and liberal of software licenses out there. For more on the MIT license,
+    = link_to('click here', "http://choosealicense.com/")
+    \.
+
