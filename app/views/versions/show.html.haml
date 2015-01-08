@@ -18,8 +18,12 @@
     %br
     %h3#resource_uri
       Resource URI
-    %code.display-uri
-      ="https://dbc-simpledata.herokuapp.com/services/#{@version.service.slug}/v#{@version.number}/records"
+    .panel.panel-default
+      .panel-heading
+        URI
+      .panel-body.display-uri
+        %code
+          ="https://dbc-simpledata.herokuapp.com/services/#{@version.service.slug}/v#{@version.number}/records"
     %table.table.table-striped.table-bordered
       %caption
         Optional Parameters
