@@ -1,14 +1,16 @@
-%footer
-  %nav.col-md-8.col-md-offset-4
-    %ul.nav.navbar-nav
-      %li
-        = link_to "Home", root_path
-      %li
-        = link_to "About Us", about_us_path
-      %li
-        = link_to "Contact Us", contact_us_path
-      %li
-        = link_to "FAQs", faqs_path
-  .col-md-5.col-md-offset-3.fa.fa-copyright
-    Copyright 2015, All Rights Reserved
-
+%footer.text-center.navbar-fixed-bottom
+  .container-fluid
+    .row
+      .footer-col.col-md-6.footer-col.col-md-offset-3
+        %ul.list-inline
+          %li
+            = link_to "Home", root_path
+          %li
+            = link_to "About Us", about_us_path
+          %li
+            = link_to "Contact Us", contact_us_path
+          %li
+            = link_to "FAQs", faqs_path
+    .row
+      .col-lg-12
+        Copyright © All Rights Reserved 2015
