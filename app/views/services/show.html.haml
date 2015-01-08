@@ -8,17 +8,26 @@
       = @service.description
   %p.org-desc
     = @service.created_at.strftime("Created on: %B %d, %Y")
+  %p
+    Status:
+    -if @service.activated
+      %span.success
+        Active
+    -else
+      %span.danger
+        Inactive
+
   %hr
-  %h2 Status:
-  - if @service.activated && !current_user || @service.activated && current_user.organization_id != @service.organization_id
-    %p This API is currently activated, meaning anyone can access its data.
-  - if !@service.activated && !current_user || !@service.activated && current_user.organization_id != @service.organization_id
-    %p This API is currently deactivated, meaning no one can access its data.
-  -if current_user && current_user.organization_id == @service.organization_id
-    - if @service.activated && @service.organization_id == current_user.organization_id
-      %p This API is currently activated, meaning anyone can access its data.
-    - if @service.activated == false && @service.organization_id == current_user.organization_id
-      %p This API is currently deactivated, meaning no one can access its data. If you wish to reopen access to this API, Click below.
+
+  / - if @service.activated && !current_user || @service.activated && current_user.organization_id != @service.organization_id
+  /   %p This API is currently activated, meaning anyone can access its data.
+  / - if !@service.activated && !current_user || !@service.activated && current_user.organization_id != @service.organization_id
+  /   %p This API is currently deactivated, meaning no one can access its data.
+  / -if current_user && current_user.organization_id == @service.organization_id
+  /   - if @service.activated && @service.organization_id == current_user.organization_id
+  /     %p This API is currently activated, meaning anyone can access its data.
+  /   - if @service.activated == false && @service.organization_id == current_user.organization_id
+  /     %p This API is currently deactivated, meaning no one can access its data. If you wish to reopen access to this API, Click below.
   .row
     .col-md-6
       %ul.serv-list
