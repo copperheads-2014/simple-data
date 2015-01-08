@@ -2,31 +2,24 @@
   .org-banner
     %h1
       = @service.name
-      Version:
-      = @version.number
+      %span.badge
+        ="V#{@version.number}"
     %p.org-desc
       = @service.description
-  %p.org-date
-    Created on:
-    = @version.created_at
-  %ul.serv-list
-    %li.serv-name
-    %h2 Version Details:
-    %ul
-      %li
-        License Type:
-        = @service.license
-        %a{"title" => "Learn more about the #{@service.license} from the Choose A Licence site.", "data-placement" => "right", "data-toggle" => "tooltip", :href => "http://choosealicense.com/", :rel => "tooltip", target: "_blank" }
-          %i.fa.fa-info-circle
-      %li
-        Creator:
-        = link_to "#{@organization.name}", "/organizations/#{@organization.id}"
-      %li= @version.created_at.strftime("Created: %B %d, %Y")
-      %li= @version.updated_at.strftime("Last Update: %B %d, %Y")
-      %li= 'Total Records: ' + @version.total_records.to_s
-    %h3 Resource URI:
-    / Let's put this in a gray box to make it very easy to identify
-    ="https://dbc-simpledata.herokuapp.com/services/#{@version.service.slug}/v#{@version.number}/records"
+    %br
+    %h4
+      %a.col-md-4{href: "#resource_uri"}
+        Resource URI
+      %a.col-md-4{href: "#headers"}
+        Headers
+      %a.col-md-4{href: "#examples"}
+        Example
+    %br
+    %br
+    %h3
+      Resource URI
+    %code
+      ="https://dbc-simpledata.herokuapp.com/services/#{@version.service.slug}/v#{@version.number}/records"
     %table.table.table-striped.table-bordered
       %caption
         Optional Parameters
