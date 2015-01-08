@@ -9,10 +9,6 @@ class ServiceCreation
     new(service_attributes, user).save
   end
 
-  def self.new(service_attributes, user)
-    return new(service_attributes, user)
-  end
-
   def save
     @service = Service.new(attributes)
     @service.organization_id = @user.organization_id
