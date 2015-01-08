@@ -1,4 +1,4 @@
-'will_paginate/array'
+require 'will_paginate/array'
 
 class UsersController < ApplicationController
   skip_before_action :current_user
