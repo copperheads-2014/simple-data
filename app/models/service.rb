@@ -29,11 +29,11 @@ class Service < ActiveRecord::Base
   end
 
   def deactivate
-    self.update(activated: false)
+    self.update_column('activated', false)
   end
 
   def activate
-    self.update(activated: true)
+    self.update_column('activated', true)
   end
 
   def show_headers
@@ -41,7 +41,9 @@ class Service < ActiveRecord::Base
   end
 
   def make_version
+    # Make a new version with an incremented number if any other versions exist.
     versions << Version.create(number: self.latest_version.number + 1, active: true) if Version.exists?(service_id: self.id)
+    # Make the first version if no other versions exist.
     versions << Version.create(number: 1, active: true) unless Version.exists?(service_id: self.id)
   end
 
