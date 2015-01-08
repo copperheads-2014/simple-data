@@ -34,15 +34,16 @@ class ServicesController < ApplicationController
 
   def create
     update_params = {}
-    @service = ServiceCreation.create(service_params, current_user)
+    @service = Service.new(service_params)
+    # @service = ServiceCreation.new(service_params, current_user)
     @service.organization = current_user.organization
-    @service.versions.last.updates << VersionUpdate.create(filename: params[:service][:file])
     if @service.save
+      @service.versions.last.updates << VersionUpdate.create(filename: params[:service][:file])
       CsvImportJob.perform_later(@service.latest_version.updates.last.id, update_params, params[:service])
       #Redirect to pending view
       redirect_to "/services/#{@service.slug}"
     else
-      redirect '/'
+      render :new
     end
   end
 
