@@ -2,31 +2,24 @@
   .org-banner
     %h1
       = @service.name
-      Version:
-      = @version.number
+      %span.badge
+        ="V#{@version.number}"
     %p.org-desc
       = @service.description
-  %p.org-date
-    Created on:
-    = @version.created_at
-  %ul.serv-list
-    %li.serv-name
-    %h2 Version Details:
-    %ul
-      %li
-        License Type:
-        = @service.license
-        %a{"title" => "Learn more about the #{@service.license} from the Choose A Licence site.", "data-placement" => "right", "data-toggle" => "tooltip", :href => "http://choosealicense.com/", :rel => "tooltip", target: "_blank" }
-          %i.fa.fa-info-circle
-      %li
-        Creator:
-        = link_to "#{@organization.name}", "/organizations/#{@organization.id}"
-      %li= @version.created_at.strftime("Created: %B %d, %Y")
-      %li= @version.updated_at.strftime("Last Update: %B %d, %Y")
-      %li= 'Total Records: ' + @version.total_records.to_s
-    %h3 Resource URI:
-    / Let's put this in a gray box to make it very easy to identify
-    ="https://dbc-simpledata.herokuapp.com/services/#{@version.service.slug}/v#{@version.number}/records"
+    %br
+    %h4
+      %a.col-md-4{href: "#resource_uri"}
+        Resource URI
+      %a.col-md-4{href: "#headers"}
+        Headers
+      %a.col-md-4{href: "#examples"}
+        Example
+    %br
+    %br
+    %h3
+      Resource URI
+    %code
+      ="https://dbc-simpledata.herokuapp.com/services/#{@version.service.slug}/v#{@version.number}/records"
     %table.table.table-striped.table-bordered
       %caption
         Optional Parameters
@@ -75,25 +68,65 @@
           limit
         %td
           Specify the maximum number of records to return in total.
-    %h4 Example Query
-    %p
-      ="https://dbc-simpledata.herokuapp.com/services/#{@version.service.slug}/v#{@version.number}/records?only=field1%2Cfield2&filter[field1]=value1&filter[field2]=value2&sortby=field1&order=asc&page=0&page_size=50&limit=100"
+    %br
     .service_headers
-      %h3 Headers:
-      %ul
+      %h3#headers
+        Headers
+      %table.table.table-striped.table-bordered
+        %tr
+          %th
+            Header
+          %th
+            Type
+          %th
+            Description
         - @version.headers.each do |header|
-          %li
-            = header.name
-      - if @service.organization_id == current_user.organization_id
-        = link_to "Modify header descriptions", "/services/#{@version.service.slug}/versions/#{@version.number}/headers/update"
-    .service_example_json
-      %h3 Example Response:
-      = @service.latest_version.records.first.to_json(except: ["insertion_id", "_id"])
-    .versions
-      %h4
-        This is version
-        =@version.number
-        of
-        ="#{@service.name}" + '.'
-        The latest version is
-        ="#{@service.latest_version.number}" + '.'
+          %tr
+            %td
+              = header.name
+            %td
+              =header.data_type if header.data_type
+              =header.data_type if header.data_type.nil?
+            %td
+              - if header.description != "" && header.description != nil
+                = header.description
+              - elsif @service.organization_id == current_user.organization_id
+                %span.warning
+                  =link_to "Please add a description", "/services/#{@version.service.slug}/versions/#{@version.number}/headers/update" if header.description.nil? || header.description == ""
+              - else
+                No description provided.
+    %br
+    %h3#examples
+      Example
+    .panel.panel-default
+      .panel-heading
+        Query
+      .panel-body
+        %code
+          ="https://dbc-simpledata.herokuapp.com/services/#{@version.service.slug}/v#{@version.number}/records?only=field1%2Cfield2&filter[field1]=value1&filter[field2]=value2&sortby=field1&order=asc&page=0&page_size=50&limit=100"
+    .panel.panel-default
+      .panel-heading
+        Example Response:
+      .panel-body
+        %code
+          = @service.latest_version.records.first.to_json(except: ["insertion_id", "_id"])
+  %p.org-date
+    Created on:
+    = @version.created_at
+  %ul.serv-list
+    %li.serv-name
+    %h2 Version Details:
+    %ul
+      %li
+        License Type:
+        = @service.license
+        %a{"title" => "Learn more about the #{@service.license} from the Choose A Licence site.", "data-placement" => "right", "data-toggle" => "tooltip", :href => "http://choosealicense.com/", :rel => "tooltip", target: "_blank" }
+          %i.fa.fa-info-circle
+      %li
+        Creator:
+        = link_to "#{@organization.name}", "/organizations/#{@organization.id}"
+      %li= @version.created_at.strftime("Created: %B %d, %Y")
+      %li= @version.updated_at.strftime("Last Update: %B %d, %Y")
+      %li= 'Total Records: ' + @version.total_records.to_s
+
+
