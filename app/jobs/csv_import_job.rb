@@ -71,17 +71,19 @@ class CsvImportJob < ActiveJob::Base
   def create_new_version
     p "HERE WE ARE CREATING A NEW VERSION WITH HEADERS!!!!!!!!!!!!!!!!!!!!!!!"
     download_file(@version_update.filename)
-    file = open(@csv_path).read
+    file = open(@csv_path)
     service_to_update = @version_update.version.service
     current_version = @version_update.version
 
-    service_to_update.versions << Version.new(number: current_version.number + 1)
+    new_version = Version.new(number: current_version.number + 1)
+    service_to_update.versions << new_version
     new_version.make_version_update(@version_update.filename)
+
+    add_records(file, new_version.id)
 
     headers = grab_headers(file)
     create_headers_schema(headers, new_version.updates.last)
 
-    add_records(file, new_version.id)
   end
 
   def download_and_add_records_and_set_headers
@@ -109,6 +111,7 @@ class CsvImportJob < ActiveJob::Base
 
   def create_headers_schema(headers, version_update)
     version_update.version.headers = headers.map { |name| Header.create(name: name) }
+    version_update.version.save!
   end
 
   def add_records(file, version_id)
