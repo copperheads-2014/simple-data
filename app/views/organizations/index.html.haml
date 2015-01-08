@@ -5,8 +5,10 @@
     - @organizations.each do |org|
       %ul.serv-list
         %li
-          = link_to "#{org.name}",  organization_path(org)
-          = link_to "(expand)", "#", :class => "displayer", :id => "org#{org.id}"
+        = link_to "#" do
+          = link_to "#{org.name}", "/services/#{org.id}"
+          = link_to "#" do
+            %i.fa.fa-chevron-circle-down{:id => "org#{org.id}", :class => "displayer"}
         %ul.hideable{:id => "org#{org.id}"}
           %li.sublist
             = org.description
