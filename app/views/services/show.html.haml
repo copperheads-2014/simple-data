@@ -2,8 +2,11 @@
   %ol.breadcrumb
     %li
       = link_to "Home", root_path
+    %li
+      = link_to "Browse APIs", services_path
     %li.active
-      = link_to "Services", services_path
+      = link_to "#{@service.name}", "#"  
+
     
   .org-banner
     - if @service.latest_version.records.count == 0
