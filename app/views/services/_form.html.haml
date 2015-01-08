@@ -25,4 +25,4 @@
     = f.label "Tags:"
     = f.text_field :tags, :class => "form-control", :placeholder => "Separate tags with commas. Descriptive tags make your API more visible to the developer community.", :value => nil
     = f.hidden_field :file, value: "https://#{ENV['S3_BUCKET']}.s3.amazonaws.com/"
-    = f.submit "Import", :class => "btn btn-default", data: { confirm: "NOTE: You are about to make this data public. Press OK to continue:" }
+    = f.submit "Import", :class => "btn btn-primary", data: { confirm: "NOTE: You are about to make this data public. Press OK to continue:" }
