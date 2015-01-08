@@ -26,6 +26,10 @@ $(function() {
             $('#service_file').val(url);
             form.find('input[name=policy]').val(data.policy);
             form.find('input[name=signature]').val(data.signature);
+          },
+          error: function() {
+            $('#file-completion').text("You must upload a proper CSV file!");
+            $('#file-completion').fadeIn();
           }
         })
         data.submit();
