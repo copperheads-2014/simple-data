@@ -24,7 +24,7 @@
         .progress
           .progress-bar.progress-bar-striped.active
       #file-completion
-    %br  
+    %br
     = f.label "Tags:"
     = f.text_field :tags, :class => "form-control", :placeholder => "Separate tags with commas. Descriptive tags make your API more visible to the developer community.", :value => nil
     = f.hidden_field :file, value: "https://#{ENV['S3_BUCKET']}.s3.amazonaws.com/"
