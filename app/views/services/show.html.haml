@@ -9,28 +9,44 @@
   %p.org-desc
     = @service.created_at.strftime("Created on: %B %d, %Y")
   %hr
-  %ul.serv-list
-    %li.serv-name
-      %h2
-        Details:
-        = link_to "(expand)", "#", :class => "displayer", :id => "#{@service.slug}"
-      %ul.hideable{:id => "#{@service.slug}"}
-        %li.sublist
-          Current Version:
-          = @service.latest_version.number
-        %li.sublist
-          License Type:
-          = @service.license
-          %a{"title" => "Learn more about the #{@service.license} from the Choose A Licence site.", "data-placement" => "right", "data-toggle" => "tooltip", :href => "http://choosealicense.com/", :rel => "tooltip", target: "_blank" }
-            %i.fa.fa-info-circle
-        %li.sublist
-          Creator:
-          = link_to "#{@organization.name}", "/organizations/#{@organization.id}"
-        %li.sublist
-          = @service.updated_at.strftime("Last update: %B %d, %Y")
-        %li.sublist
-          =mail_to @service.organization.users.first.email, " Contact email", encode: "javascript", class: "fa fa-envelope"
-      = link_to "Versions", "/services/#{@service.slug}/versions", {:id => "update-service-button", :class => "btn btn-default form-control"}
+  .row
+    .col-md-5.offset-3
+      %ul.serv-list
+        %li.serv-name
+          %h2
+            Details:
+            = link_to "(expand)", "#", :class => "displayer", :id => "#{@service.slug}"
+          %ul.hideable{:id => "#{@service.slug}"}
+            %li.sublist
+              Current Version:
+              = @service.latest_version.number
+            %li.sublist
+              License Type:
+              = @service.license
+              %a{"title" => "Learn more about the #{@service.license} from the Choose A Licence site.", "data-placement" => "right", "data-toggle" => "tooltip", :href => "http://choosealicense.com/", :rel => "tooltip", target: "_blank" }
+                %i.fa.fa-info-circle
+            %li.sublist
+              Creator:
+              = link_to "#{@organization.name}", "/organizations/#{@organization.id}"
+            %li.sublist
+              = @service.updated_at.strftime("Last update: %B %d, %Y")
+            %li.sublist
+              =mail_to @service.organization.users.first.email, " Contact email", encode: "javascript", class: "fa fa-envelope"
+    .col-md-6
+      %ul.serv-list
+        %li.serv-name
+          %h2
+            Versions:
+            = link_to "(expand)", "#", :class => "displayer", :id => "version-lists"
+          %ul.serv-list.hideable{:id => "version-lists"}
+            - @service.versions.each do |v|
+              %li.sublist
+                = link_to "Version #{v.number}", service_version_path(@service.slug, v.number)
+              %ul.sublist
+                %li= v.created_at.strftime("Created: %B %d, %Y")
+              %ul.sublist
+                %li= v.updated_at.strftime("Last Updated: %B %d, %Y")
+
   %h2 Status:
   - if @service.activated && !current_user || @service.activated && current_user.organization_id != @service.organization_id
     %p This API is currently activated, meaning anyone can access its data.
