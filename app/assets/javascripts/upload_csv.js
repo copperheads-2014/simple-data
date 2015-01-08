@@ -48,7 +48,10 @@ $(function() {
         $('.progress-bar').css('background-color','#3366ff');
       },
       fail: function(e, data) {
-        console.log('fail')
+        console.log('fail');
+        $('.progress').fadeOut();
+        $('.progress-bar').css('width', 0 + '%');
+        $('.progress-bar').css('height', '0%');
       },
       success: function(data) {
         // Here we get the file url on s3 in an xml doc
