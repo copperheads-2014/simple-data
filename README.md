@@ -2,13 +2,15 @@
 
 Final project: Jordy Williams, Grant Hummer, Ryan Jones, David Chmura and Eleni Chappen
 
-## Installing Mongo on your computer
+## Installing Dependencies
 
-You must have Mongo installed on your computer in order to work with our app. In your app's root file, run:
+You must have Mongo and redis installed on your computer in order to work with our app. In your app's root file, run:
 
 ```sh
 brew install mongo
+brew install redis
 ```
+
 
 ## Starting your Rails app
 
@@ -20,7 +22,7 @@ and ./tmp/pids
 After a `bundle install`, run the following to boot the Rails app on port 3000:
 
 ```sh
-$ foreman start -p 3000
+$ foreman start -f Procfile.dev
 ```
 
 This starts a Unicorn server. Note that running foreman start with no -p will start a server on port 5000 by default.

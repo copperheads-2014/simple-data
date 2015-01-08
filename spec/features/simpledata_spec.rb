@@ -97,7 +97,7 @@ feature "Creating an account" do
     page.fill_in "user_email", with: "OG_Gettysburg@whitehouse.gov"
     page.fill_in "user_password", with: "TheNorth"
     page.fill_in "user_password_confirmation", with: "TheNorth"
-    click_button "Submit"
+    click_button "Create Account"
 
     expect(page.current_path).to eq("/organizations/new")
   end
@@ -110,7 +110,7 @@ feature "Creating an account" do
     page.fill_in "user_email", with: "OG_Gettysburg@whitehouse.gov"
     page.fill_in "user_password", with: "TheNorth"
     page.fill_in "user_password_confirmation", with: "TheNorth"
-    click_button "Submit"
+    click_button "Create Account"
 
     expect(page).to have_text("Name can't be blank")
   end
