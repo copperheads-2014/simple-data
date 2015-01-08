@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .file-upload
   %form{:action => "https://#{ENV['S3_BUCKET']}.s3.amazonaws.com", :method => "post", :enctype => "multipart/form-data", :class => 'direct-upload'}
     %input{type: :hidden, name: :key}
@@ -10,3 +11,18 @@
       .progress
         .progress-bar.progress-bar-striped.active
     %h4#file-completion
+||||||| merged common ancestors
+=======
+.file-upload
+  %form{:action => "https://#{ENV['S3_BUCKET']}.s3.amazonaws.com", :method => "post", :enctype => "multipart/form-data", :class => 'direct-upload'}
+    %input{type: :hidden, name: :key}
+    %input{type: :hidden, name: "AWSAccessKeyId", value: ENV["AWS_ACCESS_KEY_ID"]}
+    %input{type: :hidden, name: :acl, value: 'public-read'}
+    %input{type: :hidden, name: :policy}
+    %input{type: :hidden, name: :signature}
+    %input{type: :hidden, name: :success_action_status, value: "201"}
+    %input{type: :file, name: :file }
+      .progress
+        .progress-bar.progress-bar-striped.active
+    #file-completion
+>>>>>>> made file-upload a partial, added sentence, added margins top and bottom of some elements
