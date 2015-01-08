@@ -74,6 +74,7 @@ class ServicesController < ApplicationController
 # only a member of the service's organization can edit or destroy the service
   def edit
     set_service
+    @headers = @service.latest_version.headers
   end
 
   def update

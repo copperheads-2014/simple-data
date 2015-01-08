@@ -2,13 +2,39 @@
   %h1
     Update
     = @service.name
-  = link_to "Append", "#", :class => "update-api btn btn-default form-control", :id => "append-api"
-  = link_to "New Version", "#", :class => "update-api btn btn-default form-control", :id => "new-api-version"
-  %div#explanation
-    %h2
-      Do you want to add data to your API? For instance, a new month's worth of traffic records? Click "Append"! But, make sure that the file you are uploading does not contain duplicate data--unless you want that. To see what data already exists
-      =link_to "click here.", "/services/#{@service.slug}/#{@service.latest_version.number}/records"
-
-    %h2 Did you add or delete headers from your API? Click "New Version"!
-  %div#add-info.update-form.hideable
-    =render partial: "updating"
+  %div.update-container
+    %div.choice-container
+      %div.col-md-6
+        .col-md-offset-5
+          %i.glyphicon.glyphicon-plus-sign.fa-4x
+        %br
+        .col-md-offset-3
+          = link_to "Append", "#", :class => "update-api btn btn-default form-control", :id => "append-api"
+        %br
+        %p
+          Do you want to add data to your API? To avoid duplicate data, ensure the file you upload does not contain data already in your API. To see what data already exists
+          =link_to "click here.", "/services/#{@service.slug}/v#{@service.latest_version.number}/report"
+      %div.col-md-6
+        .col-md-offset-6
+          %i.glyphicon.glyphicon-file.fa-4x
+        %br
+        .col-md-offset-3
+          = link_to "New Version", "#", :class => "update-api btn btn-default form-control", :id => "new-api-version"
+        %br
+        %p
+          Did you add or delete headers from your API? Click "New Version!"
+        %br
+        %br
+    %div#add-info.update-form.hideable
+      =render partial: "updating"
+    %br
+    %table.table.table-striped.table-bordered
+      %caption
+        Headers of your most recent version
+      %tr
+        %th
+          Header
+      - @headers.each do |header|
+        %tr
+          %td
+            = header.name
