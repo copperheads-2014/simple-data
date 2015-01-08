@@ -25,8 +25,7 @@ police = ServiceCreation.create({
 
 police.latest_version.create_records(CSV.read(
   'db/samples/Police_Stations.csv',
-   headers: true,
-  :header_converters => lambda { |h| h.downcase.gsub(' ','_') unless h.nil?}
+   headers: true
 ))
 
 services = [
@@ -71,8 +70,7 @@ services.each do |file|
 
   service.latest_version.create_records(CSV.read(
     "db/samples/#{file}",
-    headers: true,
-    :header_converters => lambda { |h| h.downcase.gsub(' ','_') unless h.nil?}
+    headers: true
     ))
 
   update = VersionUpdate.create!(version_id: service.latest_version.id, user_id: user.id, filename: "db/#{file}", status: :completed)

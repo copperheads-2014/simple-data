@@ -12,6 +12,10 @@
           = link_to "#" do
             %i.fa.fa-chevron-circle-down{:id => "#{s.slug}", :class => "displayer"}
         %ul.hideable{:id => "#{s.slug}"}
+          = link_to "#{s.name}", "/services/#{s.slug}"
+          = link_to "#" do
+            %i.fa.fa-chevron-circle-down{:id => "#{s.slug}", :class => "displayer"}
+        %ul.hideable{:id => "#{s.slug}"}
           %li.sublist
             = s.description
           %li.sublist
