@@ -1,3 +1,5 @@
+'will_paginate/array'
+
 class UsersController < ApplicationController
   skip_before_action :current_user
 
@@ -32,8 +34,7 @@ class UsersController < ApplicationController
     if @user.organization
       @organization = @user.organization
     end
-    @log = activity_log(@user)
-    @paginatable_log = Kaminari.paginate_array(@log).page(params[:page]).per(10)
+    @log = activity_log(@user).paginate(:page => params[:page])
   end
 
   private
