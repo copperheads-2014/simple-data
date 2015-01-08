@@ -34,4 +34,4 @@
           on
           =s.created_at.strftime("%B %d, %Y")
   .custom_pagination
-    = paginate @paginatable_log
+    = will_paginate @log

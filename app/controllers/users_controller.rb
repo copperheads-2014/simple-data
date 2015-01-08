@@ -1,4 +1,4 @@
-'will_paginate/array'
+require 'will_paginate/array'
 
 class UsersController < ApplicationController
   skip_before_action :current_user
@@ -44,13 +44,15 @@ class UsersController < ApplicationController
   end
 
   def activity_log(user)
-    collect_logs(user)
+    @user = user
+    collect_logs(@user)
   end
 
   def collect_logs(user)
+    @user = user
     collection = []
-    services = Service.where(creator_id: user.id).to_a
-    updates = VersionUpdate.where(user_id: user.id).to_a
+    services = Service.where(creator_id: @user.id).to_a
+    updates = VersionUpdate.where(user_id: @user.id).to_a
     collection << services
     collection << updates
     collection.flatten!
@@ -59,5 +61,7 @@ class UsersController < ApplicationController
 
   def sort_collection(collection)
     @log = collection[0..-1].sort_by { |item| item.created_at }
+    p "LOG ARRAY #{@log.map{|i| i.class}}"
+    @log
   end
 end
