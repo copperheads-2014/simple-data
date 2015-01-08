@@ -9,8 +9,10 @@
     -@results.each do |r|
       %ul.serv-list
         %li
+        = link_to "#" do
           = link_to "#{r.name}", "/services/#{r.slug}"
-          = link_to "(expand)", "#", :class => "displayer", :id => "#{r.slug}"
+          = link_to "#" do
+            %i.fa.fa-chevron-circle-down{:id => "#{r.slug}", :class => "displayer"}
         %ul.hideable{:id => "#{r.slug}"}
           %li.sublist
             = r.description
