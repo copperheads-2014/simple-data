@@ -20,14 +20,14 @@
       Activity Log:
     %ul.users-services-list
       -@log[0..-1].each do |s|
-        -if s.class == "Service"
+        -if s.class.name == "Service"
           %li
           Created
           = link_to "#{s.name}", "/services/#{s.slug}"
           on
           =s.created_at.strftime("%B %d, %Y")
 
-        -if s.class == "ServiceUpdate"
+        -if s.class.name == "ServiceUpdate"
           %li
           Updated
           = link_to "#{Service.find_by(id: s.service_id).name}", "/services/#{Service.find_by(id: s.service_id).slug}"
