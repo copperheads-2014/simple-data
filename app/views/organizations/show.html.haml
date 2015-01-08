@@ -22,5 +22,5 @@
             = link_to "Update", {:controller => "services", :action => "edit", :service_slug => service.slug}, {:id => "update-service-button", :class => "btn btn-default form-control"}
       %hr
 .custom_pagination
-  = paginate @services
+  = will_paginate @services
 
