@@ -53,9 +53,6 @@ $(function() {
         $('#real_file_url').val(url) // Update the real input in the other form
       },
       done: function (event, data) {
-        $('.progress').fadeOut(300, function() {
-          $('.bar').css('width', 0);
-        })
         $('input[name=file]').toggle();
         $('#file-completion').fadeIn();
       },
