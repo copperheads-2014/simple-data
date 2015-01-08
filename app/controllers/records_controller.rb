@@ -16,6 +16,22 @@ class RecordsController < ApplicationController
     end
   end
 
+  def report
+    @service = Service.find_by(slug: params[:service_slug])
+    v_num = params[:version][1..-1]
+    @version = @service.versions.find_by(number: v_num) if @service
+    if (@service && @service.activated) && (@version && @version.active)
+      @headers = @version.headers
+      @records = @version.records.limit(@version.records.count).to_a
+      pairs = @records.first.attributes
+      pairs.delete("_id")
+      @attributes = pairs.map(&:first)
+      render :report
+    else
+      redirect_to services_path
+    end
+  end
+
   protected
 
   def default_params

@@ -19,9 +19,9 @@ Rails.application.routes.draw do
         end
       end
       get "/:version/records", to: "records#index", as: 'version_records'
+      get "/:version/report", to: "records#report", as: 'version_report'
     end
   end
-
   resources :upload_csv, only: :index
 
   # Marketing pages
