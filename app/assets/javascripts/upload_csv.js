@@ -58,6 +58,7 @@ $(function() {
         var url = $(data).find('Location').text()
 
         $('#real_file_url').val(url) // Update the real input in the other form
+        $('.progress').fadeOut();
       },
       done: function (event, data) {
         $('input[name=file]').toggle();
