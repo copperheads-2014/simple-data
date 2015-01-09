@@ -18,16 +18,31 @@ eleni = User.create(
   password: 'password',
   password_confirmation: 'password')
 
-police = ServiceCreation.create({
-    description: "A list of police stations",
-    name: "Police Stations",
+passage = ServiceCreation.create({
+    description: "A list of safe passages for children",
+    name: "Safe Passages",
   }, eleni)
 
-police.latest_version.create_records(CSV.read(
-  'db/samples/Police_Stations.csv',
+passage.latest_version.create_records(CSV.read(
+  'db/samples/safepassage_buffer.csv',
    headers: true,
   :header_converters => lambda { |h| h.downcase.gsub(' ','_') unless h.nil?}
 ))
+
+passage_headers = CSV.readlines("db/samples/safepassage_buffer.csv").first
+passage.latest_version.headers = passage_headers.map { |name| Header.create(name: name) }
+passage.latest_version.save!
+
+passage.latest_version.headers.find_by(name: "OBJECTID").update(data_type: 'integer', description: "The object's ID")
+passage.latest_version.headers.find_by(name: "SCHOOL_NAM").update(data_type: 'text', description: "The name of the school")
+passage.latest_version.headers.find_by(name: "ROUTE_NUMB").update(data_type: 'integer', description: "The route number")
+passage.latest_version.headers.find_by(name: "SHAPE_LENG").update(data_type: 'decimal', description: "The direct length")
+passage.latest_version.headers.find_by(name: "BUFF_DIST").update(data_type: 'integer', description: "The buffer distance")
+passage.latest_version.headers.find_by(name: "SHAPE_AREA").update(data_type: 'decimal', description: "The area of the shape")
+passage.latest_version.headers.find_by(name: "SHAPE_LEN").update(data_type: 'decimal', description: "The secondary shape length")
+passage.latest_version.headers.find_by(name: "SCHOOLID").update(data_type: 'integer', description: "The ID of the school")
+
+
 
 services = [
   # "311_Service_Requests_-_Tree_Debris.csv",
@@ -71,8 +86,7 @@ services.each do |file|
 
   service.latest_version.create_records(CSV.read(
     "db/samples/#{file}",
-    headers: true,
-    :header_converters => lambda { |h| h.downcase.gsub(' ','_') unless h.nil?}
+    headers: true
     ))
 
   update = VersionUpdate.create!(version_id: service.latest_version.id, user_id: user.id, filename: "db/#{file}", status: :completed)
