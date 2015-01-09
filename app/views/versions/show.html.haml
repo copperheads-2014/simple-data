@@ -114,16 +114,16 @@
       Example
     .panel.panel-default
       .panel-heading
-        Query
+        Query Format
       .panel-body.display-uri
         %code
-          ="https://dbc-simpledata.herokuapp.com/services/#{@version.service.slug}/v#{@version.number}/records?only=field1%2Cfield2&filter[field1]=value1&filter[field2]=value2&sortby=field1&order=asc&page=0&page_size=50&limit=100"
+          ="https://dbc-simpledata.herokuapp.com/services/#{@version.service.slug}/v#{@version.number}/records?api_token=#{SecureRandom.urlsafe_base64}only=field1%2Cfield2&filter[field1]=value1&filter[field2]=value2&sortby=field1&order=asc&page=0&page_size=50&limit=100"
     .panel.panel-default
       .panel-heading
-        Example Response:
+        Example Response Format
       .panel-body.display-uri
-        %code
-          = @service.latest_version.records.first.to_json(except: ["insertion_id", "_id"])
+        %pre
+          %code= @response
   %ul.serv-list
     %li.serv-name
     %h4 Version Details:
