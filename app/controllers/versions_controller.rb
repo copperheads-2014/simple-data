@@ -8,6 +8,9 @@ class VersionsController < ApplicationController
     @service = Service.find_by(slug: params[:service_slug])
     @version = @service.versions.find_by(number: params[:id])
     @organization = Organization.find_by(id: @service.organization_id)
+    @first_record = @service.latest_version.records.first
+    @headers = @first_record.attributes.keys
+    @headers.delete("_id")
     # @headers = Header.find_by(version_id: params[:version_id]).map(&:name)
     # Figure out headers
   end
