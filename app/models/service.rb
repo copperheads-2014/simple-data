@@ -16,6 +16,9 @@ class Service < ActiveRecord::Base
   before_save :make_slug
   self.per_page = 10
 
+  def self.search(query)
+    where('name like ? OR description like ?', "%#{query}%", "%#{query}%")
+  end
 
   def set_update_time
     self.update(updated_at: Time.now )
