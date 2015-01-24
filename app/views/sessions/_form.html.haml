@@ -10,5 +10,8 @@
       = f.password_field :password, :class => "form-control"
       = f.submit "Login", :class => "btn btn-primary form_submit"
 .row
-  .col-md-2.col-md-offset-4
-    = link_to "Create a New User", new_user_path, :class => "form-control btn btn-default", :id => "new-user-button"
+  .col-md-4.col-md-offset-4
+    %div.well
+      %p
+        Don't have an account?
+      = link_to "Create a New User", new_user_path, :class => "form-control btn btn-default", :id => "new-user-button"
