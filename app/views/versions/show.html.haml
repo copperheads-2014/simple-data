@@ -134,7 +134,7 @@
         %a{"title" => "Learn more about the #{@service.license} from the Choose A Licence site.", "data-placement" => "right", "data-toggle" => "tooltip", :href => "http://choosealicense.com/", :rel => "tooltip", target: "_blank" }
           %i.fa.fa-info-circle
       %li
-        Creator:
+        Organization:
         = link_to "#{@organization.name}", "/organizations/#{@organization.id}"
       %li= @version.created_at.strftime("Created: %B %d, %Y")
       %li= @version.updated_at.strftime("Last Update: %B %d, %Y")
