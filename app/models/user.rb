@@ -6,5 +6,12 @@ class User < ActiveRecord::Base
 
   belongs_to :organization
 
+  after_create :generate_token
+
   has_secure_password
+
+  def generate_token
+    self.token = SecureRandom.urlsafe_base64
+    self.save
+  end
 end
