@@ -2,7 +2,6 @@ Rails.application.routes.draw do
   resources :users, except: [:index]
   resources :sessions, only: [:new, :create, :destroy]
   resources :organizations, only: [:new, :create, :show, :index]
-  resources :versions, only: [:index, :show]
 
   resources :services, param: :service_slug, except: [:destroy] do
     member do
