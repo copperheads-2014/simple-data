@@ -3,9 +3,9 @@
 .container-fluid
   .jumbotron
     %h1
-      What's
-      %span= t('site_title')
-      ?
+      %span
+        = t('site_title')
+
   .row.blocks-container
     .col-md-4.info_blocks.col-xs-4
       .fa-container
@@ -13,21 +13,21 @@
       %h2
         Give us your
         %span data
-      %p You've got some great data: maybe it's about a pet adoption agency, or a town's traffic patterns, or the local restaurants' menus. You know it's useful, but maybe you don't know how useful.
+      %p You've got some great data: maybe it's about a pet adoption agency, or a town's traffic patterns, or the local restaurants' menus.
     .col-md-4.info_blocks.col-xs-4
       .fa-container
         %i.fa.fa-cog.fa-5x
       %h2
         We turn it into an
         %span API
-      %p Give that info to us in a friendly CSV file and we can turn it into something usable for web developers (the people who brought us cat memes and Facebook!)
+      %p Give that info to us in a friendly CSV file and we turn it into a format useful for developers.
     .col-md-4.info_blocks.col-xs-4
       .fa-container
         %i.fa.fa-star.fa-5x
       %h2
         Devs make
         %span apps
-      %p Coders are hungry for data because it means they can make things to make the world better. Go ahead--let them have a crack at it!
+      %p Coders are hungry for data because it enhances the programs they can make for all of us.
 
 .container-fluid
   -if current_user
