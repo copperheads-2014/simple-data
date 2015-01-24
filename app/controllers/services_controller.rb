@@ -8,7 +8,7 @@ class ServicesController < ApplicationController
     if current_user && current_user.organization
       @my_services = current_user.organization.services.paginate(:page => params[:page])
     end
-    @services = Service.paginate(:page => params[:page])
+    @services = Service.search(params[:search]).paginate(:page => params[:page])
     respond_to do |format|
       format.html
       format.json { render_json_collection @services }
