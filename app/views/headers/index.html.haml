@@ -11,8 +11,8 @@
           %p
           = label_tag "Description:"
           %p
-            = text_area_tag  "headers[][description]", nil , {:class => "form-control"}
+            = text_area_tag  "headers[][description]", header.description , {:class => "form-control"}
           = label_tag "Data Type:"
-          = select_tag("headers[][data_type]", options_for_select([["Text", :string], ["Integer", :integer], ["Decimal Number", :float], ["True or False", :boolean]]))
+          = select_tag("headers[][data_type]", options_for_select([["String (Text)", :string], ["Integer", :integer], ["Float (Decimal Number)", :float], ["Boolean (True or False)", :boolean]]))
           %hr
       = submit_tag "Submit", :class => "btn btn-default form-control"
