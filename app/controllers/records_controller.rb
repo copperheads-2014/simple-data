@@ -25,7 +25,7 @@ class RecordsController < ApplicationController
       @records = @version.records.limit(@version.records.count).to_a
       pairs = @records.first.attributes
       pairs.delete("_id")
-      @attributes = pairs.map(&:first)
+      @attributes = pairs.map(&:first).rotate!(-1)
       render :report
     else
       redirect_to services_path
