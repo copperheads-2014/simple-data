@@ -5,4 +5,8 @@ class Organization < ActiveRecord::Base
   validates :description, presence: true, length: { :in => 12..300 }
   self.per_page = 10
 
+  def self.search(query)
+    where('name like ? OR description like ?', "%#{query}%", "%#{query}%")
+  end
+
 end
