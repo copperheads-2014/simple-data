@@ -1,11 +1,11 @@
 .col-md-8.col-md-offset-2
-  %div.well#search-well
+  %div#search-container
     = form_tag(services_path, :method => "get", class: "navbar-form", id: "search-form") do
       %div.form-group
         = text_field_tag :search, params[:search], class: "form-control", placeholder: "Search"
       %button{type: "submit", class: "btn btn-default"}
         Submit
-  %h2 APIs Available:
+  %h2#content-description APIs
   %ul.service-list
     -@services.each do |r|
       %ul.serv-list
