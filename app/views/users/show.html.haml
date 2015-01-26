@@ -1,19 +1,23 @@
 .col-md-8.col-md-offset-2.user-profile
   %h1
     =@user.name
-  %h2
+  %h4
     Joined
     %span= t('site_title')
     On
     =@user.created_at.strftime("%B %d, %Y")
   -if @organization != nil
-    %h2
-      Belongs To:
+    %h4
+      Belongs to
       =link_to "#{@organization.name}", organization_path(@organization.id)
   -if @organization == nil && @user == current_user
-    %h3
+    %h4
       You must create an organization before creating an API.
-      %h4=link_to "Create Organization", new_organization_path, :class => "btn btn-default form-control", :id => "create-org-btn"
+      %h5=link_to "Create Organization", new_organization_path, :class => "btn btn-default form-control", :id => "create-org-btn"
+  -if @user == current_user
+    %div.well
+      API Token:
+      = current_user.token
   -if @organization && @log[0]
     %hr
     %h3.activity-log
