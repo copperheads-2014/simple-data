@@ -1,6 +1,6 @@
 class OrganizationsController < ApplicationController
   def index
-    @organizations = Organization.paginate(:page => params[:page])
+    @organizations = Organization.search(params[:search]).paginate(:page => params[:page])
     respond_to do |format|
       format.html
       format.json { render_json_collection @organizations }
