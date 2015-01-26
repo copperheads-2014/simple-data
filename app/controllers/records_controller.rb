@@ -34,6 +34,10 @@ class RecordsController < ApplicationController
 
   protected
 
+  def authorized
+    params[:api_token] && User.find_by(token: params[:api_token])
+  end
+
   def default_params
     {page: 0, page_size: 50, start: 0, sortby: :insertion_id, order: :asc}.with_indifferent_access
   end
