@@ -7,8 +7,7 @@
         = msg
 .row
   .col-md-4.form-group.logging.col-md-offset-4
-    %h1 Account Creation
-    %p A User account and an Organization are required to create an API with SimpleData. After successfully creating your account, you'll be taken to the Organization Creation page.
+    %div.well#new-account An account is required to create an API.
     =form_for @user, url: { controller: "users", action: "create"} do |f|
       = f.label "Name:"
       = f.text_field :name, :class => "form-control"
