@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   has_secure_password
 
   def generate_token
-    self.token = SecureRandom.urlsafe_base64
-    self.save
+    token = SecureRandom.urlsafe_base64
+    save
   end
 end
