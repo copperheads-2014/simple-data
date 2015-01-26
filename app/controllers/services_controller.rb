@@ -47,6 +47,7 @@ class ServicesController < ApplicationController
 
   def set_headers
     set_service
+    authorized
     render "set_headers.html.haml", :layout => false
   end
 
@@ -73,11 +74,13 @@ class ServicesController < ApplicationController
 # only a member of the service's organization can edit or destroy the service
   def edit
     set_service
+    authorized
     @headers = @service.latest_version.headers
   end
 
   def update
     @service = Service.find_by(slug: params[:service_slug])
+    authorized
     respond_to do |format|
       #Ensure the individual submitting owns the organization
       if @service && (@service.organization_id == current_user.organization_id)
@@ -111,12 +114,14 @@ class ServicesController < ApplicationController
 
   def deactivate
     @service = Service.find_by(slug: params[:service_slug])
+    authorized
     @service.deactivate if @service.organization_id == current_user.organization_id
     redirect_to "/services/#{@service.slug}"
   end
 
   def activate
     @service = Service.find_by(slug: params[:service_slug])
+    authorized
     @service.activate if @service.organization_id == current_user.organization_id
     redirect_to "/services/#{@service.slug}"
   end
