@@ -151,6 +151,12 @@ class ServicesController < ApplicationController
     @service ||= Service.find_by(slug: params[:service_slug])
   end
 
+  def authorized
+    unless current_user == @service.creator
+      redirect_to "/services/#{@service.slug}"
+    end
+  end
+
 end
 
 
